@@ -1,0 +1,46 @@
+{
+  "name": "@semantic-release/error",
+  "description": "errors with more than just a message",
+  "author": "Stephan Bönnemann <stephan@boennemann.me> (http://boennemann.me)",
+  "bugs": {
+    "url": "https://github.com/semantic-release/error/issues"
+  },
+  "config": {
+    "nyc": {
+      "exclude": [
+        ".test",
+        "node_modules"
+      ]
+    }
+  },
+  "devDependencies": {
+    "babel": "^5.5.8",
+    "coveralls": "^2.11.2",
+    "mkdirp": "^0.5.1",
+    "nyc": "^3.0.0",
+    "rimraf": "^2.4.0",
+    "standard": "^4.2.1",
+    "tap": "^1.2.0"
+  },
+  "homepage": "https://github.com/semantic-release/error#readme",
+  "keywords": [
+    "semantic-release",
+    "error"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/semantic-release/error.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && mkdirp dist && babel src --out-dir dist",
+    "build:tests": "rimraf .test && mkdirp .test && babel test --out-dir .test",
+    "coverage": "nyc report",
+    "coverage:upload": "npm run coverage -- --reporter=lcovonly && coveralls < coverage/lcov.info",
+    "pretest:suite": "npm run build && npm run build:tests",
+    "test": "npm run test:style && npm run test:suite",
+    "test:style": "standard",
+    "test:suite": "nyc tap --no-cov .test/{scenarios,specs}/*.js"
+  }
+}
