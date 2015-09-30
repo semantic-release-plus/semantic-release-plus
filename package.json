@@ -14,14 +14,14 @@
     }
   },
   "devDependencies": {
-    "babel": "^5.5.8",
-    "coveralls": "^2.11.2",
-    "mkdirp": "^0.5.1",
-    "nyc": "^3.0.0",
-    "rimraf": "^2.4.0",
-    "semantic-release": "^4.3.5",
-    "standard": "^4.2.1",
-    "tap": "^1.2.0"
+    "babel": "5.8.23",
+    "coveralls": "2.11.4",
+    "mkdirp": "0.5.1",
+    "nyc": "3.2.2",
+    "rimraf": "2.4.3",
+    "semantic-release": "4.3.5",
+    "standard": "4.5.4",
+    "tap": "1.4.1"
   },
   "homepage": "https://github.com/semantic-release/error#readme",
   "keywords": [
