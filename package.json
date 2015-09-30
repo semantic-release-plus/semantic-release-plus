@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-release/error",
+  "name": "semantic-release-error",
   "description": "errors with more than just a message",
   "author": "Stephan Bönnemann <stephan@boennemann.me> (http://boennemann.me)",
   "bugs": {
