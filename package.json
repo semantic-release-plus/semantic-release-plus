@@ -19,26 +19,29 @@
     "mkdirp": "^0.5.1",
     "nyc": "^3.0.0",
     "rimraf": "^2.4.0",
+    "semantic-release": "^4.3.5",
     "standard": "^4.2.1",
     "tap": "^1.2.0"
   },
   "homepage": "https://github.com/semantic-release/error#readme",
   "keywords": [
-    "semantic-release",
-    "error"
+    "error",
+    "semantic-release"
   ],
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/semantic-release/error.git"
+    "url": "https://github.com/semantic-release/error.git"
   },
   "scripts": {
     "build": "rimraf dist && mkdirp dist && babel src --out-dir dist",
     "build:tests": "rimraf .test && mkdirp .test && babel test --out-dir .test",
     "coverage": "nyc report",
     "coverage:upload": "npm run coverage -- --reporter=lcovonly && coveralls < coverage/lcov.info",
+    "prepublish": "npm run build",
     "pretest:suite": "npm run build && npm run build:tests",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "npm run test:style && npm run test:suite",
     "test:style": "standard",
     "test:suite": "nyc tap --no-cov .test/{scenarios,specs}/*.js"
