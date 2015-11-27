@@ -4,11 +4,7 @@ node_modules
 *.log
 .DS_Store
 .nyc_output
-.test
-.tmp
 
 # source/config
-src
-test
 *.yml
 .gitignore

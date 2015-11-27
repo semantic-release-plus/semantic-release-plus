@@ -5,20 +5,9 @@
   "bugs": {
     "url": "https://github.com/semantic-release/error/issues"
   },
-  "config": {
-    "nyc": {
-      "exclude": [
-        ".test",
-        "node_modules"
-      ]
-    }
-  },
   "devDependencies": {
-    "babel": "5.8.23",
     "coveralls": "2.11.4",
-    "mkdirp": "0.5.1",
     "nyc": "3.2.2",
-    "rimraf": "2.4.3",
     "semantic-release": "4.3.5",
     "standard": "5.4.1",
     "tap": "2.2.0"
@@ -29,21 +18,16 @@
     "semantic-release"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/semantic-release/error.git"
   },
   "scripts": {
-    "build": "rimraf dist && mkdirp dist && babel src --out-dir dist",
-    "build:tests": "rimraf .test && mkdirp .test && babel test --out-dir .test",
     "coverage": "nyc report",
-    "coverage:upload": "npm run coverage -- --reporter=lcovonly && coveralls < coverage/lcov.info",
-    "prepublish": "npm run build",
-    "pretest:suite": "npm run build && npm run build:tests",
+    "coverage:upload": "npm run -s coverage -- --reporter=text-lcov | coveralls",
+    "pretest": "standard",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "npm run test:style && npm run test:suite",
-    "test:style": "standard",
-    "test:suite": "nyc tap --no-cov .test/{scenarios,specs}/*.js"
+    "test": "nyc tap --no-cov test/*.js"
   }
 }
