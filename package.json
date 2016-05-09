@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
-    "nyc": "^5.0.0",
+    "nyc": "^6.4.4",
     "semantic-release": "^4.3.5",
     "standard": "^6.0.3",
     "tap": "^5.0.0"
