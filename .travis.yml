@@ -1,27 +1,27 @@
-sudo: false
 language: node_js
-cache:
-  directories:
-  - node_modules
 notifications:
   email: false
 node_js:
-- 4
-- iojs-v3
-- iojs-v2
-- iojs-v1
-- '0.12'
-- '0.10'
-before_install:
-- npm install -g npm@^2
-before_script:
-- npm prune
-after_success:
-- curl -Lo travis_after_all.py https://git.io/travis_after_all
-- python travis_after_all.py
-- export $(cat .to_export_back) &> /dev/null
-- npm run coverage:upload
-- npm run semantic-release
+  - 8
+
+# Trigger a push build on master and greenkeeper branches + PRs build on every branches
+# Avoid double build on PRs (See https://github.com/travis-ci/travis-ci/issues/1147)
 branches:
-  except:
-  - /^v\d+\.\d+\.\d+$/
+  only:
+    - master
+    - /^greenkeeper.*$/
+
+# Retrieve 999 commits (default is 50) so semantic-release can analyze all commits when there is more than 50 on a PR
+git:
+  depth: 999
+
+# Retry install on fail to avoid failing a build on network/disk/external errors
+install:
+  - travis_retry npm install
+
+script:
+  - npm run test
+
+after_success:
+  - npm run coverage:upload
+  - npm run semantic-release
