@@ -7,10 +7,10 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
-    "nyc": "^8.3.2",
+    "nyc": "^11.2.1",
     "semantic-release": "^8.0.0",
-    "standard": "^8.0.0",
-    "tap": "^8.0.0"
+    "standard": "^10.0.3",
+    "tap": "^10.7.2"
   },
   "homepage": "https://github.com/semantic-release/error#readme",
   "keywords": [
