@@ -29,5 +29,6 @@
     "pretest": "standard",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "nyc tap --no-cov test/*.js"
-  }
+  },
+  "version": "0.0.0-development"
 }
