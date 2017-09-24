@@ -12,7 +12,8 @@
     }
   },
   "devDependencies": {
-    "coveralls": "^2.11.4",
+    "ava": "^0.22.0",
+    "codecov": "^2.3.0",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.7.0",
@@ -24,9 +25,9 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
     "nyc": "^11.2.1",
-    "semantic-release": "^8.0.0",
-    "tap": "^10.7.2"
     "prettier": "^1.7.0",
+    "rimraf": "^2.6.2",
+    "semantic-release": "^8.0.0"
   },
   "eslintConfig": {
     "extends": [
@@ -50,23 +51,41 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "nyc": {
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "include": [
+      "index.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "all": true
+  },
   "prettier": {
     "printWidth": 120,
     "singleQuote": true,
     "bracketSpacing": false,
     "trailingComma": "es5"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/semantic-release/error.git"
   },
   "scripts": {
-    "coverage": "nyc report",
-    "coverage:upload": "npm run -s coverage -- --reporter=text-lcov | coveralls",
-    "pretest": "standard",
+    "clean": "rimraf coverage && rimraf .nyc_output",
     "cm": "git-cz",
+    "codecov": "codecov",
+    "coverage": "nyc check-coverage",
     "lint": "eslint .",
+    "pretest": "npm run clean && npm run lint",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "nyc tap --no-cov test/*.js"
-  },
+    "test": "nyc ava -v"
+  }
 }
