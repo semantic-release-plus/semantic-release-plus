@@ -5,8 +5,15 @@
   "bugs": {
     "url": "https://github.com/semantic-release/error/issues"
   },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "devDependencies": {
     "coveralls": "^2.11.4",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
     "nyc": "^11.2.1",
     "semantic-release": "^8.0.0",
     "standard": "^10.0.3",
@@ -27,6 +34,7 @@
     "coverage": "nyc report",
     "coverage:upload": "npm run -s coverage -- --reporter=text-lcov | coveralls",
     "pretest": "standard",
+    "cm": "git-cz",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "nyc tap --no-cov test/*.js"
   },

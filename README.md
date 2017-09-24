@@ -8,3 +8,4 @@
 [![devDependency Status](https://david-dm.org/semantic-release/error/dev-status.svg)](https://david-dm.org/semantic-release/error#info=devDependencies)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 [![license](https://img.shields.io/github/license/semantic-release/error.svg)](https://github.com/semantic-release/error/blob/master/LICENSE)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
