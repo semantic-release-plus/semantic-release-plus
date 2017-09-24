@@ -15,10 +15,30 @@
     "coveralls": "^2.11.4",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
+    "eslint": "^4.7.0",
+    "eslint-config-prettier": "^2.5.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-prettier": "^2.2.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "nyc": "^11.2.1",
     "semantic-release": "^8.0.0",
-    "standard": "^10.0.3",
     "tap": "^10.7.2"
+    "prettier": "^1.7.0",
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": 2
+    }
   },
   "files": [
     "index.js"
@@ -30,6 +50,12 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "trailingComma": "es5"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/semantic-release/error.git"
@@ -39,6 +65,7 @@
     "coverage:upload": "npm run -s coverage -- --reporter=text-lcov | coveralls",
     "pretest": "standard",
     "cm": "git-cz",
+    "lint": "eslint .",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "nyc tap --no-cov test/*.js"
   },
