@@ -52,16 +52,13 @@
   "license": "MIT",
   "main": "index.js",
   "nyc": {
-    "lines": 100,
-    "statements": 100,
-    "functions": 100,
-    "branches": 100,
     "include": [
       "index.js"
     ],
     "reporter": [
-      "lcov",
-      "text"
+      "json",
+      "text",
+      "html"
     ],
     "all": true
   },
@@ -81,8 +78,7 @@
   "scripts": {
     "clean": "rimraf coverage && rimraf .nyc_output",
     "cm": "git-cz",
-    "codecov": "codecov",
-    "coverage": "nyc check-coverage",
+    "codecov": "codecov -f coverage/coverage-final.json",
     "lint": "eslint .",
     "pretest": "npm run clean && npm run lint",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
