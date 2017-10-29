@@ -4,5 +4,6 @@ module.exports = class SemanticReleaseError extends Error {
     Error.captureStackTrace(this, this.constructor);
     this.name = this.constructor.name;
     this.code = code;
+    this.semanticRelease = true;
   }
 };
