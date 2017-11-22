@@ -16,30 +16,12 @@
     "codecov": "^3.0.0",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
-    "eslint": "^4.7.0",
     "eslint-config-prettier": "^2.5.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-prettier": "^2.2.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
     "nyc": "^11.2.1",
-    "prettier": "^1.7.0",
-    "rimraf": "^2.6.2",
-    "semantic-release": "^8.0.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "standard",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": 2
-    }
+    "prettier": "~1.8.2",
+    "semantic-release": "^8.0.0",
+    "xo": "^0.18.2"
   },
   "files": [
     "index.js"
@@ -76,12 +58,22 @@
     "url": "https://github.com/semantic-release/error.git"
   },
   "scripts": {
-    "clean": "rimraf coverage && rimraf .nyc_output",
     "cm": "git-cz",
     "codecov": "codecov -f coverage/coverage-final.json",
-    "lint": "eslint .",
-    "pretest": "npm run clean && npm run lint",
+    "lint": "xo",
+    "pretest": "npm run lint",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "nyc ava -v"
+  },
+  "xo": {
+    "extends": [
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": 2
+    }
   }
 }

@@ -1,10 +1,10 @@
 import SemanticReleaseError from '../../index';
 
 export default class InheritedError extends SemanticReleaseError {
-  constructor(message, code, newProperty) {
+  constructor(message, code) {
     super(message);
     Error.captureStackTrace(this, this.constructor);
-    this.name = this.constructor.name;
+    this.name = 'InheritedError';
     this.code = code;
     this.newProperty = 'newProperty';
   }
