@@ -24,16 +24,20 @@ throw new SemanticReleaseError('An error happened');
 // With error message and error code
 throw new SemanticReleaseError('An error happened', 'ECODE');
 
+// With error message, error code and details
+throw new SemanticReleaseError('An error happened', 'ECODE', 'Here is some suggestions to solve this error.');
+
 // With inheritance
 class InheritedError extends SemanticReleaseError {
-  constructor(message, code, newProperty) {
+  constructor(message, code, newProperty, details) {
     super(message);
     Error.captureStackTrace(this, this.constructor);
     this.name = this.constructor.name;
     this.code = code;
+    this.details = details;
     this.newProperty = 'newProperty';
   }
 }
 
-throw new InheritedError('An error happened', 'ECODE');
+throw new InheritedError('An error happened', 'ECODE', 'Here is some suggestions to solve this error.');
 ```

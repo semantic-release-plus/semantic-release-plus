@@ -32,6 +32,19 @@ test('Sets message and code', t => {
   t.true(error instanceof SemanticReleaseError);
 });
 
+test('Sets message, code and details', t => {
+  const code = 'ENOFOO';
+  const message = 'bar';
+  const details = 'baz';
+  const error = new SemanticReleaseError(message, code, details);
+
+  t.is(error.code, code);
+  t.is(error.message, message);
+  t.is(error.details, details);
+  t.true(error.semanticRelease);
+  t.true(error instanceof SemanticReleaseError);
+});
+
 test('Include the stacktrace and name', async t => {
   const error = await t.throws(() => throwError());
   t.regex(error.stack, /helpers\/throw-error/);
