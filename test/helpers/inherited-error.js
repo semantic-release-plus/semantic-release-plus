@@ -1,4 +1,4 @@
-import SemanticReleaseError from '../../index';
+import SemanticReleaseError from '../..';
 
 export default class InheritedError extends SemanticReleaseError {
   constructor(message, code) {
