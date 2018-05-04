@@ -18,7 +18,7 @@
     "cz-conventional-changelog": "^2.0.0",
     "nyc": "^11.2.1",
     "semantic-release": "^15.0.0",
-    "xo": "^0.20.0"
+    "xo": "^0.21.0"
   },
   "files": [
     "index.js"
@@ -42,7 +42,8 @@
     "all": true
   },
   "prettier": {
-    "printWidth": 120
+    "printWidth": 120,
+    "trailingComma": "es5"
   },
   "publishConfig": {
     "access": "public"
