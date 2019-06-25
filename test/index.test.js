@@ -1,8 +1,8 @@
 import test from 'ava';
-import SemanticReleaseError from '..';
 import throwError from './helpers/throw-error';
 import InheritedError from './helpers/inherited-error';
 import throwInheritedError from './helpers/throw-inherited-error';
+import SemanticReleaseError from '..';
 
 test('Instanciates error', t => {
   const error = new SemanticReleaseError();
