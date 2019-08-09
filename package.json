@@ -11,16 +11,9 @@
   "bugs": {
     "url": "https://github.com/semantic-release/error/issues"
   },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
   "devDependencies": {
     "ava": "^2.0.0",
     "codecov": "^3.0.0",
-    "commitizen": "^4.0.0",
-    "cz-conventional-changelog": "^2.0.0",
     "nyc": "^14.0.0",
     "semantic-release": "^15.0.0",
     "xo": "^0.24.0"
@@ -58,7 +51,6 @@
     "url": "https://github.com/semantic-release/error.git"
   },
   "scripts": {
-    "cm": "git-cz",
     "codecov": "codecov -f coverage/coverage-final.json",
     "lint": "xo",
     "pretest": "npm run lint",
