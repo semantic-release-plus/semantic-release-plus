@@ -1,5 +1,5 @@
-import SemanticReleaseError from '../..';
+const SemanticReleaseError = require('../..');
 
-export default () => {
+module.exports = () => {
   throw new SemanticReleaseError('message', 'code');
 };

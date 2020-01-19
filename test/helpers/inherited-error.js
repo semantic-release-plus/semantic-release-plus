@@ -1,6 +1,6 @@
-import SemanticReleaseError from '../..';
+const SemanticReleaseError = require('../..');
 
-export default class InheritedError extends SemanticReleaseError {
+module.exports = class InheritedError extends SemanticReleaseError {
   constructor(message, code) {
     super(message);
     Error.captureStackTrace(this, this.constructor);
@@ -8,4 +8,4 @@ export default class InheritedError extends SemanticReleaseError {
     this.code = code;
     this.newProperty = 'newProperty';
   }
-}
+};

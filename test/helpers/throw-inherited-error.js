@@ -1,5 +1,5 @@
-import InheritedError from './inherited-error';
+const InheritedError = require('./inherited-error');
 
-export default () => {
+module.exports = () => {
   throw new InheritedError('message', 'code');
 };
