@@ -107,6 +107,10 @@ jobs:
       - restore_cache:
           <<: *yarn_cache
       - run: yarn affected:test -- ${AFFECTED_ARGS} --parallel -- --ci --code-coverage
+      - store_test_results:
+          path: reports
+      - store_artifacts:
+          path: coverage
   e2e:
     <<: *defaults
     steps:
@@ -120,6 +124,7 @@ jobs:
       - run: yarn affected:e2e -- ${AFFECTED_ARGS} --configuration production -- --headless
       - store_artifacts:
           path: dist/cypress
+
   release:
     <<: *defaults
     steps:
@@ -130,6 +135,8 @@ jobs:
           <<: *set_env
       - restore_cache:
           <<: *yarn_cache
+      - restore_cache:
+          key: build-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run: yarn affected -- --target release ${AFFECTED_ARGS}
 
   deploy:
@@ -173,7 +180,6 @@ workflows:
             - install
       - release:
           requires:
-            - install
             - check-formatting
             - lint
             - test
