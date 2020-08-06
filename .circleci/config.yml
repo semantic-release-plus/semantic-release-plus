@@ -180,7 +180,6 @@ workflows:
             - install
       - release:
           requires:
-            - install
             - check-formatting
             - lint
             - test
