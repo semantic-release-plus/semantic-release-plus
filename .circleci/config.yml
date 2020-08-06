@@ -120,6 +120,7 @@ jobs:
       - run: yarn affected:e2e -- ${AFFECTED_ARGS} --configuration production -- --headless
       - store_artifacts:
           path: dist/cypress
+
   release:
     <<: *defaults
     steps:
@@ -130,6 +131,8 @@ jobs:
           <<: *set_env
       - restore_cache:
           <<: *yarn_cache
+      - restore_cache:
+          key: build-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run: yarn affected -- --target release ${AFFECTED_ARGS}
 
   deploy:
