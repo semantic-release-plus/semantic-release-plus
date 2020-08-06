@@ -15,24 +15,4 @@ module.exports = {
     '.prettierignore',
     `${srcRoot}/*`,
   ], // should come from dep-graph and angular.json
-  // assets: [`${srcRoot}/README.md`, `${srcRoot}/CHANGELOG.md`],
-  // plugins: [
-  //   '@semantic-release/commit-analyzer',
-  //   '@semantic-release/release-notes-generator',
-  //   [
-  //     '@semantic-release/changelog',
-  //     {
-  //       changelogFile: `${srcRoot}/CHANGELOG.md`,
-  //     },
-  //   ],
-  //   '@semantic-release/npm',
-  //   [
-  //     '@semantic-release/git',
-  //     {
-  //       message:
-  //         `chore(release): ${name}` +
-  //         '-v${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
-  //     },
-  //   ],
-  // ],
 };
