@@ -18,7 +18,7 @@ module.exports = {
     [
       'jest-junit',
       {
-        outputDirectory: '../../../reports/packages/plugins/docker',
+        outputDirectory: 'reports/packages/plugins/docker',
       },
     ],
   ],
