@@ -1,4 +1,12 @@
 {
   "name": "@semantic-release-plus/docker",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    "@semantic-release/error": "^2.1.0",
+    "execa": "^4.0.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "semantic-release-plus": "^18.0.0"
+  }
 }
