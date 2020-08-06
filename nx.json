@@ -15,13 +15,20 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "accessToken": "YWM2ODM5MmEtNDU1My00OWM5LWJlODEtOWU0ZDQ4MDBiNTQxfHJlYWQtd3JpdGU=",
+        "cacheableOperations": ["build", "test", "lint", "e2e"],
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
       }
     }
   },
-  "projects": {},
+  "projects": {
+    "plugins-docker": {
+      "tags": ["plugin"]
+    }
+  },
   "workspaceLayout": {
     "appsDir": "packages",
     "libsDir": "packages"

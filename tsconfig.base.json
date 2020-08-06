@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@semantic-release-plus/docker": ["libs/plugins/docker/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
