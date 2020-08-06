@@ -1,9 +1,9 @@
-const execa = require('execa')
+import * as execa from 'execa';
 
-module.exports = async (pluginConfig, { logger }) => {
+export async function verifyConditions(pluginConfig, { logger }) {
   for (const envVar of ['DOCKER_USERNAME', 'DOCKER_PASSWORD']) {
     if (!process.env[envVar]) {
-      throw new Error(`Environment variable ${envVar} is not set`)
+      throw new Error(`Environment variable ${envVar} is not set`);
     }
   }
   try {
@@ -18,8 +18,8 @@ module.exports = async (pluginConfig, { logger }) => {
       {
         stdio: 'inherit',
       }
-    )
+    );
   } catch (err) {
-    throw new Error('docker login failed')
+    throw new Error('docker login failed');
   }
 }
