@@ -35,6 +35,16 @@
             "main": "packages/plugins/docker/src/index.ts",
             "assets": ["packages/plugins/docker/*.md"]
           }
+        },
+        "release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx semantic-release --extends=./packages/plugins/docker/release.config.js"
+              }
+            ]
+          }
         }
       }
     }
