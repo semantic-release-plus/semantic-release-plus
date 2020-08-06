@@ -5,7 +5,7 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/semantic-release-plus/semantic-release-plus.git"
+    "url": "https://github.com/semantic-release-plus/semantic-release-plus.git"
   },
   "author": "Justin Dietz",
   "license": "MIT",
