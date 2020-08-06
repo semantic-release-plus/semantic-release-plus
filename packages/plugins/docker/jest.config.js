@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 module.exports = {
   name: 'plugins-docker',
   preset: '../../../jest.config.js',
@@ -12,4 +13,13 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'html'],
   coverageDirectory: '../../../coverage/packages/plugins/docker',
+  reporters: [
+    'default',
+    [
+      'jest-junit',
+      {
+        outputDirectory: '../../../reports/packages/plugins/docker',
+      },
+    ],
+  ],
 };

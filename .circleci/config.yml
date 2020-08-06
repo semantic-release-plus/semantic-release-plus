@@ -107,6 +107,10 @@ jobs:
       - restore_cache:
           <<: *yarn_cache
       - run: yarn affected:test -- ${AFFECTED_ARGS} --parallel -- --ci --code-coverage
+      - store_test_results:
+          path: reports
+      - store_artifacts:
+          path: coverage
   e2e:
     <<: *defaults
     steps:
