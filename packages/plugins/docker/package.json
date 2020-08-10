@@ -18,7 +18,8 @@
   "homepage": "https://github.com/semantic-release-plus/semantic-release-plus",
   "dependencies": {
     "@semantic-release/error": "^2.1.0",
-    "execa": "^4.0.0"
+    "execa": "^4.0.0",
+    "tslib": "^2.0.1"
   },
   "devDependencies": {},
   "peerDependencies": {
