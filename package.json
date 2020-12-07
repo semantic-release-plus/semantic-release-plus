@@ -12,7 +12,7 @@
     "url": "https://github.com/semantic-release/error/issues"
   },
   "devDependencies": {
-    "ava": "3.13.0",
+    "ava": "3.14.0",
     "codecov": "3.8.1",
     "nyc": "15.1.0",
     "semantic-release": "17.3.0",
