@@ -34,7 +34,7 @@
     "@nrwl/nx-cloud": "latest",
     "@nrwl/workspace": "11.2.12",
     "@semantic-release/error": "2.2.0",
-    "@types/jest": "26.0.8",
+    "@types/jest": "26.0.20",
     "@types/node": "12.12.38",
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
