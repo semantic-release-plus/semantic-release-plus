@@ -35,7 +35,7 @@
     "@nrwl/workspace": "11.2.12",
     "@semantic-release/error": "^2.1.0",
     "@types/jest": "26.0.8",
-    "@types/node": "12.12.38",
+    "@types/node": "12.20.1",
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
     "dotenv": "6.2.0",
