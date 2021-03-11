@@ -16,7 +16,7 @@
     "codecov": "3.8.1",
     "nyc": "15.1.0",
     "semantic-release": "17.4.1",
-    "xo": "0.28.3"
+    "xo": "0.38.2"
   },
   "files": [
     "index.js"
