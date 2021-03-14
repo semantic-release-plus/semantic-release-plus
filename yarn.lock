@@ -4620,10 +4620,10 @@ hosted-git-info@^2.1.4, hosted-git-info@^2.7.1, hosted-git-info@^2.8.8:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.8.tgz#7539bd4bc1e0e0a895815a2e0262420b12858488"
   integrity sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
 
-hosted-git-info@^3.0.0:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-3.0.5.tgz#bea87905ef7317442e8df3087faa3c842397df03"
-  integrity sha512-i4dpK6xj9BIpVOTboXIlKG9+8HMKggcrMX7WA24xZtKwX0TPelq/rbaS5rCKeNX8sJXZJGdSxpnEGtta+wismQ==
+hosted-git-info@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-4.0.0.tgz#9f06639a90beff66cacae6e77f8387b431d61ddc"
+  integrity sha512-fqhGdjk4av7mT9fU/B01dUtZ+WZSc/XEXMoLXDVZukiQRXxeHSSz3AqbeWRJHtF8EQYHlAgB1NSAHU0Cm7aqZA==
   dependencies:
     lru-cache "^6.0.0"
 
@@ -8683,10 +8683,10 @@ selfsigned@^1.10.7:
   dependencies:
     node-forge "0.9.0"
 
-semantic-release-plus@18.2.4:
-  version "18.2.4"
-  resolved "https://registry.yarnpkg.com/semantic-release-plus/-/semantic-release-plus-18.2.4.tgz#4a2718679882c5d8b16f1f598748a6096556a562"
-  integrity sha512-SC/UvyAWXWXR1xaeESPbKU1S6q0CC7iXszsLMClgPo+OAU6X2I8+r5vg9mJywU0AfR7WS6yeBFoT97lJdMVjBA==
+semantic-release-plus@18.2.5:
+  version "18.2.5"
+  resolved "https://registry.yarnpkg.com/semantic-release-plus/-/semantic-release-plus-18.2.5.tgz#888e9f14aafd072bf24d93e72a9c76a9539db72e"
+  integrity sha512-18Ch9g0jmXifhjvfP+Ex1ZhcIDq/UIW65qHNUmPv3BTwFqLvy6x4xOF4P6fDs3w+kktUkUy/MDPg1ZIatAgRcQ==
   dependencies:
     "@semantic-release/commit-analyzer" "^8.0.0"
     "@semantic-release/error" "^2.2.0"
@@ -8703,7 +8703,7 @@ semantic-release-plus@18.2.4:
     get-stream "^6.0.0"
     git-log-parser "^1.2.0"
     hook-std "^2.0.0"
-    hosted-git-info "^3.0.0"
+    hosted-git-info "^4.0.0"
     lodash "^4.17.15"
     marked "^2.0.0"
     marked-terminal "^4.0.0"
