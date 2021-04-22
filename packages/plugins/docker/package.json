@@ -19,7 +19,7 @@
   "dependencies": {
     "@semantic-release/error": "2.2.0",
     "execa": "5.0.0",
-    "tslib": "2.1.0"
+    "tslib": "2.2.0"
   },
   "devDependencies": {},
   "peerDependencies": {
