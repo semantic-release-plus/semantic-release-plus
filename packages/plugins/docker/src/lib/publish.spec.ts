@@ -1,7 +1,7 @@
 jest.mock('execa');
 
-import { publish } from './publish';
 import * as execa from 'execa';
+import { publish } from './publish';
 
 describe('publish', () => {
   beforeEach(() => {

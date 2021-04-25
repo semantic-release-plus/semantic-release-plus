@@ -1,7 +1,7 @@
 jest.mock('execa');
 
-import { verifyConditions } from './verify';
 import * as execa from 'execa';
+import { verifyConditions } from './verify';
 
 describe('verify', () => {
   beforeEach(() => {
