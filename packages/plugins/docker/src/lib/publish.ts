@@ -1,7 +1,8 @@
 import * as execa from 'execa';
+import { PluginConfig } from './plugin-config.interface';
 
 export async function publish(
-  pluginConfig,
+  pluginConfig: PluginConfig,
   { nextRelease: { version }, logger }
 ) {
   logger.log(`Pushing version ${pluginConfig.name}:${version} to docker hub`);
