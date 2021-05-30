@@ -41,7 +41,7 @@
     "dotenv": "8.2.0",
     "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
-    "execa": "5.0.0",
+    "execa": "5.0.1",
     "jest": "26.2.2",
     "jest-junit": "11.1.0",
     "prettier": "2.2.1",
