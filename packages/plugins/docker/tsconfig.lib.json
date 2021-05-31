@@ -2,6 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
+    "target": "ES2018",
+    "lib": ["ES2018"],
     "outDir": "../../../dist/out-tsc",
     "declaration": true,
     "rootDir": "./src",
