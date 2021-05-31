@@ -797,7 +797,7 @@
     lodash "^4.17.4"
     micromatch "^4.0.2"
 
-"@semantic-release/error@2.2.0", "@semantic-release/error@^2.2.0":
+"@semantic-release/error@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@semantic-release/error/-/error-2.2.0.tgz#ee9d5a09c9969eade1ec864776aeda5c5cddbbf0"
   integrity sha512-9Tj/qn+y2j+sjCI3Jd+qseGtHjOAeg7dU2/lVcqIQ9TV3QDaDXDYXcoOHU+7o2Hwh8L8ymL4gfuO7KxDs3q2zg==
@@ -5782,11 +5782,6 @@ lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.4, lodash@^4.17.5:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
   integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
-lodash@^4.17.20:
-  version "4.17.20"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
-  integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
-
 lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
@@ -5902,7 +5897,7 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked-terminal@^4.1.0:
+marked-terminal@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/marked-terminal/-/marked-terminal-4.1.1.tgz#34a6f063cd6cfe26bffaf5bac3724e24242168a9"
   integrity sha512-t7Mdf6T3PvOEyN01c3tYxDzhyKZ8xnkp8Rs6Fohno63L/0pFTJ5Qtwto2AQVuDtbQiWzD+4E5AAu1Z2iLc8miQ==
@@ -7875,10 +7870,10 @@ schema-utils@^2.7.0:
     ajv "^6.12.4"
     ajv-keywords "^3.5.2"
 
-semantic-release-plus@18.2.7:
-  version "18.2.7"
-  resolved "https://registry.yarnpkg.com/semantic-release-plus/-/semantic-release-plus-18.2.7.tgz#7c664e445e1d33aeee2cc0d2b0ae0bdfc97592be"
-  integrity sha512-kq/tVvMKoDhbQDusRbu1P6+EvsOp25GAPUCr2btIrwjsc9/5KUc8hVANDv2n0sCUPYC4kLjSUZjC+w3/V0AjOw==
+semantic-release-plus@18.3.0:
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/semantic-release-plus/-/semantic-release-plus-18.3.0.tgz#50e90b842b48c82052cef9f671d24c624255f2c5"
+  integrity sha512-JpbFZr0S98Fg1IkC25VicZZKx/SjvdloO0RAlsiXSHTUGl/x8A0HgvgNx1f49B6hLsnM5Nwv2xIpv+GrTDCscQ==
   dependencies:
     "@semantic-release/commit-analyzer" "^8.0.0"
     "@semantic-release/error" "^2.2.0"
@@ -7896,9 +7891,9 @@ semantic-release-plus@18.2.7:
     git-log-parser "^1.2.0"
     hook-std "^2.0.0"
     hosted-git-info "^4.0.0"
-    lodash "^4.17.20"
+    lodash "^4.17.21"
     marked "^2.0.0"
-    marked-terminal "^4.1.0"
+    marked-terminal "^4.1.1"
     micromatch "^4.0.2"
     p-each-series "^2.1.0"
     p-reduce "^2.0.0"
