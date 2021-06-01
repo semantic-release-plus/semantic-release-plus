@@ -1,21 +1,50 @@
 import * as execa from 'execa';
+import * as semver from 'semver';
+import { normalizeConfig } from './normalize-config';
+import { PluginConfig } from './plugin-config.interface';
 
 export async function publish(
-  pluginConfig,
+  pluginConfig: PluginConfig,
   { nextRelease: { version }, logger }
 ) {
-  logger.log(`Pushing version ${pluginConfig.name}:${version} to docker hub`);
+  pluginConfig = normalizeConfig(pluginConfig);
+
+  const {
+    publishLatestTag,
+    publishMajorTag,
+    publishMinorTag,
+    name,
+  } = pluginConfig;
 
   // Push both new version and latest
-  execa(
-    'docker',
-    ['tag', `${pluginConfig.name}:latest`, `${pluginConfig.name}:${version}`],
-    { stdio: 'inherit' }
-  );
-  execa('docker', ['push', `${pluginConfig.name}:${version}`], {
-    stdio: 'inherit',
+  const { major, minor } = semver.parse(version);
+  const tags = [`${name}:${version}`];
+
+  if (publishMajorTag) {
+    tags.push(`${name}:${major}`);
+  }
+  if (publishMinorTag) {
+    tags.push(`${name}:${major}.${minor}`);
+  }
+
+  // create a tag for each configured tag to publish
+  tags.forEach((t) => {
+    execa('docker', ['tag', `${name}:latest`, t], {
+      stdio: 'inherit',
+    });
   });
-  execa('docker', ['push', `${pluginConfig.name}:latest`], {
-    stdio: 'inherit',
+
+  // adding latest tag after image tagging as latest already exists
+  if (publishLatestTag) {
+    tags.push(`${name}:latest`);
+  }
+
+  // push each tagw
+  // todo: consider using docker push --all-tags in the future
+  tags.forEach((t) => {
+    logger.log(`Pushing version ${t} to docker hub`);
+    execa('docker', ['push', t], {
+      stdio: 'inherit',
+    });
   });
 }
