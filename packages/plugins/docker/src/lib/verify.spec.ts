@@ -1,7 +1,8 @@
-jest.mock('execa');
-
-import { verifyConditions } from './verify';
 import * as execa from 'execa';
+import { PluginConfig } from './plugin-config.interface';
+import { verifyConditions } from './verify';
+
+jest.mock('execa');
 
 describe('verify', () => {
   beforeEach(() => {
@@ -16,8 +17,7 @@ describe('verify', () => {
 
     const pluginConfig = {
       name: 'test',
-      // registryUrl: undefined,
-    } as any;
+    } as PluginConfig;
 
     const context = {
       nextRelease: {
@@ -27,10 +27,6 @@ describe('verify', () => {
         log: jest.fn(),
       },
     };
-
-    const {
-      nextRelease: { version },
-    } = context;
 
     it('should try to login to default docker registry', async () => {
       process.env.DOCKER_USERNAME = dockerUser;
