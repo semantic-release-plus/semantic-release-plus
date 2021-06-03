@@ -1,9 +1,9 @@
 <h1 align="center" style="border-bottom: none;">📦🚀 semantic-release-plus nx repo</h1>
+<h3 align="center">Monorepo for Fully automated version management and package publishing</h3>
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-
-<h3 align="center">Monorepo for Fully automated version management and package publishing</h3>
 
 # Highlights
 
