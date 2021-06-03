@@ -27,7 +27,7 @@
   },
   "private": true,
   "dependencies": {
-    "execa": "5.0.1",
+    "execa": "5.1.0",
     "semver": "^7.3.5"
   },
   "devDependencies": {
