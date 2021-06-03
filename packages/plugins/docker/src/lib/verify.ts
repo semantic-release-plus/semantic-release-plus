@@ -1,6 +1,9 @@
 import * as execa from 'execa';
+import { normalizeConfig } from './normalize-config';
+import { PluginConfig } from './plugin-config.interface';
 
-export async function verifyConditions(pluginConfig, { logger }) {
+export async function verifyConditions(pluginConfig: PluginConfig, { logger }) {
+  pluginConfig = normalizeConfig(pluginConfig);
   for (const envVar of ['DOCKER_USERNAME', 'DOCKER_PASSWORD']) {
     if (!process.env[envVar]) {
       throw new Error(`Environment variable ${envVar} is not set`);
@@ -11,7 +14,7 @@ export async function verifyConditions(pluginConfig, { logger }) {
       'docker',
       [
         'login',
-        pluginConfig.registryUrl || '',
+        pluginConfig.registryUrl,
         '-u=' + process.env.DOCKER_USERNAME,
         '-p=' + process.env.DOCKER_PASSWORD,
       ],
