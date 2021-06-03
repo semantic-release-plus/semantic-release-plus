@@ -13,6 +13,7 @@ export async function publish(
     publishLatestTag,
     publishMajorTag,
     publishMinorTag,
+    registryUrl,
     name,
   } = pluginConfig;
 
@@ -39,10 +40,10 @@ export async function publish(
     tags.push(`${name}:latest`);
   }
 
-  // push each tagw
+  // push each tag
   // todo: consider using docker push --all-tags in the future
   tags.forEach((t) => {
-    logger.log(`Pushing version ${t} to docker hub`);
+    logger.log(`Pushing version ${t} to ${registryUrl || 'docker hub'}`);
     execa('docker', ['push', t], {
       stdio: 'inherit',
     });
