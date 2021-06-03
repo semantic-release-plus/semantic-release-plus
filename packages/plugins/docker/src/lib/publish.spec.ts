@@ -195,4 +195,44 @@ describe('publish', () => {
     );
     expect(execa).lastCalledWith(...pushVersionArgs);
   });
+
+  it('should publish exact version only and skip latest tag', () => {
+    const pluginConfig = {
+      name: 'test',
+      publishLatestTag: false,
+      registryUrl: 'https://my-registry',
+    } as PluginConfig;
+
+    const version = '1.2.3';
+
+    const context = {
+      nextRelease: {
+        version,
+      },
+      logger: {
+        log: jest.fn(),
+      },
+    };
+
+    const tagArgs = [
+      'docker',
+      ['tag', `${pluginConfig.name}:latest`, `${pluginConfig.name}:${version}`],
+      { stdio: 'inherit' },
+    ];
+
+    const pushVersionArgs = [
+      'docker',
+      ['push', `${pluginConfig.name}:${version}`],
+      {
+        stdio: 'inherit',
+      },
+    ];
+
+    publish(pluginConfig, context);
+    expect(execa).toHaveBeenNthCalledWith(1, ...tagArgs);
+    expect(context.logger.log).toBeCalledWith(
+      `Pushing version ${pluginConfig.name}:${version} to https://my-registry`
+    );
+    expect(execa).lastCalledWith(...pushVersionArgs);
+  });
 });
