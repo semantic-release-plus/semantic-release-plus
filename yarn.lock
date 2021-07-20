@@ -7870,10 +7870,10 @@ schema-utils@^2.7.0:
     ajv "^6.12.4"
     ajv-keywords "^3.5.2"
 
-semantic-release-plus@18.3.1:
-  version "18.3.1"
-  resolved "https://registry.yarnpkg.com/semantic-release-plus/-/semantic-release-plus-18.3.1.tgz#375087635f08381c51068ff10b19a116719d961f"
-  integrity sha512-fyDKVT8/4xe2xPXsnui3BqdbmMK6SIdwfPN+RqwFzzhMenWyZ5D8l/riX4FxFzj7Q+M5AMOYwRBPoZp/egeRhA==
+semantic-release-plus@18.4.0:
+  version "18.4.0"
+  resolved "https://registry.yarnpkg.com/semantic-release-plus/-/semantic-release-plus-18.4.0.tgz#7f4cb9ab4d37f924551f8d50f1e2a0f0a932376c"
+  integrity sha512-aGwHXQDsPYYCDWbAd9fXZbzgTt82vKKACRUovetNPEiUuEpn1G10PxrnG44UCT6D5IgBmXIT4mZuj/fYKrPqBw==
   dependencies:
     "@semantic-release/commit-analyzer" "^8.0.0"
     "@semantic-release/error" "^2.2.0"
