@@ -16,13 +16,18 @@ export async function verifyConditions(pluginConfig: PluginConfig, { logger }) {
         'login',
         pluginConfig.registryUrl,
         '-u=' + process.env.DOCKER_USERNAME,
-        '-p=' + process.env.DOCKER_PASSWORD,
+        '--password-stdin',
       ],
       {
-        stdio: 'inherit',
+        input: process.env.DOCKER_PASSWORD,
       }
     );
+    logger.log(
+      `docker successfully logged in to "${
+        pluginConfig.registryUrl || 'docker hub'
+      }"`
+    );
   } catch (err) {
-    throw new Error('docker login failed');
+    throw new Error(`docker login failed: ${err?.stderr}`);
   }
 }

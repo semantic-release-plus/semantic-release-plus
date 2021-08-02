@@ -34,15 +34,18 @@ describe('verify', () => {
 
       const dockerLoginArgs = [
         'docker',
-        ['login', '', `-u=${dockerUser}`, '-p=' + dockerPassword],
+        ['login', '', `-u=${dockerUser}`, '--password-stdin'],
         {
-          stdio: 'inherit',
+          input: dockerPassword,
         },
       ];
 
       verifyConditions(pluginConfig, context);
-
+      // ((execa as unknown) as jest.Mock).mockResolvedValue('success');
       expect(execa).toHaveBeenCalledWith(...dockerLoginArgs);
+      expect(context.logger.log).toBeCalledWith(
+        `docker successfully logged in to "docker hub"`
+      );
     });
 
     it('should try to login to specified docker registry', async () => {
@@ -52,14 +55,9 @@ describe('verify', () => {
 
       const dockerLoginArgs = [
         'docker',
-        [
-          'login',
-          'https://my-reg.url',
-          `-u=${dockerUser}`,
-          '-p=' + dockerPassword,
-        ],
+        ['login', 'https://my-reg.url', `-u=${dockerUser}`, '--password-stdin'],
         {
-          stdio: 'inherit',
+          input: dockerPassword,
         },
       ];
 
