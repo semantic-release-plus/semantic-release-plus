@@ -40,13 +40,13 @@ Publishing Latest, Major, and Minor tags is a pattern followed by a number of do
 
 Your credentials have to be configured with the environment variables `DOCKER_USERNAME` and `DOCKER_PASSWORD`.
 
-| Option             | Description                                                                                            | Type      | Default   |
-| ------------------ | ------------------------------------------------------------------------------------------------------ | --------- | --------- |
-| **`name`**         | Required config associated with the tag name assigned to the image during build `docker build -t name` | `string`  |           |
-| `registryUrl`      | The docker registry url to publish                                                                     | `string`  | docker.io |
-| `publishLatestTag` | Publishes/Updates `name:latest` tag to point at the latest release                                     | `boolean` | true      |
-| `publishMajorTag`  | If releasing `v3.2.1` Publishes/Updates `name:3` to the latest release                                 | `boolean` | false     |
-| `publishMinorTag`  | If releasing `v3.2.1` Publishes/Updates `name:3.2` to the latest release                               | `boolean` | false     |
+| Option             | Description                                                                                                                                                                                                                          | Type      | Default   |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | --------- |
+| **`name`**         | Required config associated with the tag name assigned to the image during build `docker build -t name`.                                                                                                                              | `string`  |           |
+| `registryUrl`      | The docker registry url to login. _The registryUrl is not used as part of the docker push command it is only used for login. To push registry other than docker hub the registry url/path should be included when tagging the image_ | `string`  | docker.io |
+| `publishLatestTag` | Publishes/Updates `name:latest` tag to point at the latest release                                                                                                                                                                   | `boolean` | true      |
+| `publishMajorTag`  | If releasing `v3.2.1` Publishes/Updates `name:3` to the latest release                                                                                                                                                               | `boolean` | false     |
+| `publishMinorTag`  | If releasing `v3.2.1` Publishes/Updates `name:3.2` to the latest release                                                                                                                                                             | `boolean` | false     |
 
 ## Plugins
 
@@ -57,6 +57,37 @@ Verify that all needed configuration are present and login to the Docker registr
 ### `publish`
 
 Tag the image specified by `name` with the new version, push it to Docker Hub and update the `latest`, `major`, `minor` tags based on the configuration.
+
+## Publishing to a registry other than docker hub
+
+When you publish to a registry other than docker hub durring your CI process prior to running semantic release the docker tag needs to include the regitryUrl in the tag.
+
+### Example
+
+If you build your docker image like this
+
+```bash
+docker build -t ghcr.io/OWNER/IMAGE_NAME .
+```
+
+The plugin config should look like:
+
+```json
+{
+  "plugins": [
+    [
+      "@semantic-release-plus/docker",
+      {
+        "name": " ghcr.io/OWNER/IMAGE_NAME",
+        "registryUrl": "ghcr.io", // <-- this needs to be the same as what you would enter in the `docker login` cli command
+        "publishLatestTag": true,
+        "publishMajorTag": true,
+        "publishMinorTag": true
+      }
+    ]
+  ]
+}
+```
 
 ## Example .travis.yml
 
