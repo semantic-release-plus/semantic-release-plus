@@ -3,7 +3,7 @@
 
 <p align="center">
   <a href="#contributors-">
-    <img alt="Github All Contributors" src="https://img.shields.io/github/all-contributors/semantic-release-plus/semantic-release-~~plus~~">
+    <img alt="Github All Contributors" src="https://img.shields.io/github/all-contributors/semantic-release-plus/semantic-release-plus">
   </a>
 </p>
 
