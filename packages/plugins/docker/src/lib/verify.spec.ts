@@ -19,6 +19,11 @@ describe('verify', () => {
       name: 'test',
     } as PluginConfig;
 
+    const pluginConfigNoLogin = {
+      name: 'test',
+      skipLogin: true,
+    } as PluginConfig;
+
     const context = {
       nextRelease: {
         version: '1.1.1',
@@ -79,6 +84,12 @@ describe('verify', () => {
         new Error('test error')
       );
       await expect(verifyConditions(pluginConfig, context)).rejects.toThrow();
+    });
+
+    it('should skip logging in to docker if set to in config', async () => {
+      expect(verifyConditions(pluginConfigNoLogin, context)).resolves;
+
+      expect(execa).not.toHaveBeenCalled();
     });
   });
 });
