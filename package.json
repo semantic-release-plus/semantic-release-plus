@@ -7,7 +7,7 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "lint": "nx workspace-lint && nx lint",
+    "lint": "nx workspace-lint",
     "e2e": "nx e2e",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
@@ -23,7 +23,8 @@
     "update": "nx migrate latest",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "register-local-nx-plugins": "nx run-many --target=build-plugin --all && nx run-many --target=link-plugin --all"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +37,8 @@
     "@nrwl/node": "12.7.2",
     "@nrwl/nx-cloud": "12.3.10",
     "@nrwl/workspace": "12.7.2",
+    "@nrwl/devkit": "12.7.2",
+    "@nrwl/nx-plugin": "12.7.2",
     "@types/jest": "26.0.8",
     "@types/node": "14.14.33",
     "@typescript-eslint/eslint-plugin": "4.19.0",
@@ -49,6 +52,7 @@
     "semantic-release-plus": "18.4.0",
     "ts-jest": "27.0.3",
     "ts-node": "9.1.1",
+    "tslib": "^2.0.0",
     "tslint": "6.1.3",
     "typescript": "4.3.5"
   }

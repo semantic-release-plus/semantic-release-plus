@@ -1,6 +1,78 @@
 {
   "version": 1,
   "projects": {
+    "nx-setup": {
+      "root": "packages/nx-setup",
+      "sourceRoot": "packages/nx-setup/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nx-setup/**/*.ts"]
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nx-setup",
+            "tsConfig": "packages/nx-setup/tsconfig.lib.json",
+            "packageJson": "packages/nx-setup/package.json",
+            "main": "packages/nx-setup/src/index.ts",
+            "assets": [
+              "packages/nx-setup/*.md",
+              {
+                "input": "./packages/nx-setup/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-setup/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-setup",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-setup",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "build-plugin": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "nx run nx-setup:build"
+          }
+        },
+        "link-plugin": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "cd ./dist/packages/nx-setup && yarn link",
+              "yarn link @semantic-release-plus/nx-setup"
+            ],
+            "parallel": false
+          }
+        },
+        "release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "yarn semantic-release --extends=./packages/nx-setup/release.config.js"
+              }
+            ]
+          }
+        }
+      }
+    },
     "plugins-docker": {
       "root": "packages/plugins/docker",
       "sourceRoot": "packages/plugins/docker/src",
@@ -45,6 +117,92 @@
                 "command": "yarn semantic-release --extends=./packages/plugins/docker/release.config.js"
               }
             ]
+          }
+        }
+      }
+    },
+    "nx-setup": {
+      "root": "packages/nx-setup",
+      "sourceRoot": "packages/nx-setup/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nx-setup/**/*.ts"]
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nx-setup",
+            "tsConfig": "packages/nx-setup/tsconfig.lib.json",
+            "packageJson": "packages/nx-setup/package.json",
+            "main": "packages/nx-setup/src/index.ts",
+            "assets": [
+              "packages/nx-setup/*.md",
+              {
+                "input": "./packages/nx-setup/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-setup/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-setup",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-setup",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "build-plugin": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "nx run nx-setup:build"
+          }
+        },
+        "link-plugin": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "cd ./dist/packages/nx-setup && yarn link",
+              "yarn link @semantic-release-plus/nx-setup"
+            ],
+            "parallel": false
+          }
+        },
+        "release": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "yarn semantic-release --extends=./packages/nx-setup/release.config.js"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-setup-e2e": {
+      "projectType": "application",
+      "root": "packages/nx-setup-e2e",
+      "sourceRoot": "packages/nx-setup-e2e/src",
+      "architect": {
+        "test-local": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-setup:build",
+            "jestConfig": "packages/nx-setup-e2e/jest.config.js"
           }
         }
       }

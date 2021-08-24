@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nx-setup",
+  "version": "0.0.1",
+  "generators": {
+    "configure": {
+      "factory": "./src/generators/configure/generator",
+      "schema": "./src/generators/configure/schema.json",
+      "description": "configures workspace and project to utilize semantic-release-plus"
+    }
+  }
+}

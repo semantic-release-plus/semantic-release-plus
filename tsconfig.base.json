@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@semantic-release-plus/docker": ["libs/plugins/docker/src/index.ts"]
+      "@semantic-release-plus/docker": ["libs/plugins/docker/src/index.ts"],
+      "@semantic-release-plus/nx-setup": ["packages/nx-setup/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
