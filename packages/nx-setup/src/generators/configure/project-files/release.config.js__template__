@@ -1,0 +1,17 @@
+/* eslint-disable no-undef */
+const name = '<%= releaseName %>';
+const srcRoot = `<%= projectRoot %>`;
+
+module.exports = {
+  pkgRoot: `<%= outputPath %>`, // should come from angular.cli
+  tagFormat: name + '-v${version}',
+  commitPaths: [
+    'workspace.json',
+    'nx.json',
+    '.nxignore',
+    'package.json',
+    '.prettierrc',
+    '.prettierignore',
+    `${srcRoot}/*`,
+  ], // should come from dep-graph and angular.json
+};

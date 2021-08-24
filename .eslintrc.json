@@ -28,10 +28,7 @@
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
-      "rules": {
-        "sort-imports": "error"
-      }
+      "extends": ["plugin:@nrwl/nx/javascript"]
     }
   ]
 }
