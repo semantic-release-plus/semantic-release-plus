@@ -22,7 +22,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "packages/plugins/docker/jest.config.js",
-            "tsConfig": "tsconfig.spec.json",
+            "tsConfig": "packages/plugins/docker/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
