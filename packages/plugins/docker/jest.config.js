@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 module.exports = {
   name: 'plugins-docker',
-  preset: '../../../jest.config.js',
+  preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' },
   },
