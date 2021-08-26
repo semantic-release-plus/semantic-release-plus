@@ -47,6 +47,7 @@ Your credentials have to be configured with the environment variables `DOCKER_US
 | `publishLatestTag` | Publishes/Updates `name:latest` tag to point at the latest release                                                                                                                                                                   | `boolean` | true      |
 | `publishMajorTag`  | If releasing `v3.2.1` Publishes/Updates `name:3` to the latest release                                                                                                                                                               | `boolean` | false     |
 | `publishMinorTag`  | If releasing `v3.2.1` Publishes/Updates `name:3.2` to the latest release                                                                                                                                                             | `boolean` | false     |
+| `skipLogin`        | Skips logging in to docker hub in the verifyConditions step, used if you log in seperately in your CI job. Removes requirement for `DOCKER_USERNAME` and `DOCKER_PASSWORD` environment variables                                     | `boolean` | false     |
 
 ## Plugins
 
