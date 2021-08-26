@@ -17,9 +17,9 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "accessToken": "YWM2ODM5MmEtNDU1My00OWM5LWJlODEtOWU0ZDQ4MDBiNTQxfHJlYWQtd3JpdGU=",
+        "accessToken": "MDAwNWM4NjktMDY1Yi00YmFkLTg5OTUtZjNhMjhmYjEzNzU0fHJlYWQ=",
         "cacheableOperations": ["build", "test", "lint", "e2e"],
-        "canTrackAnalytics": false,
+        "canTrackAnalytics": true,
         "showUsageWarnings": true
       }
     }
