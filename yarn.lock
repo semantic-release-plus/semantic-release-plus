@@ -6027,10 +6027,10 @@ marked-terminal@^4.1.1:
     node-emoji "^1.10.0"
     supports-hyperlinks "^2.1.0"
 
-marked@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-2.0.0.tgz#9662bbcb77ebbded0662a7be66ff929a8611cee5"
-  integrity sha512-NqRSh2+LlN2NInpqTQnS614Y/3NkVMFFU6sJlRFEpxJ/LHuK/qJECH7/fXZjk4VZstPW/Pevjil/VtSONsLc7Q==
+marked@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-3.0.2.tgz#60ce97d6aec34dd882ab4bb4df82494666854e17"
+  integrity sha512-TMJQQ79Z0e3rJYazY0tIoMsFzteUGw9fB3FD+gzuIT3zLuG9L9ckIvUfF51apdJkcqc208jJN2KbtPbOvXtbjA==
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -8023,10 +8023,10 @@ schema-utils@^2.7.0:
     ajv "^6.12.4"
     ajv-keywords "^3.5.2"
 
-semantic-release-plus@18.4.0:
-  version "18.4.0"
-  resolved "https://registry.yarnpkg.com/semantic-release-plus/-/semantic-release-plus-18.4.0.tgz#7f4cb9ab4d37f924551f8d50f1e2a0f0a932376c"
-  integrity sha512-aGwHXQDsPYYCDWbAd9fXZbzgTt82vKKACRUovetNPEiUuEpn1G10PxrnG44UCT6D5IgBmXIT4mZuj/fYKrPqBw==
+semantic-release-plus@18.4.1:
+  version "18.4.1"
+  resolved "https://registry.yarnpkg.com/semantic-release-plus/-/semantic-release-plus-18.4.1.tgz#3d094fc78ff2cf6ad134035d83cc0b1fd7583938"
+  integrity sha512-fOtOkFgXR4Qqjbq+8PR6hVIjvYhRNUdwFbk5glP/36qNIkNpywYkAZS5bGBWx7+8DFROjiYaaAzv3t9NtKz83A==
   dependencies:
     "@semantic-release/commit-analyzer" "^8.0.0"
     "@semantic-release/error" "^2.2.0"
@@ -8045,7 +8045,7 @@ semantic-release-plus@18.4.0:
     hook-std "^2.0.0"
     hosted-git-info "^4.0.0"
     lodash "^4.17.21"
-    marked "^2.0.0"
+    marked "^3.0.0"
     marked-terminal "^4.1.1"
     micromatch "^4.0.2"
     p-each-series "^2.1.0"
