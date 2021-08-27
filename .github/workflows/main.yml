@@ -79,11 +79,13 @@ jobs:
           nxCloud: 'true'
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{secrets.NX_CLOUD_ACCESS_TOKEN}}
+      - name: check build output
+        run: ls -lR dist
       - name: Save build output
         uses: actions/upload-artifact@v2
         with:
-          name: dist
-          path: ~/dist/
+          name: packages
+          path: dist/packages
 
   release:
     needs:
@@ -103,7 +105,7 @@ jobs:
         continue-on-error: true
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: packages
       - name: Release affected
         uses: mansagroup/nrwl-nx-action@v2
         with:
