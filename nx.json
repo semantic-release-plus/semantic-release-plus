@@ -24,18 +24,7 @@
       }
     }
   },
-  "projects": {
-    "nx-setup": {
-      "tags": ["nx-plugin"]
-    },
-    "nx-setup-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-setup"]
-    },
-    "plugins-docker": {
-      "tags": ["plugin"]
-    }
-  },
+  "projects": {},
   "workspaceLayout": {
     "appsDir": "packages",
     "libsDir": "packages"
