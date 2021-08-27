@@ -6,7 +6,7 @@ jest.mock('execa');
 
 describe('verify', () => {
   beforeEach(() => {
-    ((execa as unknown) as jest.Mock).mockClear();
+    (execa as unknown as jest.Mock).mockClear();
     delete process.env.DOCKER_USERNAME;
     delete process.env.DOCKER_PASSWORD;
   });
@@ -80,7 +80,7 @@ describe('verify', () => {
     it('should throw error if login fails', async () => {
       process.env.DOCKER_USERNAME = dockerUser;
       process.env.DOCKER_PASSWORD = dockerPassword;
-      ((execa as undefined) as jest.Mock).mockRejectedValue(
+      (execa as undefined as jest.Mock).mockRejectedValue(
         new Error('test error')
       );
       await expect(verifyConditions(pluginConfig, context)).rejects.toThrow();
