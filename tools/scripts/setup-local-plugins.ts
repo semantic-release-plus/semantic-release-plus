@@ -9,7 +9,7 @@ const publishableLibNames = getPublishableLibNames();
 
 console.log(publishableLibNames);
 
-execSync(`yarn nx run-many --target build --projects ${publishableLibNames}`);
+execSync(`npx nx run-many --target build --projects ${publishableLibNames}`);
 
 removeSync(`${appRootPath}/node_modules/@semantic-release-plus`);
 

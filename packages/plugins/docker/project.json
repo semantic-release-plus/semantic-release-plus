@@ -39,7 +39,7 @@
       "options": {
         "commands": [
           {
-            "command": "yarn semantic-release --extends=./packages/plugins/docker/release.config.js"
+            "command": "npx semantic-release-plus --extends=./packages/plugins/docker/release.config.js"
           }
         ]
       }
