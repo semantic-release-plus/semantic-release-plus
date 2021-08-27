@@ -100,6 +100,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Get build output
+        continue-on-error: true
         uses: actions/download-artifact@v2
         with:
           name: dist
