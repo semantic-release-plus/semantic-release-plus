@@ -8,6 +8,7 @@ on:
       - beta
       - alpha
       - '*.x' # maintenance releases branches
+      - context-variables
   pull_request:
     types:
       - opened
