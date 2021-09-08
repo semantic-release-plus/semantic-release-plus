@@ -36,8 +36,9 @@ jobs:
             args: --code-coverage 
           - name: build
             args: --configuration=production
-            outputsName: packages
-            outputsPath: dist/packages
+            output:
+              name: packages
+              path: dist/packages
     steps:
       - uses: actions/checkout@v2
         with:
@@ -55,10 +56,11 @@ jobs:
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{secrets.NX_CLOUD_ACCESS_TOKEN}}
       - name: Save build output
+        if: ${{ matrix.target.output.name !== "" }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.target.outputName }}
-          path: ${{ matrix.target.outputPath }}
+          name: ${{ matrix.target.output.name }}
+          path: ${{ matrix.target.output.path }}
 
   release:
     needs:
