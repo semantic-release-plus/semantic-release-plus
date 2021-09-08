@@ -25,44 +25,19 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx nx workspace-lint
-  lint:
+  lint_test_build:
     needs: lint_workspace
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v2
-        with:
-          cache: npm
-      - run: npm ci
-      - uses: mansagroup/nrwl-nx-action@v2.0.6
-        with:
-          targets: lint
-          nxCloud: 'true'
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{secrets.NX_CLOUD_ACCESS_TOKEN}}
-  test:
-    needs: lint_workspace
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v2
-        with:
-          cache: npm
-      - run: npm ci
-      - uses: mansagroup/nrwl-nx-action@v2.0.6
-        with:
-          targets: test
-          args: --code-coverage
-          nxCloud: 'true'
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{secrets.NX_CLOUD_ACCESS_TOKEN}}
-  build:
-    needs: lint_workspace
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: 
+          - name: lint 
+          - name: test 
+            args: --code-coverage 
+          - name: build
+            args: --configuration=production
+            outputsName: packages
+            outputsPath: dist/packages
     steps:
       - uses: actions/checkout@v2
         with:
@@ -74,24 +49,20 @@ jobs:
       - name: Build affected
         uses: mansagroup/nrwl-nx-action@v2.0.6
         with:
-          targets: build
-          args: --configuration=production
+          targets: ${{ matrix.target.name }}
+          args: ${{ matrix.target.args }}
           nxCloud: 'true'
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{secrets.NX_CLOUD_ACCESS_TOKEN}}
-      - name: check build output
-        run: ls -lR dist
       - name: Save build output
         uses: actions/upload-artifact@v2
         with:
-          name: packages
-          path: dist/packages
+          name: ${{ matrix.target.outputName }}
+          path: ${{ matrix.target.outputPath }}
 
   release:
     needs:
-      - lint
-      - test
-      - build
+      - lint_test_build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
