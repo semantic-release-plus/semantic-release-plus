@@ -56,7 +56,7 @@ jobs:
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{secrets.NX_CLOUD_ACCESS_TOKEN}}
       - name: Save build output
-        if: ${{ matrix.target.output.name !== "" }}
+        if: ${{ matrix.target.output.name != "" }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.target.output.name }}
