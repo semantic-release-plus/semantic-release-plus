@@ -8023,10 +8023,10 @@ schema-utils@^2.7.0:
     ajv "^6.12.4"
     ajv-keywords "^3.5.2"
 
-semantic-release-plus@18.4.1:
-  version "18.4.1"
-  resolved "https://registry.yarnpkg.com/semantic-release-plus/-/semantic-release-plus-18.4.1.tgz#3d094fc78ff2cf6ad134035d83cc0b1fd7583938"
-  integrity sha512-fOtOkFgXR4Qqjbq+8PR6hVIjvYhRNUdwFbk5glP/36qNIkNpywYkAZS5bGBWx7+8DFROjiYaaAzv3t9NtKz83A==
+semantic-release-plus@18.4.3:
+  version "18.4.3"
+  resolved "https://registry.yarnpkg.com/semantic-release-plus/-/semantic-release-plus-18.4.3.tgz#d9f80b0fcd5058c1188f55bc891e0b4757a907ae"
+  integrity sha512-CtK1LJbwc/PGV+LvUUPPz5qf0yZeBl5DGkFfU7iTl/6e733BCt6dbZEuMhdPDyHTgFHqAf1J3QYrQr0NQ96fow==
   dependencies:
     "@semantic-release/commit-analyzer" "^8.0.0"
     "@semantic-release/error" "^2.2.0"
