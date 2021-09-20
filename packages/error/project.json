@@ -5,11 +5,12 @@
   "targets": {
     "build": {
       "executor": "@nrwl/node:package",
-      "outputs": ["{options.outputPath}"],
+
       "options": {
         "outputPath": "dist/packages/error",
         "tsConfig": "packages/error/tsconfig.lib.json",
         "packageJson": "packages/error/package.json",
+        "generatePackageJson": true,
         "main": "packages/error/src/index.js",
         "assets": ["packages/error/*.md"]
       }
@@ -20,12 +21,28 @@
         "lintFilePatterns": ["packages/error/**/*.js"]
       }
     },
-    "test": {
+    "test-jest": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/error"],
       "options": {
         "jestConfig": "packages/error/jest.config.js",
         "passWithNoTests": true
+      }
+    },
+    "test": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["npx ava"],
+        "cwd": "packages/error",
+        "parallel": false
+      }
+    },
+    "release": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["npx semantic-release-plus"],
+        "cwd": "packages/error",
+        "parallel": false
       }
     }
   },

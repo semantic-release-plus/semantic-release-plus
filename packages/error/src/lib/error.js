@@ -1,4 +1,4 @@
-module.exports = class SemanticReleaseError extends Error {
+export class SemanticReleaseError extends Error {
   constructor(message, code, details) {
     super(message);
     Error.captureStackTrace(this, this.constructor);
@@ -7,4 +7,4 @@ module.exports = class SemanticReleaseError extends Error {
     this.details = details;
     this.semanticRelease = true;
   }
-};
+}

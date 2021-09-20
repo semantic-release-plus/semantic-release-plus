@@ -1,1 +1,1 @@
-export * from './lib/error';
+export { SemanticReleaseError } from './lib/error';

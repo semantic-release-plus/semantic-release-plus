@@ -1,6 +1,6 @@
-import { error } from './error';
+import { SemanticReleaseError as Error } from './error';
 describe('error', () => {
   it('should work', () => {
-    expect(error()).toEqual('error');
+    expect(new Error()).toBeDefined();
   });
 });
