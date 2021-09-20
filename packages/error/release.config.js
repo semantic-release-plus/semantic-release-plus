@@ -2,18 +2,19 @@
 // npx semantic-release --no-ci --branch=mono-repo-scripts --extends=./apps/member-portal-webui/release.config.js --debug
 const name = 'error';
 const srcRoot = `packages/${name}`;
+const pathToRepoRoot = '../..';
 
 module.exports = {
-  extends: '../../release.config.base.js',
-  pkgRoot: `../../dist/${srcRoot}`, // should come from angular.cli
+  extends: `${pathToRepoRoot}/release.config.base.js`,
+  pkgRoot: `${pathToRepoRoot}/dist/${srcRoot}`,
   tagFormat: name + '-v${version}',
   commitPaths: [
-    'workspace.json',
-    'nx.json',
-    '.nxignore',
-    'package.json',
-    '.prettierrc',
-    '.prettierignore',
-    `${srcRoot}/*`,
-  ], // should come from dep-graph and angular.json
+    `${pathToRepoRoot}/workspace.json`,
+    `${pathToRepoRoot}/nx.json`,
+    `${pathToRepoRoot}/.nxignore`,
+    `${pathToRepoRoot}/package.json`,
+    `${pathToRepoRoot}/.prettierrc`,
+    `${pathToRepoRoot}/.prettierignore`,
+    `*`, // anything in this directory
+  ],
 };

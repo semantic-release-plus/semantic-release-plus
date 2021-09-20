@@ -2,18 +2,19 @@
 
 const name = 'nx-setup';
 const srcRoot = `packages/${name}`;
+const pathToRepoRoot = '../..';
 
 module.exports = {
-  extends: '../../release.config.base.js',
-  pkgRoot: `../../dist/${srcRoot}`,
+  extends: `${pathToRepoRoot}/release.config.base.js`,
+  pkgRoot: `${pathToRepoRoot}/dist/${srcRoot}`,
   tagFormat: name + '-v${version}',
   commitPaths: [
-    'workspace.json',
-    'nx.json',
-    '.nxignore',
-    'package.json',
-    '.prettierrc',
-    '.prettierignore',
-    `${srcRoot}/*`,
+    `${pathToRepoRoot}/workspace.json`,
+    `${pathToRepoRoot}/nx.json`,
+    `${pathToRepoRoot}/.nxignore`,
+    `${pathToRepoRoot}/package.json`,
+    `${pathToRepoRoot}/.prettierrc`,
+    `${pathToRepoRoot}/.prettierignore`,
+    `*`, // anything in this directory
   ],
 };
