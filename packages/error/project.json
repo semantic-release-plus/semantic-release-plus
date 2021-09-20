@@ -5,7 +5,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/node:package",
-
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/error",
         "tsConfig": "packages/error/tsconfig.lib.json",
