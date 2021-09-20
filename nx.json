@@ -24,13 +24,17 @@
       }
     }
   },
-  "projects": {
-    "plugins-docker": {
-      "tags": ["plugin"]
-    }
-  },
+  "projects": {},
   "workspaceLayout": {
     "appsDir": "packages",
     "libsDir": "packages"
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }

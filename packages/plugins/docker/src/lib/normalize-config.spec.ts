@@ -7,6 +7,7 @@ describe('normalize config', () => {
 
     const expectedConfig = {
       name: 'test123',
+      skipLogin: false,
       publishMajorTag: false,
       publishMinorTag: false,
       publishLatestTag: true,
@@ -21,6 +22,7 @@ describe('normalize config', () => {
   it('should return specified values when additional config is specified', () => {
     const testConfig = {
       name: 'test123',
+      skipLogin: true,
       publishMajorTag: true,
       publishMinorTag: true,
       publishLatestTag: false,
@@ -29,6 +31,7 @@ describe('normalize config', () => {
 
     const expectedConfig = {
       name: 'test123',
+      skipLogin: true,
       publishMajorTag: true,
       publishMinorTag: true,
       publishLatestTag: false,

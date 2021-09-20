@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "id": "Configure",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Target project to configure for semantic-release-plus",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?"
+    },
+    "releaseName": {
+      "type": "string",
+      "description": "Specify the release name you want to use, if omitted semantic-release-plus will use the name defined in the projects package.json"
+    }
+  },
+  "required": ["project"]
+}

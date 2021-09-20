@@ -6,7 +6,7 @@ jest.mock('execa');
 
 describe('verify', () => {
   beforeEach(() => {
-    ((execa as unknown) as jest.Mock).mockClear();
+    (execa as unknown as jest.Mock).mockClear();
     delete process.env.DOCKER_USERNAME;
     delete process.env.DOCKER_PASSWORD;
   });
@@ -17,6 +17,11 @@ describe('verify', () => {
 
     const pluginConfig = {
       name: 'test',
+    } as PluginConfig;
+
+    const pluginConfigNoLogin = {
+      name: 'test',
+      skipLogin: true,
     } as PluginConfig;
 
     const context = {
@@ -75,10 +80,16 @@ describe('verify', () => {
     it('should throw error if login fails', async () => {
       process.env.DOCKER_USERNAME = dockerUser;
       process.env.DOCKER_PASSWORD = dockerPassword;
-      ((execa as undefined) as jest.Mock).mockRejectedValue(
+      (execa as undefined as jest.Mock).mockRejectedValue(
         new Error('test error')
       );
       await expect(verifyConditions(pluginConfig, context)).rejects.toThrow();
+    });
+
+    it('should skip logging in to docker if set to in config', async () => {
+      expect(verifyConditions(pluginConfigNoLogin, context)).resolves;
+
+      expect(execa).not.toHaveBeenCalled();
     });
   });
 });
