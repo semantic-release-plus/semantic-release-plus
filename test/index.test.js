@@ -4,7 +4,7 @@ const proxyquire = require('proxyquire');
 const { spy, stub } = require('sinon');
 const { WritableStreamBuffer } = require('stream-buffers');
 const AggregateError = require('aggregate-error');
-const SemanticReleaseError = require('@semantic-release/error');
+const SemanticReleaseError = require('@semantic-release-plus/error');
 const {
   COMMIT_NAME,
   COMMIT_EMAIL,

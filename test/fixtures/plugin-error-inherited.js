@@ -1,4 +1,4 @@
-const SemanticReleaseError = require('@semantic-release/error');
+const SemanticReleaseError = require('@semantic-release-plus/error');
 
 class InheritedError extends SemanticReleaseError {
   constructor(message, code) {
