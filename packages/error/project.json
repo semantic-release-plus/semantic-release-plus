@@ -1,0 +1,33 @@
+{
+  "root": "packages/error",
+  "sourceRoot": "packages/error/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/error",
+        "tsConfig": "packages/error/tsconfig.lib.json",
+        "packageJson": "packages/error/package.json",
+        "main": "packages/error/src/index.js",
+        "assets": ["packages/error/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/error/**/*.js"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/error"],
+      "options": {
+        "jestConfig": "packages/error/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
