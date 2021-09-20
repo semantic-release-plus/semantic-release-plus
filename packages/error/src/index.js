@@ -1,1 +1,3 @@
-export { SemanticReleaseError } from './lib/error';
+const SemanticReleaseError = require('./lib/error');
+
+module.exports = SemanticReleaseError
