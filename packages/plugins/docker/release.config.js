@@ -4,6 +4,7 @@ const name = 'docker';
 const srcRoot = `packages/plugins/${name}`;
 
 module.exports = {
+  extends: '../../../release.config.base.js',
   pkgRoot: `dist/${srcRoot}`, // should come from angular.cli
   tagFormat: name + '-v${version}',
   commitPaths: [
