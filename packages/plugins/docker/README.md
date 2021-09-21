@@ -40,14 +40,17 @@ Publishing Latest, Major, and Minor tags is a pattern followed by a number of do
 
 Your credentials have to be configured with the environment variables `DOCKER_USERNAME` and `DOCKER_PASSWORD`.
 
-| Option             | Description                                                                                                                                                                                                                          | Type      | Default   |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | --------- |
-| **`name`**         | Required config associated with the tag name assigned to the image during build `docker build -t name`.                                                                                                                              | `string`  |           |
-| `registryUrl`      | The docker registry url to login. _The registryUrl is not used as part of the docker push command it is only used for login. To push registry other than docker hub the registry url/path should be included when tagging the image_ | `string`  | docker.io |
-| `publishLatestTag` | Publishes/Updates `name:latest` tag to point at the latest release                                                                                                                                                                   | `boolean` | true      |
-| `publishMajorTag`  | If releasing `v3.2.1` Publishes/Updates `name:3` to the latest release                                                                                                                                                               | `boolean` | false     |
-| `publishMinorTag`  | If releasing `v3.2.1` Publishes/Updates `name:3.2` to the latest release                                                                                                                                                             | `boolean` | false     |
-| `skipLogin`        | Skips logging in to docker hub in the verifyConditions step, used if you log in seperately in your CI job. Removes requirement for `DOCKER_USERNAME` and `DOCKER_PASSWORD` environment variables                                     | `boolean` | false     |
+| Option        | Description                                                                                             | Type     | Default |
+| ------------- | ------------------------------------------------------------------------------------------------------- | -------- | ------- |
+| **`name`**    | Required config associated with the tag name assigned to the image during build `docker build -t name`. | `string` |         |
+| `registryUrl` | The docker registry url to login. \_The registryUrl is not used as part of the docker push command      |
+
+it is only used for login. To push registry other than docker hub the registry url/path should be included when tagging
+the image\_ | `string` | docker.io |
+| `publishLatestTag` | Publishes/Updates `name:latest` tag to point at the latest release. (Skipped for prerelease and maintenance versions.) | `boolean` | true |
+| `publishMajorTag` | If releasing `v3.2.1` Publishes/Updates `name:3` to the latest release. (Skipped for prerelease versions.) | `boolean` | false |
+| `publishMinorTag` | If releasing `v3.2.1` Publishes/Updates `name:3.2` to the latest release. (Skipped for prerelease versions.) | `boolean` | false |
+| `skipLogin` | Skips logging in to docker hub in the verifyConditions step, used if you log in seperately in your CI job. Removes requirement for `DOCKER_USERNAME` and `DOCKER_PASSWORD` environment variables | `boolean` | false |
 
 ## Plugins
 

@@ -5,7 +5,7 @@ import { PluginConfig } from './plugin-config.interface';
 
 export async function publish(
   pluginConfig: PluginConfig,
-  { nextRelease: { version }, logger }
+  { nextRelease: { version }, logger, branch: { type } }
 ) {
   pluginConfig = normalizeConfig(pluginConfig);
 
@@ -17,15 +17,24 @@ export async function publish(
     name,
   } = pluginConfig;
 
-  // Push both new version and latest
+  console.log('Branch Type:', type);
+  const isPrerelease = type === 'prerelease';
+  const isMaintenance = type === 'maintenance';
+
+  // add a tag for the specific version
   const { major, minor } = semver.parse(version);
   const tags = [`${name}:${version}`];
 
+  // add a major tag if configured, except for pre-releases.
   if (publishMajorTag) {
+    if (isPrerelease) logger.info('Skipping major tag for prerelease version.');
     tags.push(`${name}:${major}`);
   }
+
+  // add a minor tag if configured, except for pre-releases.
   if (publishMinorTag) {
-    tags.push(`${name}:${major}.${minor}`);
+    if (isPrerelease) logger.info('Skipping minor tag for prerelease version.');
+    else tags.push(`${name}:${major}.${minor}`);
   }
 
   // create a tag for each configured tag to publish
@@ -37,7 +46,9 @@ export async function publish(
 
   // adding latest tag after image tagging as latest already exists
   if (publishLatestTag) {
-    tags.push(`${name}:latest`);
+    if (isPrerelease || isMaintenance)
+      logger.info(`Skipping latest tag for ${type} version.`);
+    else tags.push(`${name}:latest`);
   }
 
   // push each tag
