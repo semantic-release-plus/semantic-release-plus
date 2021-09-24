@@ -1,0 +1,46 @@
+{
+  "root": "packages/plugins/docker",
+  "sourceRoot": "packages/plugins/docker/src",
+  "projectType": "library",
+  "generators": {},
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:lint",
+      "options": {
+        "linter": "eslint",
+        "tsConfig": [
+          "packages/plugins/docker/tsconfig.lib.json",
+          "packages/plugins/docker/tsconfig.spec.json"
+        ],
+        "exclude": ["**/node_modules/**", "!packages/plugins/docker/**/*"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "packages/plugins/docker/jest.config.js",
+        "tsConfig": "packages/plugins/docker/tsconfig.spec.json",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "options": {
+        "outputPath": "dist/packages/plugins/docker",
+        "tsConfig": "packages/plugins/docker/tsconfig.lib.json",
+        "packageJson": "packages/plugins/docker/package.json",
+        "generatePackageJson": true,
+        "main": "packages/plugins/docker/src/index.ts",
+        "assets": ["packages/plugins/docker/*.md"]
+      }
+    },
+    "release": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["npx semantic-release-plus"],
+        "cwd": "packages/plugins/docker/"
+      }
+    }
+  },
+  "tags": ["plugin"]
+}

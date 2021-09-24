@@ -1,59 +1,15 @@
 {
-  "version": 1,
+  "version": 2,
   "projects": {
-    "plugins-docker": {
-      "root": "packages/plugins/docker",
-      "sourceRoot": "packages/plugins/docker/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "packages/plugins/docker/tsconfig.lib.json",
-              "packages/plugins/docker/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!packages/plugins/docker/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/plugins/docker/jest.config.js",
-            "tsConfig": "packages/plugins/docker/tsconfig.spec.json",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/plugins/docker",
-            "tsConfig": "packages/plugins/docker/tsconfig.lib.json",
-            "packageJson": "packages/plugins/docker/package.json",
-            "generatePackageJson": true,
-            "main": "packages/plugins/docker/src/index.ts",
-            "assets": ["packages/plugins/docker/*.md"]
-          }
-        },
-        "release": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "yarn semantic-release --extends=./packages/plugins/docker/release.config.js"
-              }
-            ]
-          }
-        }
-      }
-    }
+    "error": "packages/error",
+    "nx-setup": "packages/nx-setup",
+    "nx-setup-e2e": "packages/nx-setup-e2e",
+    "plugins-docker": "packages/plugins/docker"
   },
   "cli": {
     "defaultCollection": "@nrwl/workspace"
   },
-  "schematics": {
+  "generators": {
     "@nrwl/workspace": {
       "library": {
         "linter": "eslint"

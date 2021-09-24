@@ -1,3 +1,4 @@
 {
+  "*{.js,.ts}": "npx eslint --fix",
   "*": "nx format:write --files="
 }
