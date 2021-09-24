@@ -1,12 +1,15 @@
 {
-  "extends": ["../../../.eslintrc.json"],
+  "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*", "release.config.js"],
   "overrides": [
     {
+      "files": ["*.spec.{js,ts}"],
+      "env": {
+        "jest": true
+      }
+    },
+    {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "parserOptions": {
-        "project": ["packages/plugins/docker/tsconfig.*?.json"]
-      },
       "rules": {}
     },
     {

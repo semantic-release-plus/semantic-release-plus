@@ -37,11 +37,8 @@
     "release": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": [
-          {
-            "command": "npx semantic-release-plus --extends=./packages/plugins/docker/release.config.js"
-          }
-        ]
+        "commands": ["npx semantic-release-plus"],
+        "cwd": "packages/plugins/docker/"
       }
     }
   },

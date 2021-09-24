@@ -61,11 +61,8 @@
     "release": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": [
-          {
-            "command": "npx semantic-release-plus --extends=./packages/nx-setup/release.config.js"
-          }
-        ]
+        "commands": ["npx semantic-release-plus"],
+        "cwd": "packages/nx-setup"
       }
     }
   },
