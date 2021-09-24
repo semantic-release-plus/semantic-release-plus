@@ -17,7 +17,6 @@ export async function publish(
     name,
   } = pluginConfig;
 
-  console.log('Branch Type:', type);
   const isPrerelease = type === 'prerelease';
   const isMaintenance = type === 'maintenance';
 
@@ -27,14 +26,19 @@ export async function publish(
 
   // add a major tag if configured, except for pre-releases.
   if (publishMajorTag) {
-    if (isPrerelease) logger.info('Skipping major tag for prerelease version.');
+    if (isPrerelease) {
+      logger.info('Skipping major tag for prerelease version.');
+    }
     tags.push(`${name}:${major}`);
   }
 
   // add a minor tag if configured, except for pre-releases.
   if (publishMinorTag) {
-    if (isPrerelease) logger.info('Skipping minor tag for prerelease version.');
-    else tags.push(`${name}:${major}.${minor}`);
+    if (isPrerelease) {
+      logger.info('Skipping minor tag for prerelease version.');
+    } else {
+      tags.push(`${name}:${major}.${minor}`);
+    }
   }
 
   // create a tag for each configured tag to publish
@@ -46,9 +50,11 @@ export async function publish(
 
   // adding latest tag after image tagging as latest already exists
   if (publishLatestTag) {
-    if (isPrerelease || isMaintenance)
+    if (isPrerelease || isMaintenance) {
       logger.info(`Skipping latest tag for ${type} version.`);
-    else tags.push(`${name}:latest`);
+    } else {
+      tags.push(`${name}:latest`);
+    }
   }
 
   // push each tag
