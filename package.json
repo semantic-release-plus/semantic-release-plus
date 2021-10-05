@@ -29,8 +29,10 @@
   },
   "private": true,
   "dependencies": {
+    "debug": "^4.3.2",
     "execa": "5.1.1",
-    "semver": "7.3.5"
+    "semver": "7.3.5",
+    "tslib": "^2.0.0"
   },
   "devDependencies": {
     "@nrwl/cli": "12.9.0",
@@ -41,6 +43,7 @@
     "@nrwl/nx-cloud": "12.3.10",
     "@nrwl/nx-plugin": "12.9.0",
     "@nrwl/workspace": "12.9.0",
+    "@types/debug": "^4.1.7",
     "@types/jest": "26.0.8",
     "@types/node": "14.14.33",
     "@types/semver": "^7.3.8",
