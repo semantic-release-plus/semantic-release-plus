@@ -8,7 +8,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/semantic-release-plus/semantic-release-plus.git"
+    "url": "https://github.com/semantic-release-plus/semantic-release-plus.git",
+    "directory": "packages/plugins/docker"
   },
   "author": "Justin Dietz",
   "license": "MIT",
@@ -22,5 +23,6 @@
   "dependencies": {},
   "peerDependencies": {
     "semantic-release-plus": "^18.0.0"
-  }
+  },
+  "devDependencies": {}
 }

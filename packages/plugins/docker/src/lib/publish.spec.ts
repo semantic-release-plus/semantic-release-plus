@@ -1,238 +1,176 @@
-import * as execa from 'execa';
+import { BranchType, Context } from '@semantic-release-plus/core';
+import { mocked } from 'ts-jest/utils';
+import { dockerPull, dockerPush, dockerTag } from './docker-utils';
 import { PluginConfig } from './plugin-config.interface';
 import { publish } from './publish';
 
-jest.mock('execa');
+jest.mock('./docker-utils');
 
 describe('publish', () => {
+  const dockerPullMock = mocked(dockerPull);
+  const dockerTagMock = mocked(dockerTag);
+  const dockerPushMock = mocked(dockerPush);
+  const baseContext: Context = {
+    nextRelease: {
+      version: '1.2.3',
+    },
+    logger: {
+      log: jest.fn(),
+      error: jest.fn(),
+      success: jest.fn(),
+      warn: jest.fn(),
+    },
+  };
+
   beforeEach(() => {
-    ((execa as unknown) as jest.Mock).mockClear();
+    dockerPullMock.mockClear();
+    dockerTagMock.mockClear();
+    dockerPushMock.mockClear();
   });
 
-  it('should publish exact version and latest with default config', () => {
-    const pluginConfig = {
-      name: 'test',
-    } as PluginConfig;
-
-    const context = {
-      nextRelease: {
-        version: '1.2.3',
-      },
-      logger: {
-        log: jest.fn(),
-      },
-    };
-
-    const {
-      nextRelease: { version },
-    } = context;
-
-    const tagArgs = [
-      'docker',
-      ['tag', `${pluginConfig.name}:latest`, `${pluginConfig.name}:${version}`],
-      { stdio: 'inherit' },
-    ];
-
-    const pushVersionArgs = [
-      'docker',
-      ['push', `${pluginConfig.name}:${version}`],
-      {
-        stdio: 'inherit',
-      },
-    ];
-
-    const pushLatestArgs = [
-      'docker',
-      ['push', `${pluginConfig.name}:latest`],
-      {
-        stdio: 'inherit',
-      },
-    ];
-
-    publish(pluginConfig, context);
-    expect(context.logger.log).toBeCalledWith(
-      `Pushing version ${pluginConfig.name}:${version} to docker hub`
-    );
-    expect(execa).toHaveBeenNthCalledWith(1, ...tagArgs);
-    expect(execa).toHaveBeenNthCalledWith(2, ...pushVersionArgs);
-    expect(execa).toHaveBeenNthCalledWith(3, ...pushLatestArgs);
-  });
-
-  it('should publish major, minor, latest, and version when publishMajorTag and publishMinorTag are set to true', () => {
-    const pluginConfig = {
-      name: 'test',
-      publishMajorTag: true,
-      publishMinorTag: true,
-    } as PluginConfig;
-
-    const context = {
-      nextRelease: {
-        version: '1.2.3',
-      },
-      logger: {
-        log: jest.fn(),
-      },
-    };
-
-    const {
-      nextRelease: { version },
-    } = context;
-
-    const tagArgs = [
-      'docker',
-      ['tag', `${pluginConfig.name}:latest`, `${pluginConfig.name}:${version}`],
-      { stdio: 'inherit' },
-    ];
-
-    const majorTagArgs = [
-      'docker',
-      ['tag', `${pluginConfig.name}:latest`, `${pluginConfig.name}:1`],
-      { stdio: 'inherit' },
-    ];
-
-    const minorTagArgs = [
-      'docker',
-      ['tag', `${pluginConfig.name}:latest`, `${pluginConfig.name}:1.2`],
-      { stdio: 'inherit' },
-    ];
-
-    const pushVersionArgs = [
-      'docker',
-      ['push', `${pluginConfig.name}:${version}`],
-      {
-        stdio: 'inherit',
-      },
-    ];
-
-    const pushMajorArgs = [
-      'docker',
-      ['push', `${pluginConfig.name}:1`],
-      {
-        stdio: 'inherit',
-      },
-    ];
-
-    const pushMinorArgs = [
-      'docker',
-      ['push', `${pluginConfig.name}:1.2`],
-      {
-        stdio: 'inherit',
-      },
-    ];
-
-    const pushLatestArgs = [
-      'docker',
-      ['push', `${pluginConfig.name}:latest`],
-      {
-        stdio: 'inherit',
-      },
-    ];
-
-    publish(pluginConfig, context);
-
-    expect(execa).toHaveBeenNthCalledWith(1, ...tagArgs);
-    expect(execa).toHaveBeenNthCalledWith(2, ...majorTagArgs);
-    expect(execa).toHaveBeenNthCalledWith(3, ...minorTagArgs);
-
-    expect(context.logger.log).toBeCalledWith(
-      `Pushing version ${pluginConfig.name}:${version} to docker hub`
-    );
-    expect(execa).toHaveBeenNthCalledWith(4, ...pushVersionArgs);
-
-    expect(context.logger.log).toBeCalledWith(
-      `Pushing version ${pluginConfig.name}:1 to docker hub`
-    );
-    expect(execa).toHaveBeenNthCalledWith(5, ...pushMajorArgs);
-
-    expect(context.logger.log).toBeCalledWith(
-      `Pushing version ${pluginConfig.name}:1.2 to docker hub`
-    );
-    expect(execa).toHaveBeenNthCalledWith(6, ...pushMinorArgs);
-
-    expect(context.logger.log).toBeCalledWith(
-      `Pushing version ${pluginConfig.name}:latest to docker hub`
-    );
-    expect(execa).toHaveBeenNthCalledWith(7, ...pushLatestArgs);
-  });
-
-  it('should publish exact version only and skip latest tag', () => {
-    const pluginConfig = {
-      name: 'test',
-      publishLatestTag: false,
-    } as PluginConfig;
-
-    const context = {
-      nextRelease: {
-        version: '1.2.3',
-      },
-      logger: {
-        log: jest.fn(),
-      },
-    };
-
-    const {
-      nextRelease: { version },
-    } = context;
-
-    const tagArgs = [
-      'docker',
-      ['tag', `${pluginConfig.name}:latest`, `${pluginConfig.name}:${version}`],
-      { stdio: 'inherit' },
-    ];
-
-    const pushVersionArgs = [
-      'docker',
-      ['push', `${pluginConfig.name}:${version}`],
-      {
-        stdio: 'inherit',
-      },
-    ];
-
-    publish(pluginConfig, context);
-    expect(execa).toHaveBeenNthCalledWith(1, ...tagArgs);
-    expect(context.logger.log).toBeCalledWith(
-      `Pushing version ${pluginConfig.name}:${version} to docker hub`
-    );
-    expect(execa).lastCalledWith(...pushVersionArgs);
-  });
-
-  it('should publish exact version only and skip latest tag', () => {
-    const pluginConfig = {
-      name: 'test',
-      publishLatestTag: false,
-      registryUrl: 'https://my-registry',
-    } as PluginConfig;
-
+  it('should publish exact version and latest when not on a channel (merging to master)', async () => {
+    const name = 'test';
     const version = '1.2.3';
 
-    const context = {
+    const pluginConfig = {
+      name,
+    } as PluginConfig;
+
+    const context: Context = {
+      ...baseContext,
       nextRelease: {
         version,
-      },
-      logger: {
-        log: jest.fn(),
+        type: BranchType.Release,
       },
     };
 
-    const tagArgs = [
-      'docker',
-      ['tag', `${pluginConfig.name}:latest`, `${pluginConfig.name}:${version}`],
-      { stdio: 'inherit' },
-    ];
+    const exactTag = `${name}:${version}`;
+    const channelTag = `${name}:latest`;
 
-    const pushVersionArgs = [
-      'docker',
-      ['push', `${pluginConfig.name}:${version}`],
-      {
-        stdio: 'inherit',
-      },
-    ];
+    await publish(pluginConfig, context);
+    expect(context.logger.log).toBeCalledWith(`Tagging ${name} as ${exactTag}`);
+    expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
 
-    publish(pluginConfig, context);
-    expect(execa).toHaveBeenNthCalledWith(1, ...tagArgs);
     expect(context.logger.log).toBeCalledWith(
-      `Pushing version ${pluginConfig.name}:${version} to https://my-registry`
+      `Tagging ${name} as ${channelTag}`
     );
-    expect(execa).lastCalledWith(...pushVersionArgs);
+    expect(dockerTagMock).toHaveBeenCalledWith(name, channelTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
+  });
+
+  it('should publish channel tag and version when on a configured channel', async () => {
+    const name = 'test';
+    const channel = 'alpha';
+    const version = '1.2.3-alpha.1';
+
+    const pluginConfig = { name } as PluginConfig;
+
+    const context: Context = {
+      ...baseContext,
+      nextRelease: {
+        version,
+        channel,
+        type: BranchType.Prerelease,
+      },
+    };
+
+    const exactTag = `${name}:${version}`;
+    const channelTag = `${name}:${channel}`;
+
+    dockerTagMock.mockResolvedValue(undefined);
+    dockerPushMock.mockResolvedValue(undefined);
+
+    await publish(pluginConfig, context);
+
+    expect(context.logger.log).toBeCalledWith(`Tagging ${name} as ${exactTag}`);
+    expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
+
+    expect(context.logger.log).toBeCalledWith(
+      `Tagging ${name} as ${channelTag}`
+    );
+    expect(dockerTagMock).toHaveBeenCalledWith(name, channelTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
+  });
+
+  it('should publish exact version only and skip channel tag', async () => {
+    const name = 'test';
+    const channel = undefined;
+    const version = '1.2.3';
+
+    const pluginConfig = { name, publishChannelTag: false } as PluginConfig;
+
+    const context: Context = {
+      ...baseContext,
+      nextRelease: {
+        version,
+        channel,
+        type: BranchType.Release,
+      },
+    };
+
+    const exactTag = `${name}:${version}`;
+    // const channelTag = `${name}:${channel}`;
+
+    dockerTagMock.mockResolvedValue(undefined);
+    dockerPushMock.mockResolvedValue(undefined);
+
+    await publish(pluginConfig, context);
+
+    expect(context.logger.log).toBeCalledWith(`Tagging ${name} as ${exactTag}`);
+    expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
+
+    // make sure no other calls were made
+    expect(dockerTagMock).toHaveBeenCalledTimes(1);
+    expect(dockerPushMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should publish to an alternate registry', async () => {
+    const name = 'test';
+    const version = '1.2.3';
+    const registry = 'ghcr.io';
+
+    const pluginConfig = {
+      name,
+      registry,
+    } as PluginConfig;
+
+    const context: Context = {
+      ...baseContext,
+      nextRelease: {
+        version,
+        type: BranchType.Release,
+      },
+    };
+
+    const exactTag = `${registry}/${name}:${version}`;
+    const channelTag = `${registry}/${name}:latest`;
+
+    await publish(pluginConfig, context);
+    expect(context.logger.log).toBeCalledWith(`Tagging ${name} as ${exactTag}`);
+    expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
+
+    expect(context.logger.log).toBeCalledWith(
+      `Tagging ${name} as ${channelTag}`
+    );
+    expect(dockerTagMock).toHaveBeenCalledWith(name, channelTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
   });
 });

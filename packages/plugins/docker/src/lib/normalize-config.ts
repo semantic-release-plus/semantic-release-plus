@@ -2,11 +2,9 @@ import { PluginConfig } from './plugin-config.interface';
 
 export function normalizeConfig(pluginConfig: PluginConfig): PluginConfig {
   return {
-    registryUrl: '',
+    registry: '',
     skipLogin: false,
-    publishMajorTag: false,
-    publishMinorTag: false,
-    publishLatestTag: true,
+    publishChannelTag: true,
     ...pluginConfig,
   };
 }
