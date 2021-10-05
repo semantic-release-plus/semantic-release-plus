@@ -1,95 +1,91 @@
 import * as execa from 'execa';
+import { mocked } from 'ts-jest/utils';
+import { dockerLogin } from './docker-utils';
 import { PluginConfig } from './plugin-config.interface';
 import { verifyConditions } from './verify';
 
-jest.mock('execa');
+jest.mock('./docker-utils');
 
 describe('verify', () => {
+  const dockerLoginMock = mocked(dockerLogin, true);
+  const dockerUser = 'dockerUserName';
+  const dockerPassword = 'dockerPW';
+
+  const pluginConfig = {
+    name: 'test',
+  } as PluginConfig;
+
+  const pluginConfigNoLogin = {
+    name: 'test',
+    skipLogin: true,
+  } as PluginConfig;
+
+  const context = {
+    nextRelease: {
+      version: '1.1.1',
+    },
+    logger: {
+      log: jest.fn(),
+    },
+  };
+
   beforeEach(() => {
-    (execa as unknown as jest.Mock).mockClear();
+    dockerLoginMock.mockClear();
     delete process.env.DOCKER_USERNAME;
     delete process.env.DOCKER_PASSWORD;
   });
 
-  describe('master based configuration', () => {
-    const dockerUser = 'dockerUserName';
-    const dockerPassword = 'dockerPW';
+  it('should try to login to default docker registry', async () => {
+    process.env.DOCKER_USERNAME = dockerUser;
+    process.env.DOCKER_PASSWORD = dockerPassword;
 
-    const pluginConfig = {
-      name: 'test',
-    } as PluginConfig;
+    dockerLoginMock.mockResolvedValue({} as execa.ExecaReturnValue<string>);
 
-    const pluginConfigNoLogin = {
-      name: 'test',
-      skipLogin: true,
-    } as PluginConfig;
+    verifyConditions(pluginConfig, context);
 
-    const context = {
-      nextRelease: {
-        version: '1.1.1',
+    expect(dockerLoginMock).toHaveBeenCalledWith(
+      {
+        userName: dockerUser,
+        password: dockerPassword,
+        registryUrl: '',
       },
-      logger: {
-        log: jest.fn(),
+      context
+    );
+  });
+
+  it('should try to login to specified docker registry', async () => {
+    process.env.DOCKER_USERNAME = dockerUser;
+    process.env.DOCKER_PASSWORD = dockerPassword;
+    pluginConfig.registry = 'https://my-reg.url';
+
+    verifyConditions(pluginConfig, context);
+
+    expect(dockerLoginMock).toHaveBeenCalledWith(
+      {
+        userName: dockerUser,
+        password: dockerPassword,
+        registryUrl: pluginConfig.registry,
       },
-    };
+      context
+    );
+  });
 
-    it('should try to login to default docker registry', async () => {
-      process.env.DOCKER_USERNAME = dockerUser;
-      process.env.DOCKER_PASSWORD = dockerPassword;
+  it('should throw error when missing environment variable', async () => {
+    await expect(verifyConditions(pluginConfig, context)).rejects.toThrow();
+  });
 
-      const dockerLoginArgs = [
-        'docker',
-        ['login', '', `-u=${dockerUser}`, '-p=' + dockerPassword],
-        {
-          stdio: 'inherit',
-        },
-      ];
+  it('should throw error if login fails', async () => {
+    process.env.DOCKER_USERNAME = dockerUser;
+    process.env.DOCKER_PASSWORD = dockerPassword;
+    dockerLoginMock.mockRejectedValue(new Error('test error'));
+    await expect(verifyConditions(pluginConfig, context)).rejects.toThrow();
+  });
 
-      verifyConditions(pluginConfig, context);
-
-      expect(execa).toHaveBeenCalledWith(...dockerLoginArgs);
-    });
-
-    it('should try to login to specified docker registry', async () => {
-      process.env.DOCKER_USERNAME = dockerUser;
-      process.env.DOCKER_PASSWORD = dockerPassword;
-      pluginConfig.registryUrl = 'https://my-reg.url';
-
-      const dockerLoginArgs = [
-        'docker',
-        [
-          'login',
-          'https://my-reg.url',
-          `-u=${dockerUser}`,
-          '-p=' + dockerPassword,
-        ],
-        {
-          stdio: 'inherit',
-        },
-      ];
-
-      verifyConditions(pluginConfig, context);
-
-      expect(execa).toHaveBeenCalledWith(...dockerLoginArgs);
-    });
-
-    it('should throw error when missing environment variable', async () => {
-      await expect(verifyConditions(pluginConfig, context)).rejects.toThrow();
-    });
-
-    it('should throw error if login fails', async () => {
-      process.env.DOCKER_USERNAME = dockerUser;
-      process.env.DOCKER_PASSWORD = dockerPassword;
-      (execa as undefined as jest.Mock).mockRejectedValue(
-        new Error('test error')
-      );
-      await expect(verifyConditions(pluginConfig, context)).rejects.toThrow();
-    });
-
-    it('should skip logging in to docker if set to in config', async () => {
-      expect(verifyConditions(pluginConfigNoLogin, context)).resolves;
-
-      expect(execa).not.toHaveBeenCalled();
-    });
+  it('should skip logging in to docker if set to in config', async () => {
+    expect(verifyConditions(pluginConfigNoLogin, context)).resolves;
+    expect(context.logger.log).toBeCalledWith(
+      'Skipping docker login because skipLogin was set to true'
+    );
+    expect(dockerLoginMock).not.toHaveBeenCalled();
   });
 });

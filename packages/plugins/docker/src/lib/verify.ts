@@ -1,10 +1,19 @@
-import * as execa from 'execa';
+import { Context } from '@semantic-release-plus/core';
+import { dockerLogin } from './docker-utils';
 import { normalizeConfig } from './normalize-config';
 import { PluginConfig } from './plugin-config.interface';
 
-export async function verifyConditions(pluginConfig: PluginConfig, { logger }) {
+export async function verifyConditions(
+  pluginConfig: PluginConfig,
+  context: Context
+) {
+  const { logger } = context;
   pluginConfig = normalizeConfig(pluginConfig);
-  if (pluginConfig.skipLogin) return;
+
+  if (pluginConfig.skipLogin) {
+    logger.log('Skipping docker login because skipLogin was set to true');
+    return;
+  }
 
   for (const envVar of ['DOCKER_USERNAME', 'DOCKER_PASSWORD']) {
     if (!process.env[envVar]) {
@@ -12,17 +21,13 @@ export async function verifyConditions(pluginConfig: PluginConfig, { logger }) {
     }
   }
   try {
-    await execa(
-      'docker',
-      [
-        'login',
-        pluginConfig.registryUrl,
-        '-u=' + process.env.DOCKER_USERNAME,
-        '-p=' + process.env.DOCKER_PASSWORD,
-      ],
+    await dockerLogin(
       {
-        stdio: 'inherit',
-      }
+        userName: process.env.DOCKER_USERNAME,
+        password: process.env.DOCKER_PASSWORD,
+        registryUrl: pluginConfig.registry,
+      },
+      context
     );
   } catch (err) {
     throw new Error('docker login failed');
