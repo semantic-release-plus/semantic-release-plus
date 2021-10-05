@@ -37,7 +37,7 @@
         "parallel": false
       }
     },
-    "release": {
+    "XXXrelease": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": ["npx semantic-release-plus"],
