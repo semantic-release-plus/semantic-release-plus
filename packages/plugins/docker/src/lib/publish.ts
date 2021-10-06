@@ -18,15 +18,17 @@ export async function publish(pluginConfig: PluginConfig, context: Context) {
   let tags = getTags({ channel, version }, pluginConfig);
   tags = tags.map((tag) => `${registryPath}${name}:${tag}`);
 
-  tags.forEach((tag) => {
+  tags.forEach(async (tag) => {
     logger.log(`Tagging ${name} as ${tag}`);
-    dockerTag(name, tag, context);
+    const { stdout } = await dockerTag(name, tag, context);
+    logger.log(stdout);
   });
 
   // push each tag
   // todo: consider using docker push --all-tags in the future
-  tags.forEach((tag) => {
+  tags.forEach(async (tag) => {
     logger.log(`Pushing ${tag}`);
-    dockerPush(tag, context);
+    const { stdout } = await dockerPush(tag, context);
+    logger.log(stdout);
   });
 }
