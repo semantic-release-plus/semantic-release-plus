@@ -30,6 +30,7 @@ export async function verifyConditions(
       context
     );
   } catch (err) {
+    logger.error(err);
     throw new Error('docker login failed');
   }
 }
