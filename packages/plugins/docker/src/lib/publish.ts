@@ -7,16 +7,16 @@ import { PluginConfig } from './plugin-config.interface';
 export async function publish(pluginConfig: PluginConfig, context: Context) {
   pluginConfig = normalizeConfig(pluginConfig);
 
-  const { name, registry: registryUrl } = pluginConfig;
+  const { name, registry } = pluginConfig;
   const {
     nextRelease: { version, channel },
     logger,
   } = context;
 
-  const registry = registryUrl ? registryUrl + '/' : '';
+  const registryPath = registry ? registry + '/' : '';
 
   let tags = getTags({ channel, version }, pluginConfig);
-  tags = tags.map((tag) => `${registry}${name}:${tag}`);
+  tags = tags.map((tag) => `${registryPath}${name}:${tag}`);
 
   tags.forEach((tag) => {
     logger.log(`Tagging ${name} as ${tag}`);

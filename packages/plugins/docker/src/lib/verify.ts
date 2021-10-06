@@ -25,7 +25,7 @@ export async function verifyConditions(
       {
         userName: process.env.DOCKER_USERNAME,
         password: process.env.DOCKER_PASSWORD,
-        registryUrl: pluginConfig.registry,
+        registry: pluginConfig.registry,
       },
       context
     );

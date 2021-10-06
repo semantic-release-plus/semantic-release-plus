@@ -45,7 +45,7 @@ describe('docker utils', () => {
       {
         userName: dockerUser,
         password: dockerPassword,
-        registryUrl: 'ghcr.io',
+        registry: 'ghcr.io',
       },
       {}
     );

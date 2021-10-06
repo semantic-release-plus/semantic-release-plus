@@ -47,7 +47,7 @@ describe('verify', () => {
       {
         userName: dockerUser,
         password: dockerPassword,
-        registryUrl: '',
+        registry: '',
       },
       context
     );
@@ -64,7 +64,7 @@ describe('verify', () => {
       {
         userName: dockerUser,
         password: dockerPassword,
-        registryUrl: pluginConfig.registry,
+        registry: pluginConfig.registry,
       },
       context
     );

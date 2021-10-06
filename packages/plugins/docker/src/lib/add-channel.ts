@@ -14,7 +14,7 @@ export interface AddChannelContext extends Context {
   logger: Logger;
 }
 export async function addChannel(
-  { name, registry: registryUrl }: PluginConfig,
+  { name, registry }: PluginConfig,
   context: AddChannelContext
 ): Promise<NewChannel> {
   const {
@@ -26,10 +26,10 @@ export async function addChannel(
   // in this case since there is no guarantee that the image is local on the machine
   // we will prepend the registry if defined to pull from the remote registry
 
-  const registry = registryUrl ? registryUrl + '/' : '';
+  const registryPath = registry ? registry + '/' : '';
   const channelTag = getChannel(channel);
-  const imageVersionTag = `${registry}${name}:${version}`;
-  const imageChannelTag = `${registry}${name}:${channelTag}`;
+  const imageVersionTag = `${registryPath}${name}:${version}`;
+  const imageChannelTag = `${registryPath}${name}:${channelTag}`;
 
   // pull the image to the local machine
   await dockerPull(imageVersionTag, context);
@@ -42,13 +42,13 @@ export async function addChannel(
 
   logger.log(
     `Added ${imageVersionTag} to tag ${channelTag} on ${
-      registryUrl || 'docker.io'
+      registry || 'docker.io'
     }`
   );
 
   return {
     name: `docker container ${channelTag} tag`,
-    url: registryUrl || 'docker.io',
+    url: registry || 'docker.io',
     channel: channelTag,
   };
 }

@@ -5,13 +5,13 @@ export function dockerLogin(
   {
     userName,
     password,
-    registryUrl = '',
-  }: { userName: string; password: string; registryUrl?: string },
+    registry = '',
+  }: { userName: string; password: string; registry?: string },
   { cwd, env }: Context
 ) {
   return execa(
     'docker',
-    ['login', registryUrl, '--username', userName, '--password-stdin'],
+    ['login', registry, '--username', userName, '--password-stdin'],
     {
       input: password,
       env,
