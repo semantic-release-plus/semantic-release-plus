@@ -29,6 +29,13 @@
         "passWithNoTests": true,
         "coverageReporters": ["html", "text", "text-summary"]
       }
+    },
+    "release": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["npx semantic-release-plus"],
+        "cwd": "packages/core/"
+      }
     }
   },
   "tags": []
