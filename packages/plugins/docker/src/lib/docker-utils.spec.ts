@@ -1,4 +1,6 @@
+import { Context } from '@semantic-release-plus/core';
 import * as execa from 'execa';
+import { ExecaChildProcess } from 'execa';
 import { mocked } from 'ts-jest/utils';
 import { dockerLogin, dockerPull, dockerPush, dockerTag } from './docker-utils';
 
@@ -8,6 +10,12 @@ describe('docker utils', () => {
   const execaMock = mocked(execa, true);
   const dockerUser = 'user-name';
   const dockerPassword = '!my-testing-password!';
+
+  const context: Context = {
+    // stdout: jest.fn(),
+    // stderr: jest.fn(),
+  };
+
   beforeEach(() => {
     execaMock.mockClear();
   });
@@ -20,14 +28,29 @@ describe('docker utils', () => {
         input: dockerPassword,
       },
     ];
-    execaMock.mockResolvedValue({} as execa.ExecaReturnValue<Buffer>);
+
+    // execaMock.mockReturnValue({
+    //   stdin: {
+    //     pipe: jest.fn()
+    //   },
+    //   stdout: {
+    //     pipe: jest.fn(),
+    //   } as Readable,
+    //   stderr: {
+    //     pipe: jest.fn(),
+    //   } as unknown,
+    // } as ChildProcess
+    execaMock.mockResolvedValue({
+      //@ts-expect-error mocking execa return is long
+      stdout: 'Login Success',
+    });
 
     await dockerLogin(
       {
         userName: dockerUser,
         password: dockerPassword,
       },
-      {}
+      context
     );
     expect(execaMock).toHaveBeenCalledWith(...expectedLoginArgs);
   });
@@ -40,25 +63,50 @@ describe('docker utils', () => {
         input: dockerPassword,
       },
     ];
-    execaMock.mockResolvedValue({} as execa.ExecaReturnValue<Buffer>);
+
+    execaMock.mockResolvedValue(undefined);
+
     await dockerLogin(
       {
         userName: dockerUser,
         password: dockerPassword,
         registry: 'ghcr.io',
       },
-      {}
+      context
     );
     expect(execaMock).toHaveBeenCalledWith(...expectedLoginArgs);
   });
 
   it('should pull image successfully', async () => {
-    const expectedPullArgs = ['docker', ['pull', 'joa-mos/node:omega'], {}];
+    const expectedPullArgs = [
+      'docker',
+      ['pull', 'ghcr.io/joa-mos/node:omega'],
+      {},
+    ];
 
-    execaMock.mockResolvedValue({} as execa.ExecaReturnValue<Buffer>);
-    await dockerPull('joa-mos/node:omega', {});
+    // execaMock.mockResolvedValue({
+    //   command: 'docker pull ghcr.io/joa-mos/node:omega',
+    //   escapedCommand: 'docker pull "ghcr.io/joa-mos/node:omega"',
+    //   exitCode: 0,
+    //   stdout:
+    //     'omega: Pulling from joa-mos/node\n' +
+    //     'Digest: sha256:6c288ce65138858f287f23e90b4b4fb788a42ac690ee09ecba73c9e74f6be366\n' +
+    //     'Status: Image is up to date for ghcr.io/joa-mos/node:omega\n' +
+    //     'ghcr.io/joa-mos/node:omega',
+    //   stderr: `time="2021-10-06T08:53:08-07:00" level=error msg="failed to create file hook: while creating logrus local file hook: unable to get 'APPDATA'"`,
+    //   all: undefined,
+    //   failed: false,
+    //   timedOut: false,
+    //   isCanceled: false,
+    //   killed: false,
+    // });
+    const result = await dockerPull('ghcr.io/joa-mos/node:omega', {
+      stdout: process.stdout,
+      stderr: process.stderr,
+    });
+    console.log(result);
     expect(execaMock).toHaveBeenCalledWith(...expectedPullArgs);
-  });
+  }, 100000);
 
   it('should tag image successfully', async () => {
     const expectedTagArgs = [

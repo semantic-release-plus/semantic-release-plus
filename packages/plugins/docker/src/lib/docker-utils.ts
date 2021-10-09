@@ -1,33 +1,53 @@
 import { Context } from '@semantic-release-plus/core';
-import execa = require('execa');
+import * as execa from 'execa';
 
-export function dockerLogin(
+export async function dockerLogin(
   {
     userName,
     password,
     registry = '',
   }: { userName: string; password: string; registry?: string },
-  { cwd, env }: Context
+  { cwd, env, stdout, stderr }: Context
 ) {
-  return execa(
+  const result = execa(
     'docker',
     ['login', registry, '--username', userName, '--password-stdin'],
-    {
-      input: password,
-      env,
-      cwd,
-    }
+    { input: password, env, cwd }
   );
+  // console.log(result);
+  // result.stdout.pipe(stdout, { end: false });
+  // result.stderr.pipe(stderr, { end: false });
+  return await result;
 }
 
-export function dockerTag(name: string, tag: string, { cwd, env }: Context) {
-  return execa('docker', ['tag', name, tag], { cwd, env });
+export async function dockerTag(
+  name: string,
+  tag: string,
+  { cwd, env, stdout, stderr }: Context
+) {
+  const result = execa('docker', ['tag', name, tag], { cwd, env });
+  // console.log(result);
+  // result.stdout.pipe(stdout, { end: false });
+  // result.stderr.pipe(stderr, { end: false });
+  return await result;
 }
 
-export function dockerPull(tag: string, { cwd, env }: Context) {
-  return execa('docker', ['pull', tag], { cwd, env });
+export async function dockerPull(
+  tag: string,
+  { cwd, env, stdout, stderr }: Context
+) {
+  const result = execa('docker', ['pull', tag], { cwd, env });
+  // result.stdout.pipe(stdout, { end: false });
+  // result.stderr.pipe(stderr, { end: false });
+  return await result;
 }
 
-export function dockerPush(tag: string, { cwd, env }: Context) {
-  return execa('docker', ['push', tag], { cwd, env });
+export async function dockerPush(
+  tag: string,
+  { cwd, env, stdout, stderr }: Context
+) {
+  const result = execa('docker', ['push', tag], { cwd, env });
+  // result.stdout.pipe(stdout, { end: false });
+  // result.stderr.pipe(stderr, { end: false });
+  return await result;
 }
