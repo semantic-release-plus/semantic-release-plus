@@ -17,7 +17,7 @@ export async function publish(
     name,
   } = pluginConfig;
 
-  console.log('Branch Type:', type);
+  logger.debug(`Branch Type: ${type}`);
   const isPrerelease = type === 'prerelease';
   const isMaintenance = type === 'maintenance';
 
@@ -28,7 +28,7 @@ export async function publish(
   // add a major tag if configured, except for pre-releases.
   if (publishMajorTag) {
     if (isPrerelease) logger.info('Skipping major tag for prerelease version.');
-    tags.push(`${name}:${major}`);
+    else tags.push(`${name}:${major}`);
   }
 
   // add a minor tag if configured, except for pre-releases.
