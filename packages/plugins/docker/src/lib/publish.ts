@@ -20,12 +20,18 @@ export async function publish(pluginConfig: PluginConfig, context: Context) {
 
   tags.forEach(async (tag) => {
     logger.log(`Tagging ${name} as ${tag}`);
-    const { stdout } = await dockerTag(name, tag, context);
-    logger.log(stdout);
+    try {
+      const { stdout } = await dockerTag(name, tag, context);
+      logger.log(stdout);
+    } catch (err) {
+      logger.error(err);
+      throw new Error(
+        `There was an error tagging '${name}' as '${tag}', check that '${name}' is available`
+      );
+    }
   });
 
   // push each tag
-  // todo: consider using docker push --all-tags in the future
   tags.forEach(async (tag) => {
     logger.log(`Pushing ${tag}`);
     const { stdout } = await dockerPush(tag, context);

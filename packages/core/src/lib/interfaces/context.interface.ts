@@ -4,22 +4,23 @@ export interface Context {
   branch?: any;
   branches?: any;
   commits?: any;
-  cwd?: any;
-  env?: any;
-  envCi?: any;
+  cwd?: string;
+  env?: NodeJS.ProcessEnv;
+  envCi?: NodeJS.ProcessEnv;
   lastRelease?: any;
   logger?: Logger;
   nextRelease?: NextRelease;
   options?: Options;
   releases?: any;
-  stdout?: any;
-  stderr?: any;
+  stdout?: NodeJS.WriteStream;
+  stderr?: NodeJS.WriteStream;
 }
 
 export interface Options {
   tagFormat?: any;
   repositoryUrl?: any;
   branches?: any;
+  publish?: boolean;
 }
 
 export interface NextRelease {

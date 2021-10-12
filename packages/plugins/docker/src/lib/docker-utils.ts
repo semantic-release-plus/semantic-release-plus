@@ -17,6 +17,7 @@ export async function dockerLogin(
   // console.log(result);
   // result.stdout.pipe(stdout, { end: false });
   // result.stderr.pipe(stderr, { end: false });
+
   return await result;
 }
 
