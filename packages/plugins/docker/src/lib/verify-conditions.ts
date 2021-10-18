@@ -7,7 +7,7 @@ export async function verifyConditions(
   pluginConfig: PluginConfig,
   context: Context
 ) {
-  const { logger } = context;
+  const { logger, env } = context;
   pluginConfig = normalizeConfig(pluginConfig);
 
   if (pluginConfig.skipLogin) {
@@ -16,15 +16,15 @@ export async function verifyConditions(
   }
 
   for (const envVar of ['DOCKER_USERNAME', 'DOCKER_PASSWORD']) {
-    if (!process.env[envVar]) {
+    if (!env[envVar]) {
       throw new Error(`Environment variable ${envVar} is not set`);
     }
   }
   try {
     await dockerLogin(
       {
-        userName: process.env.DOCKER_USERNAME,
-        password: process.env.DOCKER_PASSWORD,
+        userName: env.DOCKER_USERNAME,
+        password: env.DOCKER_PASSWORD,
         registry: pluginConfig.registry,
       },
       context

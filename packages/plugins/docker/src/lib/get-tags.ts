@@ -1,9 +1,9 @@
-import { NextRelease } from '@semantic-release-plus/core';
+import { Release } from '@semantic-release-plus/core';
 import { getChannel } from './get-channel';
 import { PluginConfig } from './plugin-config.interface';
 
 export function getTags(
-  { channel, version }: NextRelease,
+  { channel, version }: Release,
   { publishChannelTag }: PluginConfig
 ): string[] {
   const tags: string[] = [version];
