@@ -47,6 +47,13 @@ describe('publish', () => {
     const exactTag = `${name}:${version}`;
     const channelTag = `${name}:latest`;
 
+    dockerTagMock.mockResolvedValue({
+      stdout: 'docker command output for tagging',
+    } as undefined);
+    dockerPushMock.mockResolvedValue({
+      stdout: 'docker command output for pushing',
+    } as undefined);
+
     await publish(pluginConfig, context);
     expect(context.logger.log).toBeCalledWith(`Tagging ${name} as ${exactTag}`);
     expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
@@ -82,8 +89,12 @@ describe('publish', () => {
     const exactTag = `${name}:${version}`;
     const channelTag = `${name}:${channel}`;
 
-    dockerTagMock.mockResolvedValue(undefined);
-    dockerPushMock.mockResolvedValue(undefined);
+    dockerTagMock.mockResolvedValue({
+      stdout: 'docker command output for tagging',
+    } as undefined);
+    dockerPushMock.mockResolvedValue({
+      stdout: 'docker command output for pushing',
+    } as undefined);
 
     await publish(pluginConfig, context);
 
@@ -121,8 +132,12 @@ describe('publish', () => {
     const exactTag = `${name}:${version}`;
     // const channelTag = `${name}:${channel}`;
 
-    dockerTagMock.mockResolvedValue(undefined);
-    dockerPushMock.mockResolvedValue(undefined);
+    dockerTagMock.mockResolvedValue({
+      stdout: 'docker command output for tagging',
+    } as undefined);
+    dockerPushMock.mockResolvedValue({
+      stdout: 'docker command output for pushing',
+    } as undefined);
 
     await publish(pluginConfig, context);
 
