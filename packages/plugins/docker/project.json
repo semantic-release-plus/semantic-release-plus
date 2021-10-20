@@ -20,7 +20,8 @@
       "options": {
         "jestConfig": "packages/plugins/docker/jest.config.js",
         "tsConfig": "packages/plugins/docker/tsconfig.spec.json",
-        "passWithNoTests": true
+        "passWithNoTests": true,
+        "coverageReporters": ["html", "text", "text-summary"]
       }
     },
     "build": {
