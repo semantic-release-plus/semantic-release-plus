@@ -29,8 +29,8 @@
   },
   "private": true,
   "dependencies": {
-    "aggregate-error": "^4.0.0",
-    "debug": "^4.3.2",
+    "aggregate-error": "4.0.0",
+    "debug": "4.3.2",
     "execa": "5.1.1",
     "semver": "7.3.5"
   },
