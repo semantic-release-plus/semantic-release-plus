@@ -11,17 +11,17 @@
         "tsConfig": "packages/error/tsconfig.lib.json",
         "packageJson": "packages/error/package.json",
         "generatePackageJson": true,
-        "main": "packages/error/src/index.js",
+        "main": "packages/error/src/index.ts",
         "assets": ["packages/error/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/error/**/*.js"]
+        "lintFilePatterns": ["packages/error/**/*.ts"]
       }
     },
-    "test-jest": {
+    "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/error"],
       "options": {
@@ -29,15 +29,7 @@
         "passWithNoTests": true
       }
     },
-    "test": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "commands": ["npx ava"],
-        "cwd": "packages/error",
-        "parallel": false
-      }
-    },
-    "XXXrelease": {
+    "release": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": ["npx semantic-release-plus"],

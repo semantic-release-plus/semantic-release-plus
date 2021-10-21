@@ -1,7 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "dev-kit": "packages/dev-kit",
+    "core": "packages/core",
     "error": "packages/error",
     "nx-setup": "packages/nx-setup",
     "nx-setup-e2e": "packages/nx-setup-e2e",

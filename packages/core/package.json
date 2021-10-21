@@ -1,7 +1,7 @@
 {
-  "name": "@semantic-release-plus/docker",
-  "version": "0.0.1",
-  "description": "semantic-release plugin to release a docker container",
+  "name": "@semantic-release-plus/core",
+  "version": "0.0.1-automated",
+  "description": "semantic-release-plus core interfaces and functionality",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -9,7 +9,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/semantic-release-plus/semantic-release-plus.git",
-    "directory": "packages/plugins/docker"
+    "directory": "packages/core"
   },
   "author": "Justin Dietz",
   "license": "MIT",
@@ -20,10 +20,9 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {
-    "@semantic-release-plus/core": "*"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "semantic-release-plus": "^19.0.0"
-  }
+  },
+  "devDependencies": {}
 }

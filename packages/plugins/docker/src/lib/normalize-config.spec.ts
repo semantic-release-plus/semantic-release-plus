@@ -8,10 +8,8 @@ describe('normalize config', () => {
     const expectedConfig = {
       name: 'test123',
       skipLogin: false,
-      publishMajorTag: false,
-      publishMinorTag: false,
-      publishLatestTag: true,
-      registryUrl: '',
+      publishChannelTag: true,
+      registry: '',
     } as PluginConfig;
 
     const normConfig = normalizeConfig(testConfig);
@@ -23,19 +21,15 @@ describe('normalize config', () => {
     const testConfig = {
       name: 'test123',
       skipLogin: true,
-      publishMajorTag: true,
-      publishMinorTag: true,
-      publishLatestTag: false,
-      registryUrl: 'https://my-private-repo',
+      publishChannelTag: false,
+      registry: 'https://my-private-repo',
     } as PluginConfig;
 
     const expectedConfig = {
       name: 'test123',
       skipLogin: true,
-      publishMajorTag: true,
-      publishMinorTag: true,
-      publishLatestTag: false,
-      registryUrl: 'https://my-private-repo',
+      publishChannelTag: false,
+      registry: 'https://my-private-repo',
     } as PluginConfig;
 
     const normConfig = normalizeConfig(testConfig);

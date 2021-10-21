@@ -8,13 +8,21 @@
 
 A [semantic-release-plus](https://github.com/semantic-release-plus/semantic-release) or [semantic-release](https://github.com/semantic-release/semantic-release) plugin for publishing a docker images to a docker registry.
 
-## Key features
+| Step               | Description                                                                                                                                                               |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `verifyConditions` | Verify that all needed configuration and `DOCKER_USERNAME` and `DOCKER_PASSWORD` environment variables are present and logs into the Docker registry unless skipped.      |
+| `addChannel`       | Tag an existing image with a new channel. _Run only if there are releases that have been merged from a higher branch but not added on the channel of the current branch._ |
+| `publish`          | Tag the image specified by `name` as `{registry}/{name}:{version}` and `{registry}/{name}:{channel}` (based on configuration) and push it to the Docker registry.         |
 
-- Automatically gets next version based on commit history (semantic-release-plus/semantic-release)
-- publishes latest tag
-- publishes major tag
-- publishes minor tag
-- publish to docker hub or other registry
+## Install
+
+```bash
+$ npm install @semantic-release/npm -D
+```
+
+## Usage
+
+The plugin can be configured in the [**semantic-release-plus** configuration file](https://github.com/semantic-release-plus/semantic-release/blob/master/docs/usage/configuration.md#configuration):
 
 ```json
 {
@@ -23,10 +31,7 @@ A [semantic-release-plus](https://github.com/semantic-release-plus/semantic-rele
       [
         "@semantic-release-plus/docker",
         {
-          "name": "my-cool-docker-app",
-          "publishLatestTag": true,
-          "publishMajorTag": true,
-          "publishMinorTag": true
+          "name": "my-cool-docker-app"
         }
       ]
     ]
@@ -34,60 +39,54 @@ A [semantic-release-plus](https://github.com/semantic-release-plus/semantic-rele
 }
 ```
 
-Publishing Latest, Major, and Minor tags is a pattern followed by a number of docker images.
-
 ## Configuration
 
-Your credentials have to be configured with the environment variables `DOCKER_USERNAME` and `DOCKER_PASSWORD`.
+| Option              | Description                                                                                                                                                                                                                                                                                                                                                                | Type      | Default   |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | --------- |
+| **`name`**          | Required config associated with the tag name assigned to the image during build `docker build -t name`.                                                                                                                                                                                                                                                                    | `string`  |           |
+| `registry`          | The docker registry to login and push images to, this will be pre-pended to the name field when tagging                                                                                                                                                                                                                                                                    | `string`  | docker.io |
+| `publishChannelTag` | Will publish a channel (dist) tag such as `latest`, `next`, `beta`, `alpha`, `1`, and `1.1`, that always points to the most recent release on the channel. `1`, `1.1` tags will only be created on maintenance branches. See [Publishing maintenance releases](https://github.com/semantic-release-plus/semantic-release/blob/master/docs/recipes/maintenance-releases.md) | `boolean` | true      |
+| `skipLogin`         | Skips logging in to docker hub in the verifyConditions step, used if you log in separately in your CI job. Removes requirement for `DOCKER_USERNAME` and `DOCKER_PASSWORD` environment variables                                                                                                                                                                           | `boolean` | false     |
 
-| Option             | Description                                                                                                                                                                                                                          | Type      | Default   |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | --------- |
-| **`name`**         | Required config associated with the tag name assigned to the image during build `docker build -t name`.                                                                                                                              | `string`  |           |
-| `registryUrl`      | The docker registry url to login. _The registryUrl is not used as part of the docker push command it is only used for login. To push registry other than docker hub the registry url/path should be included when tagging the image_ | `string`  | docker.io |
-| `publishLatestTag` | Publishes/Updates `name:latest` tag to point at the latest release                                                                                                                                                                   | `boolean` | true      |
-| `publishMajorTag`  | If releasing `v3.2.1` Publishes/Updates `name:3` to the latest release                                                                                                                                                               | `boolean` | false     |
-| `publishMinorTag`  | If releasing `v3.2.1` Publishes/Updates `name:3.2` to the latest release                                                                                                                                                             | `boolean` | false     |
-| `skipLogin`        | Skips logging in to docker hub in the verifyConditions step, used if you log in seperately in your CI job. Removes requirement for `DOCKER_USERNAME` and `DOCKER_PASSWORD` environment variables                                     | `boolean` | false     |
+## Example github action publishing to ghcr.io
 
-## Plugins
+The following is an example github action configuration, the source repo can be found at https://github.com/JoA-MoS/srp-docker-example
 
-### `verifyConditions`
+```yml
+name: CI
 
-Verify that all needed configuration are present and login to the Docker registry.
+on:
+  push:
+    branches:
+      - master
+      - next
+      - beta
+      - alpha
+      - '*.x'
+  pull_request:
+    types:
+      - opened
+      - synchronize
 
-### `publish`
-
-Tag the image specified by `name` with the new version, push it to Docker Hub and update the `latest`, `major`, `minor` tags based on the configuration.
-
-## Publishing to a registry other than docker hub
-
-When you publish to a registry other than docker hub durring your CI process prior to running semantic release the docker tag needs to include the regitryUrl in the tag.
-
-### Example
-
-If you build your docker image like this
-
-```bash
-docker build -t ghcr.io/OWNER/IMAGE_NAME .
-```
-
-The plugin config should look like:
-
-```json
-{
-  "plugins": [
-    [
-      "@semantic-release-plus/docker",
-      {
-        "name": " ghcr.io/OWNER/IMAGE_NAME",
-        "registryUrl": "ghcr.io", // <-- this needs to be the same as what you would enter in the `docker login` cli command
-        "publishLatestTag": true,
-        "publishMajorTag": true,
-        "publishMinorTag": true
-      }
-    ]
-  ]
-}
+jobs:
+  build_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: docker build --tag joa-mos/srp-docker-example .
+      - name: Release
+        uses: actions/setup-node@v2
+        with:
+          cache: npm
+      - run: npm ci
+      - run: npx semantic-release-plus
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_USERNAME: joa-mos
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 ```
 
 ## Example .travis.yml
@@ -148,37 +147,4 @@ workflows:
 
 ## How to keep new version in package.json inside docker image?
 
-It is best to let semantic-release focus on releasing your built artifact and not extend semantic-release to also do the build. I recommend using semantic-release-plus to get the next version without creating a tag then using that durning your build process. An example of this can be found in the semantic-release-plus [Expected next version recipe](https://semantic-release-plus.gitbook.io/semantic-release-plus/recipes/utility/expected-next-version).
-
-### Deprecated Process
-
-In order to do that you need to run `docker build` command during semantic-release `prepareCmd` event.~~
-
-It can be done with help of [@semantic-release/exec](https://github.com/semantic-release/exec) for example.~~
-
-```json
-{
-  "plugins": [
-    [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "docker build -t username/imagename ."
-      }
-    ],
-    [
-      "@semantic-release-plus/docker",
-      {
-        "name": "username/imagename"
-      }
-    ]
-  ]
-}
-```
-
-## Migrated to Nx monorepo
-
-This library was generated with [Nx](https://nx.dev).
-
-## Running unit tests
-
-Run `ng test plugins-docker` to execute the unit tests via [Jest](https://jestjs.io).
+It is best to let semantic-release focus on releasing your built artifact and not extend semantic-release to also do the build. I recommend using semantic-release-plus to get the next version without creating a tag then using that durning your build process. An example of this can be found in the semantic-release-plus [Expected next version recipe](https://github.com/semantic-release-plus/semantic-release/blob/20b0c4420e5466a7d7ed16fb3fe4981609173187/docs/recipes/expected-next-version.md#L1).
