@@ -21,7 +21,7 @@ describe('normalize config', () => {
     expect(normConfig).toEqual(expectedConfig);
   });
 
-  it('should return specified values when additional config is specified', () => {
+  it('should return specified values when additional config values are specified', () => {
     const testConfig = {
       name: 'test123',
       skipLogin: true,
@@ -31,6 +31,7 @@ describe('normalize config', () => {
 
     const expectedImageName = new ImageName(testConfig.name);
     expectedImageName.registry = testConfig.registry;
+
     const expectedConfig = {
       image: expectedImageName,
       skipLogin: true,
