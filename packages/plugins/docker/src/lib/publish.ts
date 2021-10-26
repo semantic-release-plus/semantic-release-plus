@@ -7,7 +7,7 @@ import { PluginConfig } from './plugin-config.interface';
 export async function publish(pluginConfig: PluginConfig, context: Context) {
   pluginConfig = normalizeConfig(pluginConfig);
 
-  const { name, registry } = pluginConfig;
+  const { name, fullname, registry } = pluginConfig;
   const {
     nextRelease: { version, channel },
     logger,
@@ -19,8 +19,8 @@ export async function publish(pluginConfig: PluginConfig, context: Context) {
   tags = tags.map((tag) => `${registryPath}${name}:${tag}`);
 
   for (const tag of tags) {
-    logger.log(`Tagging ${name} as ${tag}`);
-    const { stdout } = await dockerTag(name, tag, context);
+    logger.log(`Tagging ${fullname} as ${tag}`);
+    const { stdout } = await dockerTag(fullname, tag, context);
     logger.log(stdout);
   }
 
