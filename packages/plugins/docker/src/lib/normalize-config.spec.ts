@@ -1,16 +1,20 @@
+import exp = require('constants');
+import { ImageName } from './image-name';
 import { normalizeConfig } from './normalize-config';
-import { PluginConfig } from './plugin-config.interface';
+import {
+  NormalizedPluginConfig,
+  PluginConfig,
+} from './plugin-config.interface';
 
 describe('normalize config', () => {
   it('should return default values when no additional config is specified', () => {
     const testConfig = { name: 'test123' } as PluginConfig;
 
     const expectedConfig = {
-      name: 'test123',
+      image: new ImageName(testConfig.name),
       skipLogin: false,
       publishChannelTag: true,
-      registry: '',
-    } as PluginConfig;
+    } as NormalizedPluginConfig;
 
     const normConfig = normalizeConfig(testConfig);
 
@@ -22,15 +26,16 @@ describe('normalize config', () => {
       name: 'test123',
       skipLogin: true,
       publishChannelTag: false,
-      registry: 'https://my-private-repo',
+      registry: 'my-private-registry:1234',
     } as PluginConfig;
 
+    const expectedImageName = new ImageName(testConfig.name);
+    expectedImageName.registry = testConfig.registry;
     const expectedConfig = {
-      name: 'test123',
+      image: expectedImageName,
       skipLogin: true,
       publishChannelTag: false,
-      registry: 'https://my-private-repo',
-    } as PluginConfig;
+    } as NormalizedPluginConfig;
 
     const normConfig = normalizeConfig(testConfig);
 

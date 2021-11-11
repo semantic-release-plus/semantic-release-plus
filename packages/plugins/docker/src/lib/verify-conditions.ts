@@ -8,9 +8,12 @@ export async function verifyConditions(
   context: Context
 ) {
   const { logger, env } = context;
-  pluginConfig = normalizeConfig(pluginConfig);
+  const {
+    skipLogin,
+    image: { registry },
+  } = normalizeConfig(pluginConfig);
 
-  if (pluginConfig.skipLogin) {
+  if (skipLogin) {
     logger.log('Skipping docker login because skipLogin was set to true');
     return;
   }
@@ -25,7 +28,7 @@ export async function verifyConditions(
       {
         userName: env.DOCKER_USERNAME,
         password: env.DOCKER_PASSWORD,
-        registry: pluginConfig.registry,
+        registry: registry,
       },
       context
     );

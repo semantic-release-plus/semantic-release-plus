@@ -49,7 +49,7 @@ describe('verify', () => {
       {
         userName: dockerUser,
         password: dockerPassword,
-        registry: '',
+        registry: undefined,
       },
       tstContext
     );

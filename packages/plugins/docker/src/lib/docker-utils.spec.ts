@@ -1,6 +1,5 @@
 import { Context } from '@semantic-release-plus/core';
 import * as execa from 'execa';
-import { ExecaChildProcess } from 'execa';
 import { mocked } from 'ts-jest/utils';
 import { dockerLogin, dockerPull, dockerPush, dockerTag } from './docker-utils';
 
