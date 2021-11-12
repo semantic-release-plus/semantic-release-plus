@@ -14,7 +14,6 @@ export async function dockerLogin(
     ['login', registry, '--username', userName, '--password-stdin'],
     { input: password, env, cwd }
   );
-  // console.log(result);
   // result.stdout.pipe(stdout, { end: false });
   // result.stderr.pipe(stderr, { end: false });
 
@@ -27,7 +26,7 @@ export async function dockerTag(
   { cwd, env, stdout, stderr }: Context
 ) {
   const result = execa('docker', ['tag', name, tag], { cwd, env });
-  // console.log(result);
+
   // result.stdout.pipe(stdout, { end: false });
   // result.stderr.pipe(stderr, { end: false });
   return await result;
