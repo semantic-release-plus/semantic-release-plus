@@ -1,4 +1,5 @@
 import { getTags } from './get-tags';
+import { normalizeConfig } from './normalize-config';
 import { PluginConfig } from './plugin-config.interface';
 
 describe('get docker tags', () => {
@@ -18,9 +19,7 @@ describe('get docker tags', () => {
         version: '1.2.5',
         // type: BranchType.Maintenance,
       },
-      expectedConfig
+      normalizeConfig(expectedConfig)
     );
-
-    console.log(tags);
   });
 });
