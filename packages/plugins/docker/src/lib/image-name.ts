@@ -109,8 +109,4 @@ export class ImageName implements ImageDetailsInterface {
   ): imageName is ImageNameInterface {
     return (imageName as ImageNameInterface).repository !== undefined;
   }
-
-  static isString(imageName: string | ImageNameInterface): imageName is string {
-    return !this.isObject(imageName);
-  }
 }

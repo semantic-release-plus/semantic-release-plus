@@ -21,7 +21,5 @@ describe('get docker tags', () => {
       },
       normalizeConfig(expectedConfig)
     );
-
-    console.log(tags);
   });
 });

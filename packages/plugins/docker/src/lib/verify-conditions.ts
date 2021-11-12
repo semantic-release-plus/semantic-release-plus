@@ -19,7 +19,7 @@ export async function verifyConditions(
   }
 
   for (const envVar of ['DOCKER_USERNAME', 'DOCKER_PASSWORD']) {
-    if (!env[envVar]) {
+    if (!env || !env[envVar]) {
       throw new Error(`Environment variable ${envVar} is not set`);
     }
   }

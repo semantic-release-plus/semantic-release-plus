@@ -99,11 +99,11 @@ describe('docker utils', () => {
     //   isCanceled: false,
     //   killed: false,
     // });
-    const result = await dockerPull('ghcr.io/joa-mos/node:omega', {
+    await dockerPull('ghcr.io/joa-mos/node:omega', {
       stdout: process.stdout,
       stderr: process.stderr,
     });
-    console.log(result);
+
     expect(execaMock).toHaveBeenCalledWith(...expectedPullArgs);
   }, 100000);
 
