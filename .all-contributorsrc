@@ -9,10 +9,14 @@
       "login": "JoA-MoS",
       "name": "Justin Dietz",
       "avatar_url": "https://avatars.githubusercontent.com/u/5566979?v=4",
-      "profile": "http://justindietz.com",
+      "profile": "https://github.com/JoA-MoS",
       "contributions": [
-        "test",
-        "code"
+        "bug",
+        "code",
+        "doc",
+        "example",
+        "plugin",
+        "test"
       ]
     },
     {
