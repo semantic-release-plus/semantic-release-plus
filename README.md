@@ -53,6 +53,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://justindietz.com"><img src="https://avatars.githubusercontent.com/u/5566979?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Justin Dietz</b></sub></a><br /><a href="https://github.com/semantic-release-plus/semantic-release-plus/commits?author=JoA-MoS" title="Tests">⚠️</a> <a href="https://github.com/semantic-release-plus/semantic-release-plus/commits?author=JoA-MoS" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/erichardson-lee"><img src="https://avatars.githubusercontent.com/u/77331675?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Edward Richardson-Lee</b></sub></a><br /><a href="https://github.com/semantic-release-plus/semantic-release-plus/commits?author=erichardson-lee" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jBouyoud"><img src="https://avatars.githubusercontent.com/u/1336548?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Julien Bouyoud</b></sub></a><br /><a href="https://github.com/semantic-release-plus/semantic-release-plus/commits?author=jBouyoud" title="Code">💻</a> <a href="https://github.com/semantic-release-plus/semantic-release-plus/commits?author=jBouyoud" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
