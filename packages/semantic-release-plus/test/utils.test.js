@@ -15,7 +15,7 @@ const {
   getRange,
   makeTag,
   isSameChannel,
-} = require('../lib/utils');
+} = require('../src/lib/utils');
 
 test('extractErrors', (t) => {
   const errors = [new Error('Error 1'), new Error('Error 2')];
