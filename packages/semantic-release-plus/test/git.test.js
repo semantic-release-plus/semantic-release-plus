@@ -16,7 +16,7 @@ const {
   getNote,
   addNote,
   fetchNotes,
-} = require('../lib/git');
+} = require('../src/lib/git');
 const {
   gitRepo,
   gitCommits,

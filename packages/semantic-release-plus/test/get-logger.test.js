@@ -1,6 +1,6 @@
 const test = require('ava');
 const { spy } = require('sinon');
-const getLogger = require('../lib/get-logger');
+const getLogger = require('../src/lib/get-logger');
 
 test('Expose "error", "success" and "log" functions', (t) => {
   const stdout = spy();

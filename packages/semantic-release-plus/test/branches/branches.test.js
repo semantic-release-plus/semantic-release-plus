@@ -26,7 +26,7 @@ test('Enforce ranges with branching release workflow', async (t) => {
     { name: 'beta', prerelease: true, tags: [] },
     { name: 'alpha', prerelease: true, tags: [] },
   ];
-  const getBranches = proxyquire('../../lib/branches', {
+  const getBranches = proxyquire('../../src/lib/branches', {
     './get-tags': () => branches,
     './expand': () => [],
   });
@@ -400,7 +400,7 @@ test('Throw SemanticReleaseError for invalid configurations', async (t) => {
     { name: 'alpha', prerelease: 'alpha', tags: [] },
     { name: 'preview', prerelease: 'alpha', tags: [] },
   ];
-  const getBranches = proxyquire('../../lib/branches', {
+  const getBranches = proxyquire('../../src/lib/branches', {
     './get-tags': () => branches,
     './expand': () => [],
   });
@@ -437,7 +437,7 @@ test('Throw a SemanticReleaseError if there is duplicate branches', async (t) =>
     { name: 'master', tags: [] },
     { name: 'master', tags: [] },
   ];
-  const getBranches = proxyquire('../../lib/branches', {
+  const getBranches = proxyquire('../../src/lib/branches', {
     './get-tags': () => branches,
     './expand': () => [],
   });
@@ -459,7 +459,7 @@ test('Throw a SemanticReleaseError for each invalid branch name', async (t) => {
     { name: '~master', tags: [] },
     { name: '^master', tags: [] },
   ];
-  const getBranches = proxyquire('../../lib/branches', {
+  const getBranches = proxyquire('../../src/lib/branches', {
     './get-tags': () => branches,
     './expand': () => [],
   });

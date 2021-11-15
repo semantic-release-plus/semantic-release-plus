@@ -23,7 +23,7 @@ const DEFAULT_PLUGINS = [
 
 test.beforeEach((t) => {
   t.context.plugins = stub().returns({});
-  t.context.getConfig = proxyquire('../lib/get-config', {
+  t.context.getConfig = proxyquire('../src/lib/get-config', {
     './plugins': t.context.plugins,
   });
 });

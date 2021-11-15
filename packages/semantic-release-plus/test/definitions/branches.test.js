@@ -3,7 +3,7 @@ const {
   maintenance,
   prerelease,
   release,
-} = require('../../lib/definitions/branches');
+} = require('../../src/lib/definitions/branches');
 
 test('A "maintenance" branch is identified by having a "range" property or a "name" formatted like "N.x", "N.x.x" or "N.N.x"', (t) => {
   t.true(maintenance.filter({ name: '1.x.x' }));

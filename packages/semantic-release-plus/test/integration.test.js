@@ -6,8 +6,8 @@ const { writeJson, readJson } = require('fs-extra');
 const execa = require('execa');
 const { WritableStreamBuffer } = require('stream-buffers');
 const delay = require('delay');
-const getAuthUrl = require('../lib/get-git-auth-url');
-const { SECRET_REPLACEMENT } = require('../lib/definitions/constants');
+const getAuthUrl = require('../src/lib/get-git-auth-url');
+const { SECRET_REPLACEMENT } = require('../src/lib/definitions/constants');
 const {
   gitHead,
   gitTagHead,
@@ -59,7 +59,7 @@ const npmTestEnv = {
   ).toString('base64'),
 };
 
-const cli = require.resolve('../bin/semantic-release');
+const cli = require.resolve('../src/bin/semantic-release');
 const pluginError = require.resolve('./fixtures/plugin-error');
 const pluginInheritedError = require.resolve(
   './fixtures/plugin-error-inherited'
@@ -604,7 +604,7 @@ test('Pass options via CLI arguments', async (t) => {
 });
 
 test('Run via JS API', async (t) => {
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/logger': { log: () => {}, error: () => {}, stdout: () => {} },
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });

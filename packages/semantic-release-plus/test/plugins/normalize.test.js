@@ -1,7 +1,7 @@
 const test = require('ava');
 const { noop } = require('lodash');
 const { stub } = require('sinon');
-const normalize = require('../../lib/plugins/normalize');
+const normalize = require('../../src/lib/plugins/normalize');
 
 const cwd = process.cwd();
 

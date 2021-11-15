@@ -1,5 +1,5 @@
 const test = require('ava');
-const expand = require('../../lib/branches/expand');
+const expand = require('../../src/lib/branches/expand');
 const {
   gitRepo,
   gitCommits,

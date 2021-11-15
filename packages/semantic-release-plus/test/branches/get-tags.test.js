@@ -1,5 +1,5 @@
 const test = require('ava');
-const getTags = require('../../lib/branches/get-tags');
+const getTags = require('../../src/lib/branches/get-tags');
 const {
   gitRepo,
   gitCommits,

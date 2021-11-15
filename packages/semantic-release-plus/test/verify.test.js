@@ -1,6 +1,6 @@
 const test = require('ava');
 const tempy = require('tempy');
-const verify = require('../lib/verify');
+const verify = require('../src/lib/verify');
 const { gitRepo } = require('./helpers/git-utils');
 
 test('Throw a AggregateError', async (t) => {

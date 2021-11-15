@@ -4,7 +4,7 @@ const {
   validateStep,
   loadPlugin,
   parseConfig,
-} = require('../../lib/plugins/utils');
+} = require('../../src/lib/plugins/utils');
 
 test('validatePlugin', (t) => {
   const path = 'plugin-module';

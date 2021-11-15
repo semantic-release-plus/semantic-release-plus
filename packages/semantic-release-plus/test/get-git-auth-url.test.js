@@ -1,5 +1,5 @@
 const test = require('ava');
-const getAuthUrl = require('../lib/get-git-auth-url');
+const getAuthUrl = require('../src/lib/get-git-auth-url');
 const { gitRepo } = require('./helpers/git-utils');
 
 const env = { GIT_ASKPASS: 'echo', GIT_TERMINAL_PROMPT: 0 };

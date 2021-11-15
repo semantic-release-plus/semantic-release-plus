@@ -1,6 +1,6 @@
 const test = require('ava');
 const { stub } = require('sinon');
-const getCommits = require('../lib/get-commits');
+const getCommits = require('../src/lib/get-commits');
 const { gitRepo, gitCommits, gitDetachedHead } = require('./helpers/git-utils');
 
 test.beforeEach((t) => {

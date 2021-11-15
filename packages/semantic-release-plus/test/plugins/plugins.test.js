@@ -3,7 +3,7 @@ const test = require('ava');
 const { copy, outputFile } = require('fs-extra');
 const { stub } = require('sinon');
 const tempy = require('tempy');
-const getPlugins = require('../../lib/plugins');
+const getPlugins = require('../../src/lib/plugins');
 
 // Save the current working diretory
 const cwd = process.cwd();

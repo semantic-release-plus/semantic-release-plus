@@ -1,7 +1,7 @@
 const test = require('ava');
 const { stub } = require('sinon');
 const AggregateError = require('aggregate-error');
-const pipeline = require('../../lib/plugins/pipeline');
+const pipeline = require('../../src/lib/plugins/pipeline');
 
 test('Execute each function in series passing the same input', async (t) => {
   const step1 = stub().resolves(1);

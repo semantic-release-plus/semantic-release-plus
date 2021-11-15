@@ -4,7 +4,7 @@ const fileUrl = require('file-url');
 const pEachSeries = require('p-each-series');
 const gitLogParser = require('git-log-parser');
 const getStream = require('get-stream');
-const { GIT_NOTE_REF } = require('../../lib/definitions/constants');
+const { GIT_NOTE_REF } = require('../../src/lib/definitions/constants');
 
 /**
  * Commit message information.

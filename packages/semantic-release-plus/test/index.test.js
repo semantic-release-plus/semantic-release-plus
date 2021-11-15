@@ -9,7 +9,7 @@ const {
   COMMIT_NAME,
   COMMIT_EMAIL,
   SECRET_REPLACEMENT,
-} = require('../lib/definitions/constants');
+} = require('../src/lib/definitions/constants');
 const {
   gitHead: getGitHead,
   gitCheckout,
@@ -156,7 +156,7 @@ test('Plugins are called with expected values', async (t) => {
     },
   ];
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => envCi,
   });
@@ -461,7 +461,7 @@ test('Use custom tag format', async (t) => {
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -523,7 +523,7 @@ test('Use new gitHead, and recreate release notes if a prepare plugin create a c
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -599,7 +599,7 @@ test('Make a new release when a commit is forward-ported to an upper branch', as
     success,
   };
 
-  const semanticRelease = proxyquire('..', {
+  const semanticRelease = proxyquire('../src', {
     './lib/logger': t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -644,7 +644,7 @@ test('Publish a pre-release version', async (t) => {
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'beta', isPr: false }),
   });
@@ -706,7 +706,7 @@ test('Publish releases from different branch on the same channel', async (t) => 
     fail: stub().resolves(),
   };
 
-  let semanticRelease = requireNoCache('..', {
+  let semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'next', isPr: false }),
   });
@@ -737,7 +737,7 @@ test('Publish releases from different branch on the same channel', async (t) => 
   await merge('next', { cwd });
   await gitPush('origin', 'master', { cwd });
 
-  semanticRelease = requireNoCache('..', {
+  semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -778,7 +778,7 @@ test('Publish pre-releases the same channel as regular releases', async (t) => {
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'beta', isPr: false }),
   });
@@ -858,7 +858,7 @@ test('Do not add pre-releases to a different channel', async (t) => {
     success,
   };
 
-  const semanticRelease = proxyquire('..', {
+  const semanticRelease = proxyquire('../src', {
     './lib/logger': t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -941,7 +941,7 @@ async function addChannelMacro(t, mergeFunction) {
     gitHead: commits[2].hash,
   };
 
-  const semanticRelease = proxyquire('..', {
+  const semanticRelease = proxyquire('../src', {
     './lib/logger': t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1022,7 +1022,7 @@ test('Call all "success" plugins even if one errors out', async (t) => {
     success: [success1, success2],
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1084,7 +1084,7 @@ test('Log all "verifyConditions" errors', async (t) => {
     fail,
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1146,7 +1146,7 @@ test('Log all "verifyRelease" errors', async (t) => {
     fail,
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1210,7 +1210,7 @@ test('Dry-run skips addChannel, prepare, publish and success', async (t) => {
     success,
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1280,7 +1280,7 @@ test('Dry-run skips fail', async (t) => {
     fail,
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1352,7 +1352,7 @@ test('Force a dry-run if not on a CI and "noCi" is not explicitly set', async (t
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: false, branch: 'master' }),
   });
@@ -1411,7 +1411,7 @@ test('Dry-run does not print changelog if "generateNotes" return "undefined"', a
     success: false,
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1472,7 +1472,7 @@ test('Allow local releases with "noCi" option', async (t) => {
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: false, branch: 'master', isPr: false }),
   });
@@ -1547,7 +1547,7 @@ test('Accept "undefined" value returned by "generateNotes" and "false" by "publi
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1583,7 +1583,7 @@ test('Returns false if triggered by a PR', async (t) => {
   // Create a git repository, set the current working directory at the root of the repo
   const { cwd, repositoryUrl } = await gitRepo(true);
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({
       isCi: true,
@@ -1648,7 +1648,7 @@ test('Throws "EINVALIDNEXTVERSION" if next release is out of range of the curren
     success,
   };
 
-  const semanticRelease = proxyquire('..', {
+  const semanticRelease = proxyquire('../src', {
     './lib/logger': t.context.logger,
     'env-ci': () => ({ isCi: true, branch: '1.x', isPr: false }),
   });
@@ -1710,7 +1710,7 @@ test('Throws "EINVALIDNEXTVERSION" if next release is out of range of the curren
     success,
   };
 
-  const semanticRelease = proxyquire('..', {
+  const semanticRelease = proxyquire('../src', {
     './lib/logger': t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1786,7 +1786,7 @@ test('Throws "EINVALIDMAINTENANCEMERGE" if merge an out of range release in a ma
     fail,
   };
 
-  const semanticRelease = proxyquire('..', {
+  const semanticRelease = proxyquire('../src', {
     './lib/logger': t.context.logger,
     'env-ci': () => ({ isCi: true, branch: '1.1.x', isPr: false }),
   });
@@ -1828,7 +1828,7 @@ test('Returns false value if triggered on an outdated clone', async (t) => {
   await gitCommits(['Third'], { cwd });
   await gitPush(repositoryUrl, 'master', { cwd });
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1866,7 +1866,7 @@ test('Returns false if not running from the configured branch', async (t) => {
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'other-branch', isPr: false }),
   });
@@ -1911,7 +1911,7 @@ test('Returns false if there is no relevant changes', async (t) => {
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1967,7 +1967,7 @@ test('Exclude commits with [skip release] or [release skip] from analysis', asyn
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -1998,7 +1998,7 @@ test('Log both plugins errors and errors thrown by "fail" plugin', async (t) => 
     verifyConditions: stub().rejects(pluginError),
     fail: [stub().rejects(failError1), stub().rejects(failError2)],
   };
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -2031,7 +2031,7 @@ test('Call "fail" only if a plugin returns a SemanticReleaseError', async (t) =>
     verifyConditions: stub().rejects(pluginError),
     fail,
   };
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -2053,7 +2053,7 @@ test('Throw SemanticReleaseError if repositoryUrl is not set and cannot be found
   // Create a git repository, set the current working directory at the root of the repo
   const { cwd } = await gitRepo();
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -2101,7 +2101,7 @@ test('Throw an Error if plugin returns an unexpected value', async (t) => {
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -2136,7 +2136,7 @@ test('Hide sensitive information passed to "fail" plugin', async (t) => {
     fail,
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -2186,7 +2186,7 @@ test('Hide sensitive information passed to "success" plugin', async (t) => {
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -2241,7 +2241,7 @@ test('Get all commits including the ones not in the shallow clone', async (t) =>
     fail: stub().resolves(),
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });
@@ -2299,7 +2299,7 @@ test('skipTag skips adding tags', async (t) => {
     gitTag: 'v1.1.0',
   };
 
-  const semanticRelease = requireNoCache('..', {
+  const semanticRelease = requireNoCache('../src', {
     './lib/get-logger': () => t.context.logger,
     'env-ci': () => ({ isCi: true, branch: 'master', isPr: false }),
   });

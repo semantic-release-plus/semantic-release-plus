@@ -1,6 +1,6 @@
 const { inspect } = require('util');
 const { toLower, isString, trim } = require('lodash');
-const pkg = require('../../package.json');
+const pkg = require('../../../package.json');
 const { RELEASE_TYPE } = require('./constants');
 
 const [homepage] = pkg.homepage.split('#');
