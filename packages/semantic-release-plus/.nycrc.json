@@ -1,5 +1,8 @@
 {
-  "include": ["lib/**/*.js", "index.js", "cli.js"],
+  "include": ["src/lib/**/*.js", "src/index.js", "src/cli.js"],
   "reporter": ["json", "text", "html"],
+  "reportDir": "../../coverage/packages/semantic-release-plus",
+  "tempDirectory": "../../.nyc_output/packages/semantic-release-plus",
+  "cacheDir": "../../node_modules/.cache/nyc/semantic-release-plus",
   "all": true
 }

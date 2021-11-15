@@ -32,7 +32,7 @@
     "test": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": ["npx ava"],
+        "commands": ["npm run test"],
         "cwd": "packages/semantic-release-plus",
         "parallel": false
       }

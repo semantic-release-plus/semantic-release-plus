@@ -40,7 +40,6 @@
     "version"
   ],
   "license": "MIT",
-  "main": "index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -56,7 +55,6 @@
     "lint:fix": "npx eslint --fix .",
     "format:check": "npx prettier --check .",
     "format:write": "npx prettier --write .",
-    "pretest": "npm run lint",
     "semantic-release": "node ./bin/semantic-release.js",
     "test": "nyc ava -v",
     "test:ci": "nyc ava -v"
