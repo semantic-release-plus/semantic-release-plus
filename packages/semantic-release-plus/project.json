@@ -21,12 +21,20 @@
         "lintFilePatterns": ["packages/semantic-release-plus/**/*.js"]
       }
     },
-    "test": {
+    "test-jest": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/semantic-release-plus"],
       "options": {
         "jestConfig": "packages/semantic-release-plus/jest.config.js",
         "passWithNoTests": true
+      }
+    },
+    "test": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["npx ava"],
+        "cwd": "packages/semantic-release-plus",
+        "parallel": false
       }
     }
   },
