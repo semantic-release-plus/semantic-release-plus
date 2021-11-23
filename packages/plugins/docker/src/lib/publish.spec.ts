@@ -188,4 +188,76 @@ describe('publish', () => {
     expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
   });
+
+  it('should publish with an buildTag', async () => {
+    const name = 'test';
+    const fullname = `${name}:pr-tag`;
+    const version = '2.3.4';
+
+    const pluginConfig = { name: fullname } as PluginConfig;
+
+    const context: Context = {
+      ...baseContext,
+      nextRelease: {
+        version,
+        type: BranchType.Release,
+      },
+    };
+
+    const exactTag = `${name}:${version}`;
+    const channelTag = `${name}:latest`;
+
+    await publish(pluginConfig, context);
+    expect(context.logger.log).toBeCalledWith(
+      `Tagging ${fullname} as ${exactTag}`
+    );
+    expect(dockerTagMock).toHaveBeenCalledWith(fullname, exactTag, context);
+
+    expect(context.logger.log).toBeCalledWith(
+      `Tagging ${fullname} as ${channelTag}`
+    );
+    expect(dockerTagMock).toHaveBeenCalledWith(fullname, channelTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
+  });
+
+  it('should publish with a sha like buildTag', async () => {
+    const name = 'test';
+    const fullname = 'test@sha256:12345';
+    const version = '3.4.5';
+
+    const pluginConfig = { name: fullname } as PluginConfig;
+
+    const context: Context = {
+      ...baseContext,
+      nextRelease: {
+        version,
+        type: BranchType.Release,
+      },
+    };
+
+    const exactTag = `${name}:${version}`;
+    const channelTag = `${name}:latest`;
+
+    await publish(pluginConfig, context);
+    expect(context.logger.log).toBeCalledWith(
+      `Tagging ${fullname} as ${exactTag}`
+    );
+    expect(dockerTagMock).toHaveBeenCalledWith(fullname, exactTag, context);
+
+    expect(context.logger.log).toBeCalledWith(
+      `Tagging ${fullname} as ${channelTag}`
+    );
+    expect(dockerTagMock).toHaveBeenCalledWith(fullname, channelTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
+
+    expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
+    expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
+  });
 });
