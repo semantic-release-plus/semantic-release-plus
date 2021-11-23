@@ -1,0 +1,47 @@
+{
+  "root": "packages/srp",
+  "sourceRoot": "packages/srp/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/srp",
+        "tsConfig": "packages/srp/tsconfig.lib.json",
+        "packageJson": "packages/srp/package.json",
+        "main": "packages/srp/src/index.js",
+        "assets": ["packages/srp/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/srp/**/*.js"]
+      }
+    },
+    "test-jest": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/srp"],
+      "options": {
+        "jestConfig": "packages/srp/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "test": {
+      "executor": "@nrwl/workspace:run-script",
+      "options": {
+        "script": "test"
+      }
+    },
+    "release": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["npx semantic-release-plus"],
+        "cwd": "packages/srp/"
+      }
+    }
+  },
+  "tags": []
+}

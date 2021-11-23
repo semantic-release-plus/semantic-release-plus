@@ -5,6 +5,7 @@
     "error": "packages/error",
     "nx-setup": "packages/nx-setup",
     "nx-setup-e2e": "packages/nx-setup-e2e",
-    "plugins-docker": "packages/plugins/docker"
+    "plugins-docker": "packages/plugins/docker",
+    "srp": "packages/srp"
   }
 }

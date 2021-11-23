@@ -34,6 +34,21 @@
         "target": "build",
         "projects": "dependencies"
       }
+    ],
+    "release": [
+      {
+        "target": "build",
+        "projects": "self",
+        "options": {
+          "configuration": "production"
+        }
+      }
+    ],
+    "link-plugin": [
+      {
+        "target": "build",
+        "projects": "self"
+      }
     ]
   },
   "cli": {
