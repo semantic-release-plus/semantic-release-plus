@@ -25,7 +25,8 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "prepare": "husky install",
-    "register-local-nx-plugins": "nx run-many --target=link-plugin --all"
+    "register-local-nx-plugins": "nx run-many --target=link-plugin --all",
+    "postinstall": "npm run register-local-nx-plugins"
   },
   "private": true,
   "dependencies": {
@@ -46,15 +47,15 @@
     "hook-std": "^2.0.0",
     "hosted-git-info": "^4.0.0",
     "lodash": "^4.17.21",
-    "marked-terminal": "^4.1.1",
     "marked": "^3.0.0",
+    "marked-terminal": "^4.1.1",
     "micromatch": "^4.0.2",
     "p-each-series": "^2.1.0",
     "p-reduce": "^2.0.0",
     "read-pkg-up": "^7.0.0",
     "resolve-from": "^5.0.0",
-    "semver-diff": "^3.1.1",
     "semver": "7.3.5",
+    "semver-diff": "^3.1.1",
     "signale": "^1.2.1",
     "tslib": "^2.0.0",
     "yargs": "^16.2.0"
