@@ -25,7 +25,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "prepare": "husky install",
-    "register-local-nx-plugins": "nx run-many --target=build-plugin --all && nx run-many --target=link-plugin --all"
+    "register-local-nx-plugins": "nx run-many --target=link-plugin --all"
   },
   "private": true,
   "dependencies": {

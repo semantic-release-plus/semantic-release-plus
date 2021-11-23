@@ -42,17 +42,11 @@
         ]
       }
     },
-    "build-plugin": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "command": "nx run nx-setup:build"
-      }
-    },
     "link-plugin": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
-          "cd ./dist/packages/nx-setup && npm link",
+          "npm link ./dist/packages/nx-setup",
           "npm link @semantic-release-plus/nx-setup"
         ],
         "parallel": false
