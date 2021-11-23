@@ -6,6 +6,6 @@
     "nx-setup": "packages/nx-setup",
     "nx-setup-e2e": "packages/nx-setup-e2e",
     "plugins-docker": "packages/plugins/docker",
-    "semantic-release-plus": "packages/semantic-release-plus"
+    "srp": "packages/srp"
   }
 }

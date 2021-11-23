@@ -1,35 +1,35 @@
-<h1 align="center" style="border-bottom: none;">📦🚀 semantic-release-plus</h1>
+<h1 align="center" style="border-bottom: none;">📦🚀 srp</h1>
 <h3 align="center">Fully automated version management and package publishing</h3>
 <p align="center">
-  <a href="https://github.com/semantic-release-plus/semantic-release/discussions">
+  <a href="https://github.com/srp/semantic-release/discussions">
     <img alt="Join the community on GitHub Discussions" src="https://img.shields.io/badge/Join%20the%20community-on%20GitHub%20Discussions-blue">
   </a>
-  <a href="https://github.com/semantic-release-plus/semantic-release/actions?query=workflow%3ATest+branch%3Amaster">
-    <img alt="Build states" src="https://github.com/semantic-release-plus/semantic-release/workflows/Test/badge.svg">
+  <a href="https://github.com/srp/semantic-release/actions?query=workflow%3ATest+branch%3Amaster">
+    <img alt="Build states" src="https://github.com/srp/semantic-release/workflows/Test/badge.svg">
   </a>
   <a href="https://renovatebot.com/"><img src="https://img.shields.io/badge/renovate-enabled-brightgreen.svg" alt="renovate"></a>
   <a href="#badge">
-    <img alt="semantic-release-plus" src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release--plus-e10079.svg">
+    <img alt="srp" src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release--plus-e10079.svg">
   </a>
 </p>
 <p align="center">
-  <a href="https://www.npmjs.com/package/semantic-release-plus">
-    <img alt="npm latest version" src="https://img.shields.io/npm/v/semantic-release-plus/latest.svg">
+  <a href="https://www.npmjs.com/package/srp">
+    <img alt="npm latest version" src="https://img.shields.io/npm/v/srp/latest.svg">
   </a>
-  <a href="https://www.npmjs.com/package/semantic-release-plus">
-    <img alt="npm next version" src="https://img.shields.io/npm/v/semantic-release-plus/next.svg">
+  <a href="https://www.npmjs.com/package/srp">
+    <img alt="npm next version" src="https://img.shields.io/npm/v/srp/next.svg">
   </a>
-  <a href="https://www.npmjs.com/package/semantic-release-plus">
-    <img alt="npm beta version" src="https://img.shields.io/npm/v/semantic-release-plus/beta.svg">
+  <a href="https://www.npmjs.com/package/srp">
+    <img alt="npm beta version" src="https://img.shields.io/npm/v/srp/beta.svg">
   </a>
 </p>
 <p align="center">
   <a href="#contributors-">
-    <img alt="Github All Contributors" src="https://img.shields.io/github/all-contributors/semantic-release-plus/semantic-release">
+    <img alt="Github All Contributors" src="https://img.shields.io/github/all-contributors/srp/semantic-release">
   </a>
 </p>
 
-**semantic-release-plus** is a drop in replacement for **semantic release** that adds some enhancements:
+**srp** is a drop in replacement for **semantic release** that adds some enhancements:
 
 - [x] Filter commit by path [commitPaths](docs/usage/configuration.md#commitPaths)
   - allows support for monorepos like nx and lerna to support multi version between releasable apps
@@ -170,7 +170,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="http://justindietz.com"><img src="https://avatars.githubusercontent.com/u/5566979?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Justin Dietz</b></sub></a><br /><a href="https://github.com/semantic-release-plus/semantic-release/commits?author=JoA-MoS" title="Documentation">📖</a> <a href="https://github.com/semantic-release-plus/semantic-release/issues?q=author%3AJoA-MoS" title="Bug reports">🐛</a> <a href="https://github.com/semantic-release-plus/semantic-release/commits?author=JoA-MoS" title="Code">💻</a> <a href="#ideas-JoA-MoS" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="http://justindietz.com"><img src="https://avatars.githubusercontent.com/u/5566979?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Justin Dietz</b></sub></a><br /><a href="https://github.com/srp/semantic-release/commits?author=JoA-MoS" title="Documentation">📖</a> <a href="https://github.com/srp/semantic-release/issues?q=author%3AJoA-MoS" title="Bug reports">🐛</a> <a href="https://github.com/srp/semantic-release/commits?author=JoA-MoS" title="Code">💻</a> <a href="#ideas-JoA-MoS" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 

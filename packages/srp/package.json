@@ -27,7 +27,7 @@
     "node": ">=14.17"
   },
   "files": [],
-  "homepage": "https://github.com/semantic-release-plus/semantic-release#readme",
+  "homepage": "https://github.com/semantic-release-plus/semantic-release-plus/packages/srp/#readme",
   "keywords": [
     "author",
     "automation",
@@ -46,15 +46,10 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/semantic-release-plus/semantic-release-plus.git",
-    "directory": "packages/semantic-release-plus"
+    "directory": "packages/srp"
   },
   "scripts": {
     "codecov": "codecov -f coverage/coverage-final.json",
-    "prepare": "husky install",
-    "lint": "npx eslint .",
-    "lint:fix": "npx eslint --fix .",
-    "format:check": "npx prettier --check .",
-    "format:write": "npx prettier --write .",
     "semantic-release": "node ./bin/semantic-release.js",
     "test": "nyc ava -v",
     "test:ci": "nyc ava -v"
