@@ -17,8 +17,6 @@
     "url": "https://github.com/semantic-release-plus/semantic-release/issues"
   },
   "contributors": [
-    "Gregor Martynus (https://twitter.com/gr2m)",
-    "Pierre Vanduynslager (https://twitter.com/@pvdlg_)",
     "Justin Dietz (https://twitter.com/@skigeek)"
   ],
   "dependencies": {},
@@ -26,7 +24,6 @@
   "engines": {
     "node": ">=14.17"
   },
-  "files": [],
   "homepage": "https://github.com/semantic-release-plus/semantic-release-plus/packages/srp/#readme",
   "keywords": [
     "author",
