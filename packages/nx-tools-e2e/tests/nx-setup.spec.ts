@@ -3,19 +3,19 @@ import {
   runNxCommandAsync,
   uniq,
 } from '@nrwl/nx-plugin/testing';
-describe('nx-setup e2e', () => {
-  it('should create nx-setup', async () => {
-    const plugin = uniq('nx-setup');
+describe('nx-tools e2e', () => {
+  it('should create nx-tools', async () => {
+    const plugin = uniq('nx-tools');
 
     ensureNxProject(
-      '@semantic-release-plus/nx-setup',
-      'dist/packages/nx-setup'
+      '@semantic-release-plus/nx-tools',
+      'dist/packages/nx-tools'
     );
     await runNxCommandAsync(
       `generate @nrwl/node:library --name=${plugin} --buildable --publishable --importPath=${plugin}`
     );
     await runNxCommandAsync(
-      `generate @semantic-release-plus/nx-setup:configure --project=${plugin}`
+      `generate @semantic-release-plus/nx-tools:configure --project=${plugin}`
     );
     // FIXME: Assert something
   }, 80000);

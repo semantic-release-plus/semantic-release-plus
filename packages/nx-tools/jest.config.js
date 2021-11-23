@@ -1,5 +1,7 @@
+/* eslint-disable */
+
 module.exports = {
-  displayName: 'nx-setup',
+  displayName: 'nx-tools',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -10,5 +12,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/packages/nx-setup',
+  coverageDirectory: '../../coverage/packages/nx-tools',
 };

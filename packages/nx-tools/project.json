@@ -1,41 +1,41 @@
 {
-  "root": "packages/nx-setup",
-  "sourceRoot": "packages/nx-setup/src",
+  "root": "packages/nx-tools",
+  "sourceRoot": "packages/nx-tools/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["packages/nx-setup/**/*.ts"]
+        "lintFilePatterns": ["packages/nx-tools/**/*.ts"]
       }
     },
     "build": {
       "executor": "@nrwl/node:package",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/nx-setup",
-        "tsConfig": "packages/nx-setup/tsconfig.lib.json",
-        "packageJson": "packages/nx-setup/package.json",
-        "main": "packages/nx-setup/src/index.ts",
+        "outputPath": "dist/packages/nx-tools",
+        "tsConfig": "packages/nx-tools/tsconfig.lib.json",
+        "packageJson": "packages/nx-tools/package.json",
+        "main": "packages/nx-tools/src/index.ts",
         "assets": [
-          "packages/nx-setup/*.md",
+          "packages/nx-tools/*.md",
           {
-            "input": "./packages/nx-setup/src",
+            "input": "./packages/nx-tools/src",
             "glob": "**/!(*.ts)",
             "output": "./src"
           },
           {
-            "input": "./packages/nx-setup/src",
+            "input": "./packages/nx-tools/src",
             "glob": "**/*.d.ts",
             "output": "./src"
           },
           {
-            "input": "./packages/nx-setup",
+            "input": "./packages/nx-tools",
             "glob": "generators.json",
             "output": "."
           },
           {
-            "input": "./packages/nx-setup",
+            "input": "./packages/nx-tools",
             "glob": "executors.json",
             "output": "."
           }
@@ -46,17 +46,17 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
-          "npm link ./dist/packages/nx-setup",
-          "npm link @semantic-release-plus/nx-setup"
+          "npm link ./dist/packages/nx-tools",
+          "npm link @semantic-release-plus/nx-tools"
         ],
         "parallel": false
       }
     },
-    "XXXrelease": {
+    "release": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": ["npx semantic-release-plus"],
-        "cwd": "packages/nx-setup"
+        "cwd": "packages/nx-tools"
       }
     }
   },

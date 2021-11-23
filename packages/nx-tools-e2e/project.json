@@ -1,0 +1,16 @@
+{
+  "projectType": "application",
+  "root": "packages/nx-tools-e2e",
+  "sourceRoot": "packages/nx-tools-e2e/src",
+  "targets": {
+    "test-local": {
+      "executor": "@nrwl/nx-plugin:e2e",
+      "options": {
+        "target": "nx-tools:build",
+        "jestConfig": "packages/nx-tools-e2e/jest.config.js"
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["nx-tools"]
+}

@@ -3,8 +3,8 @@
   "projects": {
     "core": "packages/core",
     "error": "packages/error",
-    "nx-setup": "packages/nx-setup",
-    "nx-setup-e2e": "packages/nx-setup-e2e",
+    "nx-tools": "packages/nx-tools",
+    "nx-tools-e2e": "packages/nx-tools-e2e",
     "plugins-docker": "packages/plugins/docker",
     "srp": "packages/srp"
   }

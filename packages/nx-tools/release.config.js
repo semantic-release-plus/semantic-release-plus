@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-const name = 'nx-setup';
+const name = 'nx-tools';
 const srcRoot = `packages/${name}`;
 const pathToRepoRoot = '../..';
 

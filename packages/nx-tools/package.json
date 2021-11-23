@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-release-plus/nx-setup",
+  "name": "@semantic-release-plus/nx-tools",
   "version": "0.0.1",
   "main": "src/index.js",
   "generators": "./generators.json",
@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/semantic-release-plus/semantic-release-plus/issues"
   },
-  "homepage": "https://github.com/semantic-release-plus/semantic-release-plus/tree/master/packages/nx-setup",
+  "homepage": "https://github.com/semantic-release-plus/semantic-release-plus/tree/master/packages/nx-tools",
   "engines": {
     "node": ">=10.0.0"
   },
