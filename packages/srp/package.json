@@ -20,6 +20,11 @@
     "Justin Dietz (https://twitter.com/@skigeek)"
   ],
   "dependencies": {
+    "@semantic-release/commit-analyzer": "^9.0.0",
+    "@semantic-release/error": "^3.0.0",
+    "@semantic-release/github": "^8.0.0",
+    "@semantic-release/npm": "^8.0.0",
+    "@semantic-release/release-notes-generator": "^10.0.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {},
