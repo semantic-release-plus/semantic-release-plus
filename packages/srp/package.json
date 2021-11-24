@@ -24,7 +24,7 @@
   },
   "devDependencies": {},
   "engines": {
-    "node": ">=14.17"
+    "node": ">=16"
   },
   "homepage": "https://github.com/semantic-release-plus/semantic-release-plus/packages/srp/#readme",
   "keywords": [
@@ -49,7 +49,7 @@
   },
   "scripts": {
     "codecov": "codecov -f coverage/coverage-final.json",
-    "semantic-release": "node ./bin/semantic-release.js",
+    "semantic-release": "node ../../dist/packages/srp/src/bin/semantic-release.js",
     "test": "nyc ava -v",
     "test:ci": "nyc ava -v"
   }

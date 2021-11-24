@@ -36,10 +36,9 @@
       }
     },
     "release": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "@nrwl/workspace:run-script",
       "options": {
-        "commands": ["npx semantic-release-plus"],
-        "cwd": "packages/srp/"
+        "script": "semantic-release"
       }
     }
   },
