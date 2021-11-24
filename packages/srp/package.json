@@ -24,7 +24,7 @@
   },
   "devDependencies": {},
   "engines": {
-    "node": ">=16"
+    "node": ">=14"
   },
   "homepage": "https://github.com/semantic-release-plus/semantic-release-plus/packages/srp/#readme",
   "keywords": [
