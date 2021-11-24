@@ -22,6 +22,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
+          node-version: '16'
           cache: npm
       - run: npm ci
       - run: npx nx workspace-lint
@@ -34,6 +35,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
+          node-version: '16'
           cache: npm
       - run: npm ci
       - uses: mansagroup/nrwl-nx-action@v2.1.0
@@ -53,6 +55,7 @@ jobs:
       - run: git config --global user.email github-actions@github.com
       - uses: actions/setup-node@v2
         with:
+          node-version: '16'
           cache: npm
       - run: npm ci
       - uses: mansagroup/nrwl-nx-action@v2.1.0
@@ -71,6 +74,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
+          node-version: '16'
           cache: npm
       - run: npm ci
       - name: Build affected
@@ -99,6 +103,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
+          node-version: '16'
           cache: npm
       - run: npm ci
       - name: Get build output
