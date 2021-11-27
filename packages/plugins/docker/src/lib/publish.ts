@@ -3,6 +3,8 @@ import { dockerPush, dockerTag } from './docker-utils';
 import { getTags } from './get-tags';
 import { normalizeConfig } from './normalize-config';
 import { PluginConfig } from './plugin-config.interface';
+import { getReleaseInfo } from './get-release-info';
+import { getChannel } from './get-channel';
 
 export async function publish(pluginConfig: PluginConfig, context: Context) {
   const normalizedPluginConfig = normalizeConfig(pluginConfig);
@@ -28,4 +30,6 @@ export async function publish(pluginConfig: PluginConfig, context: Context) {
     const { stdout } = await dockerPush(tag, context);
     logger.log(stdout);
   }
+
+  return getReleaseInfo(image, getChannel(channel));
 }
