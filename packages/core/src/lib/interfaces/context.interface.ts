@@ -17,9 +17,9 @@ export interface Context {
 }
 
 export interface Options {
-  tagFormat?: any;
-  repositoryUrl?: any;
-  branches?: any;
+  tagFormat?: unknown;
+  repositoryUrl?: unknown;
+  branches?: unknown;
   publish?: boolean;
 }
 
@@ -41,13 +41,13 @@ export interface Logger {
 }
 
 export interface Branch {
-  channel: any;
-  tags: any;
-  type: any;
-  name: any;
-  range: any;
-  accept: any;
-  main: any;
+  channel: unknown;
+  tags: unknown;
+  type: unknown;
+  name: unknown;
+  range: unknown;
+  accept: unknown;
+  main: unknown;
 }
 
 export interface Commit {
