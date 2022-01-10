@@ -5,14 +5,10 @@
   "generators": {},
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:lint",
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "linter": "eslint",
-        "tsConfig": [
-          "packages/plugins/docker/tsconfig.lib.json",
-          "packages/plugins/docker/tsconfig.spec.json"
-        ],
-        "exclude": ["**/node_modules/**", "!packages/plugins/docker/**/*"]
+        "lintFilePatterns": ["packages/plugins/docker/**/*.ts"]
       }
     },
     "test": {

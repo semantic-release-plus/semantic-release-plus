@@ -20,7 +20,8 @@
         "accessToken": "MDAwNWM4NjktMDY1Yi00YmFkLTg5OTUtZjNhMjhmYjEzNzU0fHJlYWQ=",
         "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": true,
-        "showUsageWarnings": true
+        "showUsageWarnings": true,
+        "parallel": 1
       }
     }
   },
