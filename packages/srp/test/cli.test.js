@@ -20,7 +20,7 @@ test.afterEach.always((t) => {
   t.context.stderr.restore();
 });
 
-test.serial('Pass options to semantic-release API', async (t) => {
+test.serial('Pass options to semantic-release-plus API', async (t) => {
   const run = stub().resolves(true);
   const argv = [
     '',
@@ -90,7 +90,7 @@ test.serial('Pass options to semantic-release API', async (t) => {
 });
 
 test.serial(
-  'Pass options to semantic-release API with alias arguments',
+  'Pass options to semantic-release-plus API with alias arguments',
   async (t) => {
     const run = stub().resolves(true);
     const argv = [
@@ -128,7 +128,7 @@ test.serial(
   }
 );
 
-test.serial('Pass unknown options to semantic-release API', async (t) => {
+test.serial('Pass unknown options to semantic-release-plus API', async (t) => {
   const run = stub().resolves(true);
   const argv = [
     '',
@@ -156,7 +156,7 @@ test.serial('Pass unknown options to semantic-release API', async (t) => {
 });
 
 test.serial(
-  'Pass empty Array to semantic-release API for list option set to "false"',
+  'Pass empty Array to semantic-release-plus API for list option set to "false"',
   async (t) => {
     const run = stub().resolves(true);
     const argv = ['', '', '--publish', 'false'];
@@ -247,9 +247,9 @@ test.serial(
 );
 
 test.serial(
-  'Return error exitCode if semantic-release throw error',
+  'Return error exitCode if semantic-release-plus throw error',
   async (t) => {
-    const run = stub().rejects(new Error('semantic-release error'));
+    const run = stub().rejects(new Error('semantic-release-plus error'));
     const argv = ['', ''];
     const cli = proxyquire('../src/cli', {
       '.': run,
@@ -258,7 +258,7 @@ test.serial(
 
     const exitCode = await cli();
 
-    t.regex(t.context.errors, /semantic-release error/);
+    t.regex(t.context.errors, /semantic-release-plus error/);
     t.is(exitCode, 1);
   }
 );

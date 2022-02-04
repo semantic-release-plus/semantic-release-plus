@@ -21,7 +21,7 @@ module.exports = async () => {
       yargs.demandCommand(0, 0).usage(`Run automated package publishing
 
 Usage:
-  semantic-release [options] [plugins]`);
+  semantic-release-plus [options] [plugins]`);
     })
     .option('b', {
       alias: 'branches',

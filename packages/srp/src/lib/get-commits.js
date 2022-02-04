@@ -5,7 +5,7 @@ const { stronsole } = require('./stronsole');
 /**
  * Retrieve the list of commits on the current branch since the commit sha associated with the last release, or all the commits of the current branch if there is no last released version.
  *
- * @param {Object} context semantic-release context.
+ * @param {Object} context semantic-release-plus context.
  *
  * @return {Promise<Array<Object>>} The list of commits on the branch `branch` since the last release.
  */

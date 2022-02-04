@@ -27,9 +27,9 @@ Please verify your CI configuration to make sure the \`semantic-release\` comman
     message: 'The `repositoryUrl` option is required.',
     details: `The [repositoryUrl option](${linkify(
       'docs/usage/configuration.md#repositoryurl'
-    )}) cannot be determined from the semantic-release configuration, the \`package.json\` nor the [git origin url](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes).
+    )}) cannot be determined from the semantic-release-plus configuration, the \`package.json\` nor the [git origin url](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes).
 
-Please make sure to add the \`repositoryUrl\` to the [semantic-release configuration] (${linkify(
+Please make sure to add the \`repositoryUrl\` to the [semantic-release-plus configuration] (${linkify(
       'docs/usage/configuration.md'
     )}).`,
   }),
@@ -90,7 +90,7 @@ The invalid configuration is \`${stringify(plugin)}\`.`,
 
 The plugin \`${pluginName}\` doesn't have the property \`${type}\` and cannot be used for the \`${type}\` step.
 
-Please refer to the \`${pluginName}\` and [semantic-release plugins configuration](${linkify(
+Please refer to the \`${pluginName}\` and [semantic-release-plus plugins configuration](${linkify(
       'docs/usage/plugins.md'
     )}) documentation for more details.`,
   }),

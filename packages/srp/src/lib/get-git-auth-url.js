@@ -37,7 +37,7 @@ function formatAuthUrl(protocol, repositoryUrl, gitCredentials) {
 /**
  * Verify authUrl by calling git.verifyAuth, but don't throw on failure
  *
- * @param {Object} context semantic-release context.
+ * @param {Object} context semantic-release-plus context.
  * @param {String} authUrl Repository URL to verify
  *
  * @return {String} The authUrl as is if the connection was successfull, null otherwise
@@ -59,7 +59,7 @@ async function ensureValidAuthUrl({ cwd, env, branch }, authUrl) {
  *
  * In addition, expand shortcut URLs (`owner/repo` => `https://github.com/owner/repo.git`) and transform `git+https` / `git+http` URLs to `https` / `http`.
  *
- * @param {Object} context semantic-release context.
+ * @param {Object} context semantic-release-plus context.
  *
  * @return {String} The formatted Git repository URL.
  */
