@@ -1881,7 +1881,7 @@ test('Returns false if not running from the configured branch', async (t) => {
   );
   t.is(
     t.context.log.args[1][0],
-    'This test run was triggered on the branch other-branch, while semantic-release is configured to only publish from master, therefore a new version won’t be published.'
+    "This test run was triggered on the branch other-branch, while semantic-release is configured to only publish from master, therefore a new version won't be published."
   );
 });
 
