@@ -118,6 +118,9 @@ test('Release patch, minor and major versions', async (t) => {
     cwd,
     extendEnv: false,
   });
+  console.log('######################### DEBUG ########################');
+  console.log(stdout);
+  console.log('######################### DEBUG ########################');
   t.regex(
     stdout,
     /There are no relevant changes, so no new version is released/
