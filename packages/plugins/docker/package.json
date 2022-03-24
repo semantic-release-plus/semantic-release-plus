@@ -24,6 +24,6 @@
     "@semantic-release-plus/core": "*"
   },
   "peerDependencies": {
-    "semantic-release-plus": "^19.0.0 || ^20.0.0"
+    "semantic-release-plus": "^19.0.0 || ^20.0.0 || >=20.0.0-alpha"
   }
 }
