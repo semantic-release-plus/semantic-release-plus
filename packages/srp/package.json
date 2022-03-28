@@ -55,7 +55,7 @@
   "scripts": {
     "codecov": "codecov -f coverage/coverage-final.json",
     "semantic-release": "node ../../dist/packages/srp/src/bin/semantic-release.js",
-    "test": "nyc ava -v",
-    "test:ci": "nyc ava -v"
+    "test": "ava -v",
+    "test:ci": "ava -v"
   }
 }
