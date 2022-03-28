@@ -38,7 +38,7 @@
     "release": {
       "executor": "@nrwl/workspace:run-script",
       "options": {
-        "script": "semantic-release"
+        "script": "release"
       }
     }
   },

@@ -24,7 +24,7 @@ See [CI configuration](../usage/ci-configuration.md) and [CI configuration recip
 Use it to execute the `semantic-release` command.
 
 ```bash
-$ npx -p node@lts -c "npx semantic-release"
+$ npx -p node@lts -c "npx semantic-release-plus"
 ```
 
 **Note**: See [What is npx](./FAQ.md#what-is-npx) for more details.

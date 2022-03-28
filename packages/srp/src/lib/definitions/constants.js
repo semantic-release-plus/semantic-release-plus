@@ -14,7 +14,7 @@ const SECRET_REPLACEMENT = '[secure]';
 
 const SECRET_MIN_SIZE = 5;
 
-const GIT_NOTE_REF = 'semantic-release';
+const GIT_NOTE_REF = 'semantic-release-plus';
 
 module.exports = {
   RELEASE_TYPE,

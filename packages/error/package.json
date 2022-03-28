@@ -22,7 +22,6 @@
   },
   "keywords": [
     "error",
-    "semantic-release",
     "semantic-release-plus"
   ],
   "dependencies": {},

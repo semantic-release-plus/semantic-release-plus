@@ -55,7 +55,7 @@ A `package.json` is required only for [local](../../usage/installation.md#local-
 ```json
 {
   "devDependencies": {
-    "semantic-release": "^18.0.0"
+    "semantic-release-plus": "^18.0.0"
   }
 }
 ```
