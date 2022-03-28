@@ -54,7 +54,8 @@
   "scripts": {
     "codecov": "codecov -f coverage/coverage-final.json",
     "release": "node ../../dist/packages/srp/src/bin/semantic-release-plus.js",
-    "test": "ava -v",
-    "test:ci": "ava -v"
+    "test": "ava -v 'test/**/!(integration).test.js'",
+    "test:ci": "ava -v 'test/**/!(integration).test.js'",
+    "e2e": "ava -v 'test/integration.test.js'"
   }
 }
