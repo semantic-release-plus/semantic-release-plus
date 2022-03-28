@@ -14,7 +14,7 @@ on:
       - synchronize
 
 env:
-  NX_CLOUD_DISTRIBUTED_EXECUTION: true
+  NX_CLOUD_DISTRIBUTED_EXECUTION: false
   NX_CLOUD_ACCESS_TOKEN: ${{secrets.NX_CLOUD_ACCESS_TOKEN}}
   GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_GITHUB_PAT }}
   NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
@@ -36,26 +36,26 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npx nx workspace-lint
-      - run: npx nx-cloud start-ci-run
+      # - run: npx nx-cloud start-ci-run
       - run: npx nx affected --target=lint --parallel --max-parallel=3
       - run: npx nx affected --target=test --parallel --max-parallel=3
       - run: npx nx affected --target=build --configuration=production --parallel --max-parallel=3
       - run: NX_CLOUD_DISTRIBUTED_EXECUTION=false npx nx affected --target=release
-      - run: npx nx-cloud stop-all-agents
+      # - run: npx nx-cloud stop-all-agents
 
-  agents:
-    runs-on: ubuntu-latest
-    name: Agent 1
-    timeout-minutes: 60
-    strategy:
-      matrix:
-        agent: [1, 2, 3]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: npm
-      - run: npm ci --ignore-scripts
-      - name: Start Nx Agent ${{ matrix.agent }}
-        run: npx nx-cloud start-agent
+  # agents:
+  #   runs-on: ubuntu-latest
+  #   name: Agent 1
+  #   timeout-minutes: 60
+  #   strategy:
+  #     matrix:
+  #       agent: [1, 2, 3]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '16'
+  #         cache: npm
+  #     - run: npm ci --ignore-scripts
+  #     - name: Start Nx Agent ${{ matrix.agent }}
+  #       run: npx nx-cloud start-agent

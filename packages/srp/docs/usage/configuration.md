@@ -172,12 +172,12 @@ Output debugging information. This can also be enabled by setting the `DEBUG` en
 
 ## Git environment variables
 
-| Variable              | Description                                                                                                                                                                                                                    | Default                              |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------ |
-| `GIT_AUTHOR_NAME`     | The author name associated with the [Git release tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging). See [Git environment variables](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables#_committing).     | @semantic-release-bot.               |
-| `GIT_AUTHOR_EMAIL`    | The author email associated with the [Git release tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging). See [Git environment variables](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables#_committing).    | @semantic-release-bot email address. |
-| `GIT_COMMITTER_NAME`  | The committer name associated with the [Git release tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging). See [Git environment variables](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables#_committing).  | @semantic-release-bot.               |
-| `GIT_COMMITTER_EMAIL` | The committer email associated with the [Git release tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging). See [Git environment variables](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables#_committing). | @semantic-release-bot email address. |
+| Variable              | Description                                                                                                                                                                                                                    | Default                                   |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------- |
+| `GIT_AUTHOR_NAME`     | The author name associated with the [Git release tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging). See [Git environment variables](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables#_committing).     | @semantic-release-plus-bot.               |
+| `GIT_AUTHOR_EMAIL`    | The author email associated with the [Git release tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging). See [Git environment variables](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables#_committing).    | @semantic-release-plus-bot email address. |
+| `GIT_COMMITTER_NAME`  | The committer name associated with the [Git release tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging). See [Git environment variables](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables#_committing).  | @semantic-release-plus-bot.               |
+| `GIT_COMMITTER_EMAIL` | The committer email associated with the [Git release tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging). See [Git environment variables](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables#_committing). | @semantic-release-plus-bot email address. |
 
 ## Existing version tags
 

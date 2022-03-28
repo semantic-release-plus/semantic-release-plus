@@ -56,6 +56,8 @@ async function run(context, plugins) {
     });
   }
 
+  console.log({ env });
+
   if (isCi && isPr && !options.noCi) {
     logger.log(
       "This run was triggered by a pull request and therefore a new version won't be published."

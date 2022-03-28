@@ -32,8 +32,10 @@ const requireNoCache = proxyquire.noPreserveCache();
 // FIXME: even though eslint says GITHUB_ACTION and GITHUB_TOKEN is unused if you remove them the tests fail
 const {
   // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   GITHUB_ACTION,
   // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   GITHUB_TOKEN,
   ...processEnvWithoutGitHubActionsVariables
 } = process.env;
