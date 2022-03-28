@@ -23,17 +23,8 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      # consider creating reusable action for this
       - uses: actions/checkout@v2
-        name: Checkout [Trunk]
-        if: ${{ github.event_name != 'pull_request' }}
         with:
-          fetch-depth: 0
-      - uses: actions/checkout@v2
-        name: Checkout [PR]
-        if: ${{ github.event_name == 'pull_request' }}
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
