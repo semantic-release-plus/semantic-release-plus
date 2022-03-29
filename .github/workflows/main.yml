@@ -39,13 +39,13 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npx nx workspace-lint
       # - run: npx nx-cloud start-ci-run
-      - name: 📝 Lint
+      - name: '📝 Lint'
         run: npx nx affected --target=lint --parallel --max-parallel=3
-      - name: 🧪 Test
+      - name: '🧪 Test'
         run: npx nx affected --target=test --parallel --max-parallel=3
-      - name: 🔎 E2E
+      - name: '🔎 E2E'
         run: npx nx affected --target=e2e  --parallel --max-parallel=3
-      - name: 🏗️ Build
+      - name: '🏗️ Build'
         run: npx nx affected --target=build --configuration=production --parallel --max-parallel=3
       - run: NX_CLOUD_DISTRIBUTED_EXECUTION=false npx nx affected --target=release
       # - run: npx nx-cloud stop-all-agents
