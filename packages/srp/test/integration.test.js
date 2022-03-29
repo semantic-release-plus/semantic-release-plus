@@ -723,14 +723,16 @@ test('Log errors inheriting SemanticReleaseError and exit with 1', async (t) => 
 
   /* Initial release */
   t.log('Commit a feature');
-  await gitCommits(['feat: Initial commit'], { cwd });
+  gitCommits(['feat: Initial commit'], { cwd });
   t.log('$ semantic-release-plus');
-  const { stderr, exitCode } = await execa(cli, [], {
+  const val = await execa(cli, ['--debug'], {
     env,
     cwd,
     reject: false,
     extendEnv: false,
   });
+  console.log(val);
+  const { stderr, exitCode } = val;
   // Verify the type and message are logged
   t.regex(stderr, /EINHERITED Inherited error/);
   t.is(exitCode, 1);
