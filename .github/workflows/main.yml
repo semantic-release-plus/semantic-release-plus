@@ -23,6 +23,8 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
+      - run: git config --global user.name github-actions
+      - run: git config --global user.email github-actions@github.com
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -37,10 +39,14 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npx nx workspace-lint
       # - run: npx nx-cloud start-ci-run
-      - run: npx nx affected --target=lint --parallel --max-parallel=3
-      - run: npx nx affected --target=test --parallel --max-parallel=3
-      - run: npx nx affected --target=e2e  --parallel --max-parallel=3
-      - run: npx nx affected --target=build --configuration=production --parallel --max-parallel=3
+      - name: 📝 Lint
+        run: npx nx affected --target=lint --parallel --max-parallel=3
+      - name: 🧪 Test
+        run: npx nx affected --target=test --parallel --max-parallel=3
+      - name: 🔎 E2E
+        run: npx nx affected --target=e2e  --parallel --max-parallel=3
+      - name: 🏗️ Build
+        run: npx nx affected --target=build --configuration=production --parallel --max-parallel=3
       - run: NX_CLOUD_DISTRIBUTED_EXECUTION=false npx nx affected --target=release
       # - run: npx nx-cloud stop-all-agents
 
