@@ -47,7 +47,8 @@ jobs:
       #   run: cd packages/srp && npm run e2e
       - name: '🏗️ Build'
         run: npx nx affected --target=build --configuration=production --parallel --max-parallel=3
-      - run: NX_CLOUD_DISTRIBUTED_EXECUTION=false npx nx affected --target=release
+      - name: '📦 Release'
+        run: NX_CLOUD_DISTRIBUTED_EXECUTION=false npx nx affected --target=release
       - run: npx nx-cloud stop-all-agents
 
   agents:
