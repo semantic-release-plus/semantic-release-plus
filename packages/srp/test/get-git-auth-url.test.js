@@ -98,9 +98,9 @@ test('Convert shorthand URL', async (t) => {
       cwd,
       env,
       branch: { name: 'master' },
-      options: { repositoryUrl: 'semantic-release/semantic-release' },
+      options: { repositoryUrl: 'semantic-release-plus/semantic-release-plus' },
     }),
-    'https://github.com/semantic-release/semantic-release.git'
+    'https://github.com/semantic-release-plus/semantic-release-plus.git'
   );
 });
 
@@ -112,9 +112,11 @@ test('Convert GitLab shorthand URL', async (t) => {
       cwd,
       env,
       branch: { name: 'master' },
-      options: { repositoryUrl: 'gitlab:semantic-release/semantic-release' },
+      options: {
+        repositoryUrl: 'gitlab:semantic-release-plus/semantic-release-plus',
+      },
     }),
-    'https://gitlab.com/semantic-release/semantic-release.git'
+    'https://gitlab.com/semantic-release-plus/semantic-release-plus.git'
   );
 });
 

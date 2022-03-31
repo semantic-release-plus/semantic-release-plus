@@ -35,10 +35,16 @@
         "script": "test"
       }
     },
+    "e2e": {
+      "executor": "@nrwl/workspace:run-script",
+      "options": {
+        "script": "e2e"
+      }
+    },
     "release": {
       "executor": "@nrwl/workspace:run-script",
       "options": {
-        "script": "semantic-release"
+        "script": "release"
       }
     }
   },

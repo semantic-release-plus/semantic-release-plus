@@ -39,3 +39,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# e2e srp cert
+packages/srp/CertificateAuthorityCertificate.pem

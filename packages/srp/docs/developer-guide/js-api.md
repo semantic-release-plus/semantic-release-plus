@@ -3,7 +3,7 @@
 ## Usage
 
 ```js
-const semanticRelease = require('semantic-release');
+const semanticRelease = require('semantic-release-plus');
 const { WritableStreamBuffer } = require('stream-buffers');
 
 const stdoutBuffer = WritableStreamBuffer();

@@ -10,7 +10,7 @@ module.exports = ({ stdout, stderr }) =>
     },
     disabled: false,
     interactive: false,
-    scope: 'semantic-release',
+    scope: 'semantic-release-plus',
     stream: [stdout],
     types: {
       error: {

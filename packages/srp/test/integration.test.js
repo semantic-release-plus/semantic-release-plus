@@ -32,8 +32,10 @@ const requireNoCache = proxyquire.noPreserveCache();
 // FIXME: even though eslint says GITHUB_ACTION and GITHUB_TOKEN is unused if you remove them the tests fail
 const {
   // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   GITHUB_ACTION,
   // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   GITHUB_TOKEN,
   ...processEnvWithoutGitHubActionsVariables
 } = process.env;
@@ -59,7 +61,7 @@ const npmTestEnv = {
   ).toString('base64'),
 };
 
-const cli = require.resolve('../src/bin/semantic-release');
+const cli = require.resolve('../src/bin/semantic-release-plus');
 const pluginError = require.resolve('./fixtures/plugin-error');
 const pluginInheritedError = require.resolve(
   './fixtures/plugin-error-inherited'
@@ -103,7 +105,7 @@ test('Release patch, minor and major versions', async (t) => {
   );
   t.log('Commit a chore');
   await gitCommits(['chore: Init repository'], { cwd });
-  t.log('$ semantic-release');
+  t.log('$ semantic-release-plus');
   let { stdout, exitCode } = await execa(cli, [], {
     env,
     cwd,
@@ -133,7 +135,7 @@ test('Release patch, minor and major versions', async (t) => {
 
   t.log('Commit a feature');
   await gitCommits(['feat: Initial commit'], { cwd });
-  t.log('$ semantic-release');
+  t.log('$ semantic-release-plus');
   ({ stdout, exitCode } = await execa(cli, [], { env, cwd, extendEnv: false }));
   t.regex(
     stdout,
@@ -180,7 +182,7 @@ test('Release patch, minor and major versions', async (t) => {
 
   t.log('Commit a fix');
   await gitCommits(['fix: bar'], { cwd });
-  t.log('$ semantic-release');
+  t.log('$ semantic-release-plus');
   ({ stdout, exitCode } = await execa(cli, [], { env, cwd, extendEnv: false }));
   t.regex(
     stdout,
@@ -227,7 +229,7 @@ test('Release patch, minor and major versions', async (t) => {
 
   t.log('Commit a feature');
   await gitCommits(['feat: baz'], { cwd });
-  t.log('$ semantic-release');
+  t.log('$ semantic-release-plus');
   ({ stdout, exitCode } = await execa(cli, [], { env, cwd, extendEnv: false }));
   t.regex(
     stdout,
@@ -276,7 +278,7 @@ test('Release patch, minor and major versions', async (t) => {
   await gitCheckout('next', true, { cwd });
   await gitPush('origin', 'next', { cwd });
   await gitCommits(['feat: foo\n\n BREAKING CHANGE: bar'], { cwd });
-  t.log('$ semantic-release');
+  t.log('$ semantic-release-plus');
   ({ stdout, exitCode } = await execa(cli, [], {
     env: { ...env, TRAVIS_BRANCH: 'next' },
     cwd,
@@ -336,7 +338,7 @@ test('Release patch, minor and major versions', async (t) => {
   await gitCheckout('master', false, { cwd });
   await merge('next', { cwd });
   await gitPush('origin', 'master', { cwd });
-  t.log('$ semantic-release');
+  t.log('$ semantic-release-plus');
   ({ stdout, exitCode } = await execa(cli, [], { env, cwd, extendEnv: false }));
   t.regex(stdout, new RegExp(`Updated GitHub release: release-url/${version}`));
   t.regex(
@@ -568,7 +570,7 @@ test('Pass options via CLI arguments', async (t) => {
   const version = '1.0.0';
   t.log('Commit a feature');
   await gitCommits(['feat: Initial commit'], { cwd });
-  t.log('$ semantic-release');
+  t.log('$ semantic-release-plus');
   const { stdout, exitCode } = await execa(
     cli,
     [
@@ -686,7 +688,7 @@ test('Log unexpected errors from plugins and exit with 1', async (t) => {
   /* Initial release */
   t.log('Commit a feature');
   await gitCommits(['feat: Initial commit'], { cwd });
-  t.log('$ semantic-release');
+  t.log('$ semantic-release-plus');
   const { stderr, exitCode } = await execa(cli, [], {
     env,
     cwd,
@@ -721,14 +723,16 @@ test('Log errors inheriting SemanticReleaseError and exit with 1', async (t) => 
 
   /* Initial release */
   t.log('Commit a feature');
-  await gitCommits(['feat: Initial commit'], { cwd });
-  t.log('$ semantic-release');
-  const { stderr, exitCode } = await execa(cli, [], {
+  gitCommits(['feat: Initial commit'], { cwd });
+  t.log('$ semantic-release-plus');
+  const val = await execa(cli, ['--debug'], {
     env,
     cwd,
     reject: false,
     extendEnv: false,
   });
+  console.log(val);
+  const { stderr, exitCode } = val;
   // Verify the type and message are logged
   t.regex(stderr, /EINHERITED Inherited error/);
   t.is(exitCode, 1);
@@ -748,7 +752,7 @@ test('Exit with 1 if missing permission to push to the remote repository', async
   t.log('Commit a feature');
   await gitCommits(['feat: Initial commit'], { cwd });
   await gitPush('origin', 'master', { cwd });
-  t.log('$ semantic-release');
+  t.log('$ semantic-release-plus');
   const { stderr, exitCode } = await execa(
     cli,
     [
@@ -779,7 +783,7 @@ test('Hide sensitive environment variable values from the logs', async (t) => {
     release: { verifyConditions: [pluginLogEnv], fail: false, success: false },
   });
 
-  t.log('$ semantic-release');
+  t.log('$ semantic-release-plus');
   const { stdout, stderr } = await execa(cli, [], {
     env: { ...env, MY_TOKEN: 'secret token' },
     cwd,

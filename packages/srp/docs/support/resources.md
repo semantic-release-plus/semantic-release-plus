@@ -19,4 +19,4 @@
 
 ## Tutorials
 
-- ["How to Write a JavaScript Library - Automating Releases with semantic-release" – egghead.io](https://egghead.io/lessons/javascript-automating-releases-with-semantic-release)
+- ["How to Write a JavaScript Library - Automating Releases with semantic-release-plus" – egghead.io](https://egghead.io/lessons/javascript-automating-releases-with-semantic-release)

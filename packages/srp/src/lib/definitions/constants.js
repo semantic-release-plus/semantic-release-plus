@@ -4,9 +4,9 @@ const FIRST_RELEASE = '1.0.0';
 
 const FIRSTPRERELEASE = '1';
 
-const COMMIT_NAME = 'semantic-release-bot';
+const COMMIT_NAME = 'semantic-release-plus-bot';
 
-const COMMIT_EMAIL = 'semantic-release-bot@martynus.net';
+const COMMIT_EMAIL = 'semantic-release-plus-bot@justindietz.com';
 
 const RELEASE_NOTES_SEPARATOR = '\n\n';
 
@@ -14,7 +14,7 @@ const SECRET_REPLACEMENT = '[secure]';
 
 const SECRET_MIN_SIZE = 5;
 
-const GIT_NOTE_REF = 'semantic-release';
+const GIT_NOTE_REF = 'semantic-release-plus';
 
 module.exports = {
   RELEASE_TYPE,
