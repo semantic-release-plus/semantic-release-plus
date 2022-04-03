@@ -2,7 +2,7 @@ const { parse, format } = require('url');
 const { isNil } = require('lodash');
 const hostedGitInfo = require('hosted-git-info');
 const { verifyAuth } = require('./git');
-const debug = require('debug')('semantic-release:get-git-auth-url');
+const debug = require('debug')('semantic-release-plus:get-git-auth-url');
 
 /**
  * Machinery to format a repository URL with the given credentials
