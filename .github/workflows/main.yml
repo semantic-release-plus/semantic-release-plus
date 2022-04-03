@@ -45,8 +45,8 @@ jobs:
         run: npx nx affected --target=test --parallel --max-parallel=3
       - name: '🧪 Test ava'
         run: npx nx affected --target=ava --parallel --max-parallel=3
-      # - name: '🔎 E2E'
-      #   run: cd packages/srp && npm run e2e
+      - name: '🔎 E2E'
+        run: npx nx affected --target=e2e --parallel --max-parallel=3
       - name: '🏗️ Build'
         run: npx nx affected --target=build --configuration=production --parallel --max-parallel=3
       - name: '📦 Release'
