@@ -20,8 +20,11 @@
       "options": {
         "outputPath": "dist/packages/srp",
         "commands": [
-          "chmod +x dist/packages/srp/src/bin/semantic-release-plus.js"
-        ]
+          "ls -latr dist/packages/srp/src/bin",
+          "chmod +x dist/packages/srp/src/bin/semantic-release-plus.js",
+          "ls -latr dist/packages/srp/src/bin"
+        ],
+        "parallel": false
       },
       "dependsOn": [
         {
