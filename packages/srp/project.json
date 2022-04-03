@@ -3,7 +3,7 @@
   "sourceRoot": "packages/srp/src",
   "projectType": "library",
   "targets": {
-    "build": {
+    "pre-build": {
       "executor": "@nrwl/node:package",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -13,6 +13,20 @@
         "main": "packages/srp/src/index.js",
         "assets": ["packages/srp/*.md"]
       }
+    },
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "chmod +x dist/packages/srp/src/bin/semantic-release-plus.js"
+        ]
+      },
+      "dependsOn": [
+        {
+          "target": "pre-build",
+          "projects": "self"
+        }
+      ]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
