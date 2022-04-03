@@ -63,7 +63,9 @@ const npmTestEnv = {
   ).toString('base64'),
 };
 
-const cli = require.resolve('../src/bin/semantic-release-plus');
+const cli = require.resolve(
+  '../../../dist/packages/srp/src/bin/semantic-release-plus'
+);
 const pluginError = require.resolve('./fixtures/plugin-error');
 const pluginInheritedError = require.resolve(
   './fixtures/plugin-error-inherited'
