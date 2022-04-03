@@ -334,7 +334,7 @@ async function logErrors({ logger, stderr }, err) {
       }
     } else {
       logger.error(
-        'An error occurred while running semantic-release: %O',
+        'An error occurred while running semantic-release-plus: %O',
         error
       );
     }

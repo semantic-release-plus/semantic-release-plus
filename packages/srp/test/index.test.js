@@ -1182,7 +1182,7 @@ test('Log all "verifyConditions" errors', async (t) => {
   );
   t.true(
     t.context.error.calledWith(
-      'An error occurred while running semantic-release: %O',
+      'An error occurred while running semantic-release-plus: %O',
       error1
     )
   );
