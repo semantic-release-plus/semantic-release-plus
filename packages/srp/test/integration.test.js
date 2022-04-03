@@ -74,6 +74,9 @@ const pluginLogEnv = require.resolve('./fixtures/plugin-log-env');
 
 test.before(async () => {
   await Promise.all([gitbox.start(), npmRegistry.start(), mockServer.start()]);
+  const res = await execa(cli, ['--version']);
+  console.log(__dirname);
+  console.log(res);
 });
 
 test.after.always(async () => {

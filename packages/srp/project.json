@@ -53,7 +53,13 @@
       "executor": "@nrwl/workspace:run-script",
       "options": {
         "script": "e2e"
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "self"
+        }
+      ]
     },
     "release": {
       "executor": "@nrwl/workspace:run-script",
