@@ -141,7 +141,7 @@ async function fetch(repositoryUrl, branch, ciBranch, execaOptions) {
       ],
       execaOptions
     );
-  } catch (_) {
+  } catch {
     await execa(
       'git',
       [
@@ -178,7 +178,7 @@ async function fetchNotes(repositoryUrl, execaOptions) {
       ],
       execaOptions
     );
-  } catch (_) {
+  } catch {
     await execa(
       'git',
       [
