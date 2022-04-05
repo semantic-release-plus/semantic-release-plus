@@ -44,7 +44,7 @@ async function start() {
         factor: 2,
       }
     );
-  } catch (_) {
+  } catch {
     throw new Error(`Couldn't start npm-registry-docker after 2 min`);
   }
 
