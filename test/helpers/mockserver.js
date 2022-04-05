@@ -38,7 +38,7 @@ async function start() {
         factor: 2,
       }
     );
-  } catch (_) {
+  } catch {
     throw new Error(`Couldn't start mock-server after 2 min`);
   }
 }
