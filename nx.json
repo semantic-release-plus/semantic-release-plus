@@ -39,10 +39,7 @@
     "release": [
       {
         "target": "build",
-        "projects": "self",
-        "options": {
-          "configuration": "production"
-        }
+        "projects": "self"
       }
     ],
     "link-plugin": [
