@@ -1,5 +1,5 @@
 const { pick } = require('lodash');
-const marked = require('marked');
+const { marked } = require('marked');
 const envCi = require('env-ci');
 const hookStd = require('hook-std');
 const semver = require('semver');
