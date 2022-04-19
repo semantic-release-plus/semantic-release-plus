@@ -40,7 +40,6 @@ module.exports = async ({
     author: c.author?.name,
     committer: c.committer?.name,
     subject: c.subject,
-    hash: c.hash,
     committerDate: c.committerDate,
     gitTags: c.getTags,
   }));
