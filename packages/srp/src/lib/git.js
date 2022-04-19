@@ -2,6 +2,12 @@ const gitLogParser = require('git-log-parser');
 const getStream = require('get-stream');
 const execa = require('execa');
 const debug = require('debug')('semantic-release:git');
+const {
+  gitNotesShow,
+  gitFetchNotes,
+  gitPushNotes,
+  gitAddNote,
+} = require('./git-note-utils');
 const { GIT_NOTE_REF } = require('./definitions/constants');
 
 Object.assign(gitLogParser.fields, {
@@ -29,7 +35,7 @@ async function getTagHead(tagName, execaOptions) {
  * @param {String} branch The branch for which to retrieve the tags.
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
- * @return {Array<String>} List of git tags.
+ * @return {Promise<Array<String>>} List of git tags.
  * @throws {Error} If the `git` command fails.
  */
 async function getTags(branch, execaOptions) {
@@ -163,35 +169,15 @@ async function fetch(repositoryUrl, branch, ciBranch, execaOptions) {
 /**
  * Unshallow the git repository if necessary and fetch all the notes.
  *
- * @param {String} repositoryUrl The remote repository URL.
+ * @param {{repositoryUrl:string, tagFormat:string}} options
  * @param {Object} [execaOpts] Options to pass to `execa`.
  */
-async function fetchNotes(repositoryUrl, execaOptions) {
-  try {
-    await execa(
-      'git',
-      [
-        'fetch',
-        '--unshallow',
-        repositoryUrl,
-        `+refs/notes/${GIT_NOTE_REF}:refs/notes/${GIT_NOTE_REF}`,
-      ],
-      execaOptions
-    );
-  } catch {
-    await execa(
-      'git',
-      [
-        'fetch',
-        repositoryUrl,
-        `+refs/notes/${GIT_NOTE_REF}:refs/notes/${GIT_NOTE_REF}`,
-      ],
-      {
-        ...execaOptions,
-        reject: false,
-      }
-    );
-  }
+async function fetchNotes({ repositoryUrl, gitNotesRef }, execaOptions) {
+  await Promise.all([
+    gitFetchNotes({ repositoryUrl, gitNotesRef }, execaOptions),
+    // TODO: Remove Legacy GIT_NOTE_REF
+    gitFetchNotes({ repositoryUrl, gitNotesRef: GIT_NOTE_REF }, execaOptions),
+  ]);
 }
 
 /**
@@ -295,12 +281,8 @@ async function push(repositoryUrl, execaOptions) {
  *
  * @throws {Error} if the push failed.
  */
-async function pushNotes(repositoryUrl, execaOptions) {
-  await execa(
-    'git',
-    ['push', repositoryUrl, `refs/notes/${GIT_NOTE_REF}`],
-    execaOptions
-  );
+async function pushNotes({ repositoryUrl, gitNotesRef }, execaOptions) {
+  await gitPushNotes({ repositoryUrl, gitNotesRef }, execaOptions);
 }
 
 /**
@@ -376,30 +358,31 @@ async function isBranchUpToDate(repositoryUrl, branch, execaOptions) {
 /**
  * Get and parse the JSON note of a given reference.
  *
- * @param {String} ref The Git reference for which to retrieve the note.
+ * @param {{commitish:string, tagFormat:string}} options The Git reference for which to retrieve the note.
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
  * @return {Object} the parsed JSON note if there is one, an empty object otherwise.
  */
-async function getNote(ref, execaOptions) {
+async function getNote({ gitNotesRef, commitish }, execaOptions) {
+  let rawNote = '{}';
   try {
-    return JSON.parse(
-      (
-        await execa(
-          'git',
-          ['notes', '--ref', GIT_NOTE_REF, 'show', ref],
-          execaOptions
-        )
-      ).stdout
-    );
+    // check the new notes location
+    rawNote = await gitNotesShow({ gitNotesRef, commitish }, execaOptions);
+    debug(`retrieved git note: ${rawNote}`);
   } catch (error) {
-    if (error.exitCode === 1) {
-      return {};
+    try {
+      // check the legacy notes location
+      rawNote = await gitNotesShow(
+        { gitNotesRef: GIT_NOTE_REF, commitish },
+        execaOptions
+      );
+      debug(`retrieved legacy git note: ${rawNote}`);
+    } catch (error) {
+      debug(error);
     }
-
-    debug(error);
-    throw error;
   }
+
+  return JSON.parse(rawNote);
 }
 
 /**
@@ -409,19 +392,9 @@ async function getNote(ref, execaOptions) {
  * @param {String} ref The Git reference to add the note to.
  * @param {Object} [execaOpts] Options to pass to `execa`.
  */
-async function addNote(note, ref, execaOptions) {
-  await execa(
-    'git',
-    [
-      'notes',
-      '--ref',
-      GIT_NOTE_REF,
-      'add',
-      '-f',
-      '-m',
-      JSON.stringify(note),
-      ref,
-    ],
+async function addNote({ gitNotesRef, note, commitish }, execaOptions) {
+  await gitAddNote(
+    { gitNotesRef, note: JSON.stringify(note), commitish, overwrite: true },
     execaOptions
   );
 }

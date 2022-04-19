@@ -17,6 +17,7 @@ const {
   addNote,
   fetchNotes,
 } = require('../src/lib/git');
+const { gitNotesShow, gitAddNote } = require('../src/lib/git-note-utils');
 const {
   gitRepo,
   gitCommits,
@@ -30,11 +31,13 @@ const {
   gitPush,
   gitDetachedHead,
   gitDetachedHeadFromBranch,
-  gitAddNote,
-  gitGetNote,
   gitFetch,
   initGit,
 } = require('./helpers/git-utils');
+
+const defaultOptions = {
+  gitNotesRef: 'semantic-release/v_',
+};
 
 test('Get the last commit sha', async (t) => {
   // Create a git repository, set the current working directory at the root of the repo
@@ -365,9 +368,24 @@ test('Get a commit note', async (t) => {
   // Add commits to the master branch
   const commits = await gitCommits(['First'], { cwd });
 
-  await gitAddNote(JSON.stringify({ note: 'note' }), commits[0].hash, { cwd });
+  await gitAddNote(
+    {
+      note: JSON.stringify({ note: 'note' }),
+      commitish: commits[0].hash,
+      gitNotesRef: defaultOptions.gitNotesRef,
+    },
+    { cwd }
+  );
 
-  t.deepEqual(await getNote(commits[0].hash, { cwd }), { note: 'note' });
+  t.deepEqual(
+    await getNote(
+      { commitish: commits[0].hash, gitNotesRef: defaultOptions.gitNotesRef },
+      { cwd }
+    ),
+    {
+      note: 'note',
+    }
+  );
 });
 
 test('Return empty object if there is no commit note', async (t) => {
@@ -376,7 +394,13 @@ test('Return empty object if there is no commit note', async (t) => {
   // Add commits to the master branch
   const commits = await gitCommits(['First'], { cwd });
 
-  t.deepEqual(await getNote(commits[0].hash, { cwd }), {});
+  t.deepEqual(
+    await getNote(
+      { commitish: commits[0].hash, gitNotesRef: defaultOptions.gitNotesRef },
+      { cwd }
+    ),
+    {}
+  );
 });
 
 test('Throw error if a commit note in invalid', async (t) => {
@@ -385,9 +409,21 @@ test('Throw error if a commit note in invalid', async (t) => {
   // Add commits to the master branch
   const commits = await gitCommits(['First'], { cwd });
 
-  await gitAddNote('non-json note', commits[0].hash, { cwd });
+  await gitAddNote(
+    {
+      note: 'non-json note',
+      commitish: commits[0].hash,
+      gitNotesRef: defaultOptions.gitNotesRef,
+    },
+    { cwd }
+  );
 
-  await t.throwsAsync(getNote(commits[0].hash, { cwd }));
+  await t.throwsAsync(
+    getNote(
+      { commitish: commits[0].hash, gitNotesRef: defaultOptions.gitNotesRef },
+      { cwd }
+    )
+  );
 });
 
 test('Add a commit note', async (t) => {
@@ -396,9 +432,22 @@ test('Add a commit note', async (t) => {
   // Add commits to the master branch
   const commits = await gitCommits(['First'], { cwd });
 
-  await addNote({ note: 'note' }, commits[0].hash, { cwd });
+  await addNote(
+    {
+      note: { note: 'note' },
+      commitish: commits[0].hash,
+      gitNotesRef: defaultOptions.gitNotesRef,
+    },
+    { cwd }
+  );
 
-  t.is(await gitGetNote(commits[0].hash, { cwd }), '{"note":"note"}');
+  t.is(
+    await gitNotesShow(
+      { commitish: commits[0].hash, gitNotesRef: defaultOptions.gitNotesRef },
+      { cwd }
+    ),
+    '{"note":"note"}'
+  );
 });
 
 test('Overwrite a commit note', async (t) => {
@@ -407,10 +456,29 @@ test('Overwrite a commit note', async (t) => {
   // Add commits to the master branch
   const commits = await gitCommits(['First'], { cwd });
 
-  await addNote({ note: 'note' }, commits[0].hash, { cwd });
-  await addNote({ note: 'note2' }, commits[0].hash, { cwd });
-
-  t.is(await gitGetNote(commits[0].hash, { cwd }), '{"note":"note2"}');
+  await addNote(
+    {
+      note: { note: 'note' },
+      commitish: commits[0].hash,
+      gitNotesRef: defaultOptions.gitNotesRef,
+    },
+    { cwd }
+  );
+  await addNote(
+    {
+      note: { note: 'note2' },
+      commitish: commits[0].hash,
+      gitNotesRef: defaultOptions.gitNotesRef,
+    },
+    { cwd }
+  );
+  t.is(
+    await gitNotesShow(
+      { gitNotesRef: defaultOptions.gitNotesRef, commitish: commits[0].hash },
+      { cwd }
+    ),
+    '{"note":"note2"}'
+  );
 });
 
 test('Unshallow and fetch repository with notes', async (t) => {
@@ -418,18 +486,39 @@ test('Unshallow and fetch repository with notes', async (t) => {
   let { cwd, repositoryUrl } = await gitRepo();
   // Add commits to the master branch
   const commits = await gitCommits(['First', 'Second'], { cwd });
-  await gitAddNote(JSON.stringify({ note: 'note' }), commits[0].hash, { cwd });
+  await gitAddNote(
+    {
+      gitNotesRef: defaultOptions.gitNotesRef,
+      note: JSON.stringify({ note: 'note' }),
+      commitish: commits[0].hash,
+    },
+    { cwd }
+  );
   // Create a shallow clone with only 1 commit
   cwd = await gitShallowClone(repositoryUrl);
 
   // Verify the shallow clone doesn't contains the note
-  await t.throwsAsync(gitGetNote(commits[0].hash, { cwd }));
+  await t.throwsAsync(
+    gitNotesShow(
+      { commitish: commits[0].hash, gitNotesRef: defaultOptions.gitNotesRef },
+      { cwd }
+    )
+  );
 
   await fetch(repositoryUrl, 'master', 'master', { cwd });
-  await fetchNotes(repositoryUrl, { cwd });
+  await fetchNotes(
+    { repositoryUrl, gitNotesRef: defaultOptions.gitNotesRef },
+    { cwd }
+  );
 
   // Verify the shallow clone contains the note
-  t.is(await gitGetNote(commits[0].hash, { cwd }), '{"note":"note"}');
+  t.is(
+    await gitNotesShow(
+      { commitish: commits[0].hash, gitNotesRef: defaultOptions.gitNotesRef },
+      { cwd }
+    ),
+    '{"note":"note"}'
+  );
 });
 
 test('Fetch all notes on a detached head repository', async (t) => {
@@ -438,11 +527,27 @@ test('Fetch all notes on a detached head repository', async (t) => {
   await gitCommits(['First'], { cwd });
   const [commit] = await gitCommits(['Second'], { cwd });
   await gitPush(repositoryUrl, 'master', { cwd });
-  await gitAddNote(JSON.stringify({ note: 'note' }), commit.hash, { cwd });
+  await gitAddNote(
+    {
+      note: JSON.stringify({ note: 'note' }),
+      commitish: commit.hash,
+      gitNotesRef: defaultOptions.gitNotesRef,
+    },
+    { cwd }
+  );
   cwd = await gitDetachedHead(repositoryUrl, commit.hash);
 
   await fetch(repositoryUrl, 'master', 'master', { cwd });
-  await fetchNotes(repositoryUrl, { cwd });
+  await fetchNotes(
+    { repositoryUrl, gitNotesRef: defaultOptions.gitNotesRef },
+    { cwd }
+  );
 
-  t.is(await gitGetNote(commit.hash, { cwd }), '{"note":"note"}');
+  t.is(
+    await gitNotesShow(
+      { commitish: commit.hash, gitNotesRef: defaultOptions.gitNotesRef },
+      { cwd }
+    ),
+    '{"note":"note"}'
+  );
 });

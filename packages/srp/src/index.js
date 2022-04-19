@@ -28,6 +28,7 @@ const {
 } = require('./lib/git');
 const getError = require('./lib/get-error');
 const { COMMIT_NAME, COMMIT_EMAIL } = require('./lib/definitions/constants');
+const { getGitNotesRef } = require('./lib/git-note-utils');
 
 let markedOptionsSet = false;
 async function terminalOutput(text) {
@@ -42,7 +43,7 @@ async function terminalOutput(text) {
 
 /* eslint complexity: off */
 async function run(context, plugins) {
-  const { cwd, env, options, logger } = context;
+  const { cwd, env, options, logger, gitNotesRef } = context;
   const { isCi, branch, prBranch, isPr } = context.envCi;
   const ciBranch = isPr ? prBranch : branch;
 
@@ -170,12 +171,20 @@ async function run(context, plugins) {
         );
       } else {
         await addNote(
-          { channels: [...currentRelease.channels, nextRelease.channel] },
-          nextRelease.gitHead,
+          {
+            note: {
+              channels: [...currentRelease.channels, nextRelease.channel],
+            },
+            commitish: nextRelease.gitHead,
+            gitNotesRef,
+          },
           { cwd, env }
         );
         await push(options.repositoryUrl, { cwd, env });
-        await pushNotes(options.repositoryUrl, { cwd, env });
+        await pushNotes(
+          { repositoryUrl: options.repositoryUrl, gitNotesRef },
+          { cwd, env }
+        );
         logger.success(
           `Add ${
             nextRelease.channel
@@ -273,12 +282,22 @@ async function run(context, plugins) {
   } else {
     // Create the tag before calling the publish plugins as some require the tag to exists
     await tag(nextRelease.gitTag, nextRelease.gitHead, { cwd, env });
-    await addNote({ channels: [nextRelease.channel] }, nextRelease.gitHead, {
-      cwd,
-      env,
-    });
+    await addNote(
+      {
+        note: { channels: [nextRelease.channel] },
+        commitish: nextRelease.gitHead,
+        gitNotesRef,
+      },
+      {
+        cwd,
+        env,
+      }
+    );
     await push(options.repositoryUrl, { cwd, env });
-    await pushNotes(options.repositoryUrl, { cwd, env });
+    await pushNotes(
+      { repositoryUrl: options.repositoryUrl, gitNotesRef },
+      { cwd, env }
+    );
     logger.success(`Created tag ${nextRelease.gitTag}`);
   }
 
@@ -356,6 +375,7 @@ module.exports = async (
   try {
     const { plugins, options } = await getConfig(context, cliOptions);
     context.options = options;
+    context.gitNotesRef = getGitNotesRef(options.tagFormat);
     try {
       const result = await run(context, plugins);
       unhook();

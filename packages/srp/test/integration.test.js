@@ -17,8 +17,8 @@ const {
   gitPush,
   gitCheckout,
   merge,
-  gitGetNote,
 } = require('./helpers/git-utils');
+const { gitNotesShow } = require('../src/lib/git-note-utils');
 const { npmView } = require('./helpers/npm-utils');
 const gitbox = require('./helpers/gitbox');
 const mockServer = require('./helpers/mockserver');
@@ -27,6 +27,10 @@ const npmRegistry = require('./helpers/npm-registry');
 /* eslint camelcase: ["error", {properties: "never"}] */
 
 const requireNoCache = proxyquire.noPreserveCache();
+
+const defaultOptions = {
+  gitNotesRef: 'semantic-release/v_',
+};
 
 // Environment variables used with semantic-release cli (similar to what a user would setup)
 // FIXME: even though eslint says GITHUB_ACTION and GITHUB_TOKEN is unused if you remove them the tests fail
@@ -304,7 +308,13 @@ test('Release patch, minor and major versions', async (t) => {
   } = await npmView(packageName, npmTestEnv));
   head = await gitHead({ cwd });
   t.is(releasedVersion, version);
-  t.is(await gitGetNote(`v${version}`, { cwd }), '{"channels":["next"]}');
+  t.is(
+    await gitNotesShow(
+      { gitNotesRef: defaultOptions.gitNotesRef, commitish: `v${version}` },
+      { cwd }
+    ),
+    '{"channels":["next"]}'
+  );
   t.is(await gitTagHead(`v${version}`, { cwd }), head);
   t.is(await gitRemoteTagHead(authUrl, `v${version}`, { cwd }), head);
   t.log(`+ released ${releasedVersion} on @next`);
@@ -354,7 +364,13 @@ test('Release patch, minor and major versions', async (t) => {
     'dist-tags': { latest: releasedVersion },
   } = await npmView(packageName, npmTestEnv));
   t.is(releasedVersion, version);
-  t.is(await gitGetNote(`v${version}`, { cwd }), '{"channels":["next",null]}');
+  t.is(
+    await gitNotesShow(
+      { gitNotesRef: defaultOptions.gitNotesRef, commitish: `v${version}` },
+      { cwd }
+    ),
+    '{"channels":["next",null]}'
+  );
   t.is(
     await gitTagHead(`v${version}`, { cwd }),
     await gitTagHead(`v${version}`, { cwd })

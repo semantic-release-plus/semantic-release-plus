@@ -86,7 +86,7 @@ async function initBareRepo(repositoryUrl, branch = 'master') {
  * @param {Array<string>} messages Commit messages.
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
- * @returns {Array<Commit>} The created commits, in reverse order (to match `git log` order).
+ * @returns {Promise<Array<Commit>>} The created commits, in reverse order (to match `git log` order).
  */
 async function gitCommits(messages, execaOptions) {
   await pEachSeries(
@@ -360,37 +360,6 @@ async function rebase(ref, execaOptions) {
   await execa('git', ['rebase', ref], execaOptions);
 }
 
-/**
- * Add a note to a Git reference.
- *
- * @param {String} note The note to add.
- * @param {String} ref The ref to add the note to.
- * @param {Object} [execaOpts] Options to pass to `execa`.
- */
-async function gitAddNote(note, ref, execaOptions) {
-  await execa(
-    'git',
-    ['notes', '--ref', GIT_NOTE_REF, 'add', '-m', note, ref],
-    execaOptions
-  );
-}
-
-/**
- * Get the note associated with a Git reference.
- *
- * @param {String} ref The ref to get the note from.
- * @param {Object} [execaOpts] Options to pass to `execa`.
- */
-async function gitGetNote(ref, execaOptions) {
-  return (
-    await execa(
-      'git',
-      ['notes', '--ref', GIT_NOTE_REF, 'show', ref],
-      execaOptions
-    )
-  ).stdout;
-}
-
 module.exports = {
   initGit,
   gitRepo,
@@ -412,6 +381,4 @@ module.exports = {
   merge,
   mergeFf,
   rebase,
-  gitAddNote,
-  gitGetNote,
 };
