@@ -1,5 +1,6 @@
 const debug = require('debug')('semantic-release:get-commits');
 const { getCommits } = require('./git');
+const { stronsole } = require('./stronsole');
 
 /**
  * Retrieve the list of commits on the current branch since the commit sha associated with the last release, or all the commits of the current branch if there is no last released version.
@@ -35,6 +36,6 @@ module.exports = async ({
   const commits = await getCommits(from, to, paths, { cwd, env });
 
   logger.log(`Found ${commits.length} commits since last release`);
-  debug('Parsed commits: %o', commits);
+  debug('Parsed commits:\n\r%s', stronsole.table(commits));
   return commits;
 };

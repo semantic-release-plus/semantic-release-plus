@@ -39,8 +39,11 @@ module.exports = async (
         },
         []
       );
-      const branchTagTable = stronsole.table(branchTags);
-      debug('found tags for branch %s:\n\r%s', branch.name, branchTagTable);
+      debug(
+        'found tags for branch %s:\n\r%s',
+        branch.name,
+        stronsole.table(branchTags)
+      );
       return [...branches, { ...branch, tags: branchTags }];
     },
     []
