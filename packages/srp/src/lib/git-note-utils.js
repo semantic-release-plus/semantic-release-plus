@@ -2,9 +2,8 @@
 const execa = require('execa');
 const debug = require('debug')('semantic-release:git-note-utils');
 const template = require('lodash/template');
-const { GIT_NOTE_REF } = require('./definitions/constants');
 
-function getGitNotesRef(tagFormat, gitNotesRef = GIT_NOTE_REF) {
+function getGitNotesRef(tagFormat, gitNotesRef = 'semantic-release-plus') {
   const sanitizedTagFormat = template(tagFormat)({ version: '_' });
   const sanitizedGitNotesRef = `${gitNotesRef}/${sanitizedTagFormat}`;
   debug(`notes ref: ${sanitizedGitNotesRef}`);

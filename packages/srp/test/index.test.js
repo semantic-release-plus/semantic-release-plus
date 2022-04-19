@@ -26,7 +26,7 @@ const {
 } = require('./helpers/git-utils');
 const { gitAddNote, gitNotesShow } = require('../src/lib/git-note-utils');
 
-const gitNotesRef = 'semantic-release/v_';
+const gitNotesRef = 'semantic-release-plus/v_';
 
 const requireNoCache = proxyquire.noPreserveCache();
 const pluginNoop = require.resolve('./fixtures/plugin-noop');

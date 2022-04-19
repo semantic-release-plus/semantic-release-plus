@@ -8,7 +8,7 @@ const {
   gitCheckout,
 } = require('../helpers/git-utils');
 
-const gitNotesRef = 'semantic-release/v_';
+const gitNotesRef = 'semantic-release-plus/v_';
 
 test('Get the valid tags', async (t) => {
   const { cwd } = await gitRepo();

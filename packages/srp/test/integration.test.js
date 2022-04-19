@@ -28,9 +28,7 @@ const npmRegistry = require('./helpers/npm-registry');
 
 const requireNoCache = proxyquire.noPreserveCache();
 
-const defaultOptions = {
-  gitNotesRef: 'semantic-release/v_',
-};
+const gitNotesRef = 'semantic-release-plus/v_';
 
 // Environment variables used with semantic-release cli (similar to what a user would setup)
 // FIXME: even though eslint says GITHUB_ACTION and GITHUB_TOKEN is unused if you remove them the tests fail
@@ -309,10 +307,7 @@ test('Release patch, minor and major versions', async (t) => {
   head = await gitHead({ cwd });
   t.is(releasedVersion, version);
   t.is(
-    await gitNotesShow(
-      { gitNotesRef: defaultOptions.gitNotesRef, commitish: `v${version}` },
-      { cwd }
-    ),
+    await gitNotesShow({ gitNotesRef, commitish: `v${version}` }, { cwd }),
     '{"channels":["next"]}'
   );
   t.is(await gitTagHead(`v${version}`, { cwd }), head);
@@ -365,10 +360,7 @@ test('Release patch, minor and major versions', async (t) => {
   } = await npmView(packageName, npmTestEnv));
   t.is(releasedVersion, version);
   t.is(
-    await gitNotesShow(
-      { gitNotesRef: defaultOptions.gitNotesRef, commitish: `v${version}` },
-      { cwd }
-    ),
+    await gitNotesShow({ gitNotesRef, commitish: `v${version}` }, { cwd }),
     '{"channels":["next",null]}'
   );
   t.is(
