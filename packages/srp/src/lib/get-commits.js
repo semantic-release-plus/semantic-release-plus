@@ -34,8 +34,17 @@ module.exports = async ({
   }
 
   const commits = await getCommits(from, to, paths, { cwd, env });
-
+  const commitsForDebug = commits.map((c) => ({
+    short: c.commit?.short,
+    tree: c.tree?.short,
+    author: c.author?.name,
+    committer: c.committer?.name,
+    subject: c.subject,
+    hash: c.hash,
+    committerDate: c.committerDate,
+    gitTags: c.getTags,
+  }));
   logger.log(`Found ${commits.length} commits since last release`);
-  debug('Parsed commits:\n\r%s', stronsole.table(commits));
+  debug('Parsed commits:\n\r%s', stronsole.table(commitsForDebug));
   return commits;
 };
