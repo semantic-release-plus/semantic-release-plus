@@ -33,7 +33,9 @@
     "release": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": ["npx semantic-release-plus"],
+        "commands": [
+          "node ../../dist/packages/srp/src/bin/semantic-release-plus.js"
+        ],
         "cwd": "packages/core/"
       }
     }
