@@ -4,7 +4,10 @@ const pReduce = require('p-reduce');
 const debug = require('debug')('semantic-release:get-tags');
 const { getTags, getNote } = require('../../lib/git');
 
-module.exports = async ({ cwd, env, options: { tagFormat } }, branches) => {
+module.exports = async (
+  { cwd, env, gitNotesRef, options: { tagFormat } },
+  branches
+) => {
   // Generate a regex to parse tags formatted with `tagFormat`
   // by replacing the `version` variable in the template by `(.+)`.
   // The `tagFormat` is compiled with space as the `version` as it's an invalid tag character,
@@ -26,9 +29,9 @@ module.exports = async ({ cwd, env, options: { tagFormat } }, branches) => {
                 {
                   gitTag: tag,
                   version,
-                  channels: (await getNote(tag, { cwd, env })).channels || [
-                    null,
-                  ],
+                  channels: (
+                    await getNote({ commitish: tag, gitNotesRef }, { cwd, env })
+                  ).channels || [null],
                 },
               ]
             : branchTags;

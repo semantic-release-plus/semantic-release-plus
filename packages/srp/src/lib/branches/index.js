@@ -9,7 +9,7 @@ const getTags = require('./get-tags');
 const normalize = require('./normalize');
 
 module.exports = async (repositoryUrl, ciBranch, context) => {
-  const { cwd, env } = context;
+  const { cwd, env, gitNotesRef } = context;
 
   const remoteBranches = await expand(
     repositoryUrl,
@@ -23,7 +23,7 @@ module.exports = async (repositoryUrl, ciBranch, context) => {
     await fetch(repositoryUrl, name, ciBranch, { cwd, env });
   });
 
-  await fetchNotes(repositoryUrl, { cwd, env });
+  await fetchNotes({ repositoryUrl, gitNotesRef }, { cwd, env });
 
   const branches = await getTags(context, remoteBranches);
 

@@ -23,9 +23,10 @@ const {
   merge,
   mergeFf,
   rebase,
-  gitAddNote,
-  gitGetNote,
 } = require('./helpers/git-utils');
+const { gitAddNote, gitNotesShow } = require('../src/lib/git-note-utils');
+
+const gitNotesRef = 'semantic-release/v_';
 
 const requireNoCache = proxyquire.noPreserveCache();
 const pluginNoop = require.resolve('./fixtures/plugin-noop');
@@ -52,7 +53,14 @@ test('Plugins are called with expected values', async (t) => {
   let commits = await gitCommits(['First'], { cwd });
   // Create the tag corresponding to version 1.0.0
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['next'] }), 'v1.0.0', { cwd });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['next'] }),
+      commitish: 'v1.0.0',
+    },
+    { cwd }
+  );
   commits = (await gitCommits(['Second'], { cwd })).concat(commits);
   await gitCheckout('next', true, { cwd });
   await gitPush(repositoryUrl, 'next', { cwd });
@@ -563,13 +571,27 @@ test('Make a new release when a commit is forward-ported to an upper branch', as
   const { cwd, repositoryUrl } = await gitRepo(true);
   await gitCommits(['feat: initial release'], { cwd });
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, '1.0.x'] }), 'v1.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: [null, '1.0.x'] }),
+      commitish: 'v1.0.0',
+    },
+    {
+      cwd,
+    }
+  );
   await gitCheckout('1.0.x', true, { cwd });
   await gitCommits(['fix: fix on maintenance version 1.0.x'], { cwd });
   await gitTagVersion('v1.0.1', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['1.0.x'] }), 'v1.0.1', { cwd });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['1.0.x'] }),
+      commitish: 'v1.0.1',
+    },
+    { cwd }
+  );
   await gitPush('origin', '1.0.x', { cwd });
   await gitCheckout('master', false, { cwd });
   await gitCommits(['feat: new feature on master'], { cwd });
@@ -658,7 +680,10 @@ test('Publish a pre-release version', async (t) => {
   t.is(releases.length, 1);
   t.is(releases[0].version, '1.1.0-beta.1');
   t.is(releases[0].gitTag, 'v1.1.0-beta.1');
-  t.is(await gitGetNote('v1.1.0-beta.1', { cwd }), '{"channels":["beta"]}');
+  t.is(
+    await gitNotesShow({ gitNotesRef, commitish: 'v1.1.0-beta.1' }, { cwd }),
+    '{"channels":["beta"]}'
+  );
 
   await gitCommits(['fix: a fix'], { cwd });
   ({ releases } = await semanticRelease(options, {
@@ -671,7 +696,10 @@ test('Publish a pre-release version', async (t) => {
   t.is(releases.length, 1);
   t.is(releases[0].version, '1.1.0-beta.2');
   t.is(releases[0].gitTag, 'v1.1.0-beta.2');
-  t.is(await gitGetNote('v1.1.0-beta.2', { cwd }), '{"channels":["beta"]}');
+  t.is(
+    await gitNotesShow({ gitNotesRef, commitish: 'v1.1.0-beta.2' }, { cwd }),
+    '{"channels":["beta"]}'
+  );
 });
 
 test('Publish releases from different branch on the same channel', async (t) => {
@@ -810,23 +838,44 @@ test('Do not add pre-releases to a different channel', async (t) => {
   const { cwd, repositoryUrl } = await gitRepo(true);
   await gitCommits(['feat: initial release'], { cwd });
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, 'beta'] }), 'v1.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: [null, 'beta'] }),
+      commitish: 'v1.0.0',
+    },
+    {
+      cwd,
+    }
+  );
   await gitCheckout('beta', true, { cwd });
   await gitCommits(
     ['feat: breaking change/n/nBREAKING CHANGE: break something'],
     { cwd }
   );
   await gitTagVersion('v2.0.0-beta.1', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['beta'] }), 'v2.0.0-beta.1', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['beta'] }),
+      commitish: 'v2.0.0-beta.1',
+    },
+    {
+      cwd,
+    }
+  );
   await gitCommits(['fix: a fix'], { cwd });
   await gitTagVersion('v2.0.0-beta.2', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['beta'] }), 'v2.0.0-beta.2', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['beta'] }),
+      commitish: 'v2.0.0-beta.2',
+    },
+    {
+      cwd,
+    }
+  );
   await gitPush('origin', 'beta', { cwd });
   await gitCheckout('master', false, { cwd });
   await merge('beta', { cwd });
@@ -878,9 +927,16 @@ async function addChannelMacro(t, mergeFunction) {
   const { cwd, repositoryUrl } = await gitRepo(true);
   const commits = await gitCommits(['feat: initial release'], { cwd });
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, 'next'] }), 'v1.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: [null, 'next'] }),
+      commitish: 'v1.0.0',
+    },
+    {
+      cwd,
+    }
+  );
   await gitCheckout('next', true, { cwd });
   commits.push(
     ...(await gitCommits(
@@ -889,14 +945,35 @@ async function addChannelMacro(t, mergeFunction) {
     ))
   );
   await gitTagVersion('v2.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['next'] }), 'v2.0.0', { cwd });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['next'] }),
+      commitish: 'v2.0.0',
+    },
+    { cwd }
+  );
 
   commits.push(...(await gitCommits(['fix: a fix'], { cwd })));
   await gitTagVersion('v2.0.1', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['next'] }), 'v2.0.1', { cwd });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['next'] }),
+      commitish: 'v2.0.1',
+    },
+    { cwd }
+  );
   commits.push(...(await gitCommits(['feat: a feature'], { cwd })));
   await gitTagVersion('v2.1.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['next'] }), 'v2.1.0', { cwd });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['next'] }),
+      commitish: 'v2.1.0',
+    },
+    { cwd }
+  );
   await gitPush('origin', 'next', { cwd });
   await gitCheckout('master', false, { cwd });
   // Merge all commits but last one from next to master
@@ -1176,12 +1253,26 @@ test('Dry-run skips addChannel, prepare, publish and success', async (t) => {
   const { cwd, repositoryUrl } = await gitRepo(true);
   await gitCommits(['First'], { cwd });
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, 'next'] }), 'v1.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: [null, 'next'] }),
+      commitish: 'v1.0.0',
+    },
+    {
+      cwd,
+    }
+  );
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['next'] }), 'v1.1.0', { cwd });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['next'] }),
+      commitish: 'v1.1.0',
+    },
+    { cwd }
+  );
 
   await gitPush(repositoryUrl, 'master', { cwd });
   await gitCheckout('next', true, { cwd });
@@ -1505,12 +1596,26 @@ test('Accept "undefined" value returned by "generateNotes" and "false" by "publi
   const { cwd, repositoryUrl } = await gitRepo(true);
   await gitCommits(['First'], { cwd });
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, 'next'] }), 'v1.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: [null, 'next'] }),
+      commitish: 'v1.0.0',
+    },
+    {
+      cwd,
+    }
+  );
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['next'] }), 'v1.1.0', { cwd });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['next'] }),
+      commitish: 'v1.1.0',
+    },
+    { cwd }
+  );
   await gitPush(repositoryUrl, 'master', { cwd });
   await gitCheckout('next', true, { cwd });
   await gitPush('origin', 'next', { cwd });
@@ -1614,9 +1719,16 @@ test('Throws "EINVALIDNEXTVERSION" if next release is out of range of the curren
   const { cwd, repositoryUrl } = await gitRepo(true);
   await gitCommits(['feat: initial commit'], { cwd });
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, '1.x'] }), 'v1.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: [null, '1.x'] }),
+      commitish: 'v1.0.0',
+    },
+    {
+      cwd,
+    }
+  );
   await gitCheckout('1.x', true, { cwd });
   await gitPush('origin', '1.x', { cwd });
   await gitCheckout('master', false, { cwd });
@@ -1678,7 +1790,14 @@ test('Throws "EINVALIDNEXTVERSION" if next release is out of range of the curren
   await gitCheckout('next', true, { cwd });
   await gitCommits(['feat: new feature on next'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['next'] }), 'v1.1.0', { cwd });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['next'] }),
+      commitish: 'v1.1.0',
+    },
+    { cwd }
+  );
   await gitPush('origin', 'next', { cwd });
   await gitCheckout('next-major', true, { cwd });
   await gitPush('origin', 'next-major', { cwd });
@@ -1737,14 +1856,28 @@ test('Throws "EINVALIDMAINTENANCEMERGE" if merge an out of range release in a ma
   const { cwd, repositoryUrl } = await gitRepo(true);
   await gitCommits(['First'], { cwd });
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, '1.1.x'] }), 'v1.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: [null, '1.1.x'] }),
+      commitish: 'v1.0.0',
+    },
+    {
+      cwd,
+    }
+  );
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, '1.1.x'] }), 'v1.1.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: [null, '1.1.x'] }),
+      commitish: 'v1.1.0',
+    },
+    {
+      cwd,
+    }
+  );
   await gitCheckout('1.1.x', 'master', { cwd });
   await gitPush('origin', '1.1.x', { cwd });
   await gitCheckout('master', false, { cwd });
@@ -2261,12 +2394,26 @@ test('skipTag skips adding tags', async (t) => {
   const { cwd, repositoryUrl } = await gitRepo(true);
   await gitCommits(['First'], { cwd });
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, 'next'] }), 'v1.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: [null, 'next'] }),
+      commitish: 'v1.0.0',
+    },
+    {
+      cwd,
+    }
+  );
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['next'] }), 'v1.1.0', { cwd });
+  await gitAddNote(
+    {
+      gitNotesRef,
+      note: JSON.stringify({ channels: ['next'] }),
+      commitish: 'v1.1.0',
+    },
+    { cwd }
+  );
 
   await gitPush(repositoryUrl, 'master', { cwd });
   await gitCheckout('next', true, { cwd });

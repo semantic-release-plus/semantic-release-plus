@@ -1,12 +1,14 @@
 const test = require('ava');
+const { gitAddNote } = require('../../src/lib/git-note-utils');
 const getTags = require('../../src/lib/branches/get-tags');
 const {
   gitRepo,
   gitCommits,
   gitTagVersion,
   gitCheckout,
-  gitAddNote,
 } = require('../helpers/git-utils');
+
+const gitNotesRef = 'semantic-release/v_';
 
 test('Get the valid tags', async (t) => {
   const { cwd } = await gitRepo();
@@ -21,7 +23,13 @@ test('Get the valid tags', async (t) => {
   await gitTagVersion('v3.0.0-beta.1', undefined, { cwd });
 
   const result = await getTags(
-    { cwd, options: { tagFormat: `v\${version}` } },
+    {
+      cwd,
+      options: {
+        tagFormat: `v\${version}`,
+        gitNotesRef,
+      },
+    },
     [{ name: 'master' }]
   );
 
@@ -41,28 +49,62 @@ test('Get the valid tags from multiple branches', async (t) => {
   const { cwd } = await gitRepo();
   await gitCommits(['First'], { cwd });
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, '1.x'] }), 'v1.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      note: JSON.stringify({ channels: [null, '1.x'] }),
+      commitish: 'v1.0.0',
+      gitNotesRef,
+    },
+    {
+      cwd,
+    }
+  );
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, '1.x'] }), 'v1.1.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      note: JSON.stringify({ channels: [null, '1.x'] }),
+      commitish: 'v1.1.0',
+      gitNotesRef,
+    },
+    {
+      cwd,
+    }
+  );
   await gitCheckout('1.x', true, { cwd });
   await gitCheckout('master', false, { cwd });
   await gitCommits(['Third'], { cwd });
   await gitTagVersion('v2.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, 'next'] }), 'v2.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      note: JSON.stringify({ channels: [null, 'next'] }),
+      commitish: 'v2.0.0',
+      gitNotesRef,
+    },
+    {
+      cwd,
+    }
+  );
   await gitCheckout('next', true, { cwd });
   await gitCommits(['Fourth'], { cwd });
   await gitTagVersion('v3.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: ['next'] }), 'v3.0.0', { cwd });
+  await gitAddNote(
+    {
+      note: JSON.stringify({ channels: ['next'] }),
+      commitish: 'v3.0.0',
+      gitNotesRef,
+    },
+    { cwd }
+  );
 
   const result = await getTags(
-    { cwd, options: { tagFormat: `v\${version}` } },
+    {
+      cwd,
+      gitNotesRef,
+      options: {
+        tagFormat: `v\${version}`,
+      },
+    },
     [{ name: '1.x' }, { name: 'master' }, { name: 'next' }]
   );
 
@@ -101,7 +143,10 @@ test('Return branches with and empty tags array if no valid tag is found', async
   await gitTagVersion('v3.0', undefined, { cwd });
 
   const result = await getTags(
-    { cwd, options: { tagFormat: `prefix@v\${version}` } },
+    {
+      cwd,
+      options: { tagFormat: `prefix@v\${version}`, gitNotesRef: `prefix@v_` },
+    },
     [{ name: 'master' }]
   );
 
@@ -114,23 +159,50 @@ test('Return branches with and empty tags array if no valid tag is found in hist
   await gitCheckout('next', true, { cwd });
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, 'next'] }), 'v1.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      note: JSON.stringify({ channels: [null, 'next'] }),
+      commitish: 'v1.0.0',
+      gitNotesRef,
+    },
+    {
+      cwd,
+    }
+  );
   await gitCommits(['Third'], { cwd });
   await gitTagVersion('v2.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, 'next'] }), 'v2.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      note: JSON.stringify({ channels: [null, 'next'] }),
+      commitish: 'v2.0.0',
+      gitNotesRef,
+    },
+    {
+      cwd,
+    }
+  );
   await gitCommits(['Fourth'], { cwd });
   await gitTagVersion('v3.0.0', undefined, { cwd });
-  await gitAddNote(JSON.stringify({ channels: [null, 'next'] }), 'v3.0.0', {
-    cwd,
-  });
+  await gitAddNote(
+    {
+      note: JSON.stringify({ channels: [null, 'next'] }),
+      commitish: 'v3.0.0',
+      gitNotesRef,
+    },
+    {
+      cwd,
+    }
+  );
   await gitCheckout('master', false, { cwd });
 
   const result = await getTags(
-    { cwd, options: { tagFormat: `prefix@v\${version}` } },
+    {
+      cwd,
+      options: {
+        tagFormat: `prefix@v\${version}`,
+        gitNotesRef: `prefix@v_`,
+      },
+    },
     [{ name: 'master' }, { name: 'next' }]
   );
 
