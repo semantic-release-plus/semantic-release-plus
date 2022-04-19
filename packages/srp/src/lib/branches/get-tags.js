@@ -2,7 +2,8 @@ const { template, escapeRegExp } = require('lodash');
 const semver = require('semver');
 const pReduce = require('p-reduce');
 const debug = require('debug')('semantic-release:get-tags');
-const { getTags, getNote } = require('../../lib/git');
+const { getTags, getNote } = require('../git');
+const { stronsole } = require('../stronsole');
 
 module.exports = async (
   { cwd, env, gitNotesRef, options: { tagFormat } },
@@ -38,8 +39,8 @@ module.exports = async (
         },
         []
       );
-
-      debug('found tags for branch %s: %o', branch.name, branchTags);
+      const branchTagTable = stronsole.table(branchTags);
+      debug('found tags for branch %s:\n\r%s', branch.name, branchTagTable);
       return [...branches, { ...branch, tags: branchTags }];
     },
     []

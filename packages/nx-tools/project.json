@@ -56,7 +56,7 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
-          "node ../../dist/packages/srp/src/bin/semantic-release-plus.js"
+          "node ../../dist/packages/srp/src/bin/semantic-release-plus.js --debug"
         ],
         "cwd": "packages/nx-tools"
       }
