@@ -43,6 +43,8 @@ jobs:
         run: npx nx affected --target=lint --parallel --max-parallel=3
       - name: '🧪 Test'
         run: npx nx affected --target=test --parallel --max-parallel=3
+      - name: '🧪 Test ava'
+        run: npx nx affected --target=ava --parallel --max-parallel=3
       # - name: '🔎 E2E'
       #   run: cd packages/srp && npm run e2e
       - name: '🏗️ Build'
