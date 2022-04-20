@@ -1,6 +1,6 @@
 # Contributing to semantic-release
 
-✨ Thanks for contributing to **semantic-release**! ✨
+✨ Thanks for contributing to **semantic-release-plus**! ✨
 
 As a contributor, here are the guidelines we would like you to follow:
 
@@ -15,13 +15,13 @@ We also recommend that you read [How to Contribute to Open Source](https://opens
 
 ## Code of conduct
 
-Help us keep **semantic-release** open and inclusive. Please read and follow our [Code of conduct](CODE_OF_CONDUCT.md).
+Help us keep **semantic-release-plus** open and inclusive. Please read and follow our [Code of conduct](CODE_OF_CONDUCT.md).
 
 ## How can I contribute?
 
 ### Improve documentation
 
-As a **semantic-release** user, you are the perfect candidate to help us improve our documentation: typo corrections, clarifications, more examples, new [recipes](docs/recipes), etc. Take a look at the [documentation issues that need help](https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+user%3Asemantic-release+archived%3Afalse+label%3A%22help+wanted%22+label%3Adocs+).
+As a **semantic-release-plus** user, you are the perfect candidate to help us improve our documentation: typo corrections, clarifications, more examples, new [recipes](docs/recipes), etc. Take a look at the [documentation issues that need help](https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+user%3Asemantic-release+archived%3Afalse+label%3A%22help+wanted%22+label%3Adocs+).
 
 Please follow the [Documentation guidelines](#documentation).
 
@@ -31,7 +31,7 @@ Some issues are created without information requested in the [Bug report guideli
 Help make them easier to resolve by adding any relevant information.
 
 Issues with the [design label](https://github.com/issues?q=is%3Aopen+is%3Aissue+user%3Asemantic-release+archived%3Afalse+label%3Adesign) are meant to discuss the implementation of new features.
-Participating in the discussion is a good opportunity to get involved and influence the future direction of **semantic-release**.
+Participating in the discussion is a good opportunity to get involved and influence the future direction of **semantic-release-plus**.
 
 ### Fix bugs and implement features
 
@@ -58,7 +58,7 @@ Please provide as much detail and context as possible and fill the information r
 
 ### New plugin request
 
-[Plugins](docs/usage/plugins.md) are a great way to extend **semantic-release** capabilities, integrate with other systems and support new project type.
+[Plugins](docs/usage/plugins.md) are a great way to extend **semantic-release-plus** capabilities, integrate with other systems and support new project type.
 Please provide as much detail and context as possible and fill the information requested in the [plugin suggestion template](https://github.com/semantic-release/semantic-release/issues/new?template=03_plugin_suggestion.md).
 
 ## Submitting a Pull Request
@@ -122,10 +122,10 @@ To ensure consistency and quality throughout the source code, all code modificat
 
 To ensure consistency and quality, all documentation modifications must:
 
-- Refer to brand in [bold](https://help.github.com/articles/basic-writing-and-formatting-syntax/#styling-text) with proper capitalization, i.e. **GitHub**, **semantic-release**, **npm**
+- Refer to brand in [bold](https://help.github.com/articles/basic-writing-and-formatting-syntax/#styling-text) with proper capitalization, i.e. **GitHub**, **semantic-release-plus**, **npm**
 - Prefer [tables](https://help.github.com/articles/organizing-information-with-tables) over [lists](https://help.github.com/articles/basic-writing-and-formatting-syntax/#lists) when listing key values, i.e. List of options with their description
 - Use [links](https://help.github.com/articles/basic-writing-and-formatting-syntax/#links) when you are referring to:
-  - a **semantic-release** concept described somewhere else in the documentation, i.e. How to [contribute](CONTRIBUTING.md)
+  - a **semantic-release-plus** concept described somewhere else in the documentation, i.e. How to [contribute](CONTRIBUTING.md)
   - a third-party product/brand/service, i.e. Integrate with [GitHub](https://github.com)
   - an external concept or feature, i.e. Create a [GitHub release](https://help.github.com/articles/creating-releases)
   - a package or module, i.e. The [`@semantic-release/github`](https://github.com/semantic-release/github) module

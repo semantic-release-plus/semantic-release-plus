@@ -1,7 +1,7 @@
 const gitLogParser = require('git-log-parser');
 const getStream = require('get-stream');
 const execa = require('execa');
-const debug = require('debug')('semantic-release:git');
+const debug = require('debug')('semantic-release-plus:git');
 const {
   gitNotesShow,
   gitFetchNotes,

@@ -35,7 +35,7 @@ Please make sure to add the \`repositoryUrl\` to the [semantic-release configura
   }),
   EGITNOPERMISSION: ({ options: { repositoryUrl }, branch: { name } }) => ({
     message: 'Cannot push to the Git repository.',
-    details: `**semantic-release** cannot push the version tag to the branch \`${name}\` on the remote Git repository with URL \`${repositoryUrl}\`.
+    details: `**semantic-release-plus** cannot push the version tag to the branch \`${name}\` on the remote Git repository with URL \`${repositoryUrl}\`.
 
 This can be caused by:
  - a misconfiguration of the [repositoryUrl](${linkify(
@@ -86,7 +86,7 @@ The invalid configuration is \`${stringify(plugin)}\`.`,
   }),
   EPLUGIN: ({ pluginName, type }) => ({
     message: `A plugin configured in the step ${type} is not a valid semantic-release plugin.`,
-    details: `A valid \`${type}\` **semantic-release** plugin must be a function or an object with a function in the property \`${type}\`.
+    details: `A valid \`${type}\` **semantic-release-plus** plugin must be a function or an object with a function in the property \`${type}\`.
 
 The plugin \`${pluginName}\` doesn't have the property \`${type}\` and cannot be used for the \`${type}\` step.
 
@@ -106,10 +106,10 @@ The \`analyzeCommits\` function of the \`${pluginName}\` returned \`${stringify(
     )}\` instead.
 
 We recommend to report the issue to the \`${pluginName}\` authors, providing the following informations:
-- The **semantic-release** version: \`${pkg.version}\`
-- The **semantic-release** logs from your CI job
+- The **semantic-release-plus** version: \`${pkg.version}\`
+- The **semantic-release-plus** logs from your CI job
 - The value returned by the plugin: \`${stringify(result)}\`
-- A link to the **semantic-release** plugin developer guide: [${linkify(
+- A link to the **semantic-release-plus** plugin developer guide: [${linkify(
       'docs/developer-guide/plugin.md'
     )}](${linkify('docs/developer-guide/plugin.md')})`,
   }),
@@ -123,10 +123,10 @@ The \`generateNotes\` function of the \`${pluginName}\` returned \`${stringify(
     )}\` instead.
 
 We recommend to report the issue to the \`${pluginName}\` authors, providing the following informations:
-- The **semantic-release** version: \`${pkg.version}\`
-- The **semantic-release** logs from your CI job
+- The **semantic-release-plus** version: \`${pkg.version}\`
+- The **semantic-release-plus** logs from your CI job
 - The value returned by the plugin: \`${stringify(result)}\`
-- A link to the **semantic-release** plugin developer guide: [${linkify(
+- A link to the **semantic-release-plus** plugin developer guide: [${linkify(
       'docs/developer-guide/plugin.md'
     )}](${linkify('docs/developer-guide/plugin.md')})`,
   }),
@@ -140,10 +140,10 @@ The \`publish\` function of the \`${pluginName}\` returned \`${stringify(
     )}\` instead.
 
 We recommend to report the issue to the \`${pluginName}\` authors, providing the following informations:
-- The **semantic-release** version: \`${pkg.version}\`
-- The **semantic-release** logs from your CI job
+- The **semantic-release-plus** version: \`${pkg.version}\`
+- The **semantic-release-plus** logs from your CI job
 - The value returned by the plugin: \`${stringify(result)}\`
-- A link to the **semantic-release** plugin developer guide: [${linkify(
+- A link to the **semantic-release-plus** plugin developer guide: [${linkify(
       'docs/developer-guide/plugin.md'
     )}](${linkify('docs/developer-guide/plugin.md')})`,
   }),
@@ -157,10 +157,10 @@ The \`addChannel\` function of the \`${pluginName}\` returned \`${stringify(
     )}\` instead.
 
 We recommend to report the issue to the \`${pluginName}\` authors, providing the following informations:
-- The **semantic-release** version: \`${pkg.version}\`
-- The **semantic-release** logs from your CI job
+- The **semantic-release-plus** version: \`${pkg.version}\`
+- The **semantic-release-plus** logs from your CI job
 - The value returned by the plugin: \`${stringify(result)}\`
-- A link to the **semantic-release** plugin developer guide: [${linkify(
+- A link to the **semantic-release-plus** plugin developer guide: [${linkify(
       'docs/developer-guide/plugin.md'
     )}](${linkify('docs/developer-guide/plugin.md')})`,
   }),

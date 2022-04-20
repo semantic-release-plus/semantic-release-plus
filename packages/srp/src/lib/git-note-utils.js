@@ -1,6 +1,6 @@
 // A set of pure functions that do not rely on any semantic-release-globals that wraps some of the standard git action
 const execa = require('execa');
-const debug = require('debug')('semantic-release:git-note-utils');
+const debug = require('debug')('semantic-release-plus:git-note-utils');
 const template = require('lodash/template');
 
 function getGitNotesRef(tagFormat, gitNotesRef = 'semantic-release-plus') {

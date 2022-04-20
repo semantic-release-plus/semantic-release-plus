@@ -23,11 +23,11 @@ $ npm-name <package-name>
 
 If the package name is not available, change it in your `package.json` or consider using an [npm scope](https://docs.npmjs.com/misc/scope).
 
-## Squashed commits are ignored by **semantic-release**
+## Squashed commits are ignored by **semantic-release-plus**
 
-**semantic-release** parses commits according to a [commit message convention](https://github.com/semantic-release/semantic-release#commit-message-format) to figure out how they affect the codebase. Commits that doesn't follow the project's commit message convention are simply ignored.
+**semantic-release-plus** parses commits according to a [commit message convention](https://github.com/semantic-release/semantic-release#commit-message-format) to figure out how they affect the codebase. Commits that doesn't follow the project's commit message convention are simply ignored.
 
-When [squashing commits](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History#_squashing) most Git tools will by default generate a new commit message with a summary of the squashed commits. This commit message will most likely not be compliant with the project's commit message convention and therefore will be ignored by **semantic-release**.
+When [squashing commits](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History#_squashing) most Git tools will by default generate a new commit message with a summary of the squashed commits. This commit message will most likely not be compliant with the project's commit message convention and therefore will be ignored by **semantic-release-plus**.
 
 When squashing commits make sure to rewrite the resulting commit message to be compliant with the project's commit message convention.
 
@@ -35,9 +35,9 @@ When squashing commits make sure to rewrite the resulting commit message to be c
 
 ## `reference already exists` error when pushing tag
 
-**semantic-release** read [Git tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging) that are present in the history of your release branch in order to determine the last release published. Then it determines the next version to release based on the commits pushed since then and create the corresponding tag.
+**semantic-release-plus** read [Git tags](https://git-scm.com/book/en/v2/Git-Basics-Tagging) that are present in the history of your release branch in order to determine the last release published. Then it determines the next version to release based on the commits pushed since then and create the corresponding tag.
 If a tag with the name already in your repository, Git will throw and error as tags must be unique across the repository.
-This situation happens when you have a version tag identical to the new one **semantic-release** is trying to create that is not in the history of the current branch.
+This situation happens when you have a version tag identical to the new one **semantic-release-plus** is trying to create that is not in the history of the current branch.
 
 If an actual release with that version number was published you need to merge all the commits up to that release into your release branch.
 
@@ -58,7 +58,7 @@ $ git push origin :refs/tags/<tag name>
 
 ## release not found release branch after `git push --force`
 
-**semantic-release** is using both [git tags](https://git-scm.com/docs/git-tag) and [git notes](https://git-scm.com/docs/git-notes) to store information about which releases happened in which branch.
+**semantic-release-plus** is using both [git tags](https://git-scm.com/docs/git-tag) and [git notes](https://git-scm.com/docs/git-notes) to store information about which releases happened in which branch.
 
 After a git history rewrite due to a `git push --force`, the git tags and notes referencing the commits that were rewritten are lost.
 

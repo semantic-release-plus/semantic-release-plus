@@ -45,17 +45,17 @@ Yes with the [dry-run options](../usage/configuration.md#dryrun) which prints to
 
 ## Can I use semantic-release to publish non-JavaScript packages?
 
-Yes, **semantic-release** is a Node CLI application, but it can be used to publish any type of packages.
+Yes, **semantic-release-plus** is a Node CLI application, but it can be used to publish any type of packages.
 
 To publish a non-Node package (without a `package.json`) you would need to:
 
-- Use a [global](../usage/installation.md#global-installation) **semantic-release** installation
-- Set **semantic-release** [options](../usage/configuration.md#options) via [CLI arguments or rc file](../usage/configuration.md#configuration)
+- Use a [global](../usage/installation.md#global-installation) **semantic-release-plus** installation
+- Set **semantic-release-plus** [options](../usage/configuration.md#options) via [CLI arguments or rc file](../usage/configuration.md#configuration)
 - Make sure your CI job executing the `semantic-release` command has access to a version of Node that [meets our version requirement](./node-version.md) to execute the `semantic-release` command
 
 See the [CI configuration recipes](../recipes/release-workflow/README.md#ci-configurations) for more details on specific CI environments.
 
-In addition, you will need to configure the **semantic-release** [plugins](../usage/plugins.md#plugins) to disable the [`@semantic-release/npm`](https://github.com/semantic-release/npm) plugin which is used by default and use a plugin for your project type.
+In addition, you will need to configure the **semantic-release-plus** [plugins](../usage/plugins.md#plugins) to disable the [`@semantic-release/npm`](https://github.com/semantic-release/npm) plugin which is used by default and use a plugin for your project type.
 
 If there is no specific plugin for your project type you can use the [`@semantic-release/exec`](https://github.com/semantic-release/exec) plugin to publish the release with a shell command.
 
@@ -84,7 +84,7 @@ See the [package managers and languages recipes](../recipes/release-workflow/REA
 
 ## Can I use semantic-release with any CI service?
 
-Yes, **semantic-release** can be used with any CI service, as long as it provides:
+Yes, **semantic-release-plus** can be used with any CI service, as long as it provides:
 
 - A way to set [authentication](../usage/ci-configuration.md#authentication) via environment variables
 - A way to guarantee that the `semantic-release` command is [executed only after all the tests of all the jobs in the CI build pass](../usage/ci-configuration.md#run-semantic-release-only-after-all-tests-succeeded)
@@ -109,7 +109,7 @@ See the [GitLab CI recipes](../recipes/ci-configurations/gitlab-ci.md#using-sema
 
 ## Can I use semantic-release with any Git hosted environment?
 
-By default **semantic-release** uses the [`@semantic-release/github`](https://github.com/semantic-release/github) plugin to publish a [GitHub release](https://help.github.com/articles/about-releases). For other Git hosted environment the [`@semantic-release/git`](https://github.com/semantic-release/git) and [`@semantic-release/changelog`](https://github.com/semantic-release/changelog) plugins can be used via [plugins configuration](../usage/plugins.md).
+By default **semantic-release-plus** uses the [`@semantic-release/github`](https://github.com/semantic-release/github) plugin to publish a [GitHub release](https://help.github.com/articles/about-releases). For other Git hosted environment the [`@semantic-release/git`](https://github.com/semantic-release/git) and [`@semantic-release/changelog`](https://github.com/semantic-release/changelog) plugins can be used via [plugins configuration](../usage/plugins.md).
 
 See the [`@semantic-release/git`](https://github.com/semantic-release/git#semantic-releasegit) [`@semantic-release/changelog`](https://github.com/semantic-release/changelog#semantic-releasechangelog) plugins documentation for more details.
 
@@ -126,11 +126,11 @@ If you have introduced a breaking bug in a release you have 2 options:
 - If you have a fix immediately ready, commit and push it (or merge it via a pull request) to the release branch
 - Otherwise, [revert the commit](https://git-scm.com/docs/git-revert) that introduced the bug and push the revert commit (or merge it via a pull request) to the release branch
 
-In both cases **semantic-release** will publish a new release, so your package users will get the fixed/reverted version.
+In both cases **semantic-release-plus** will publish a new release, so your package users will get the fixed/reverted version.
 
 Depending on the package manager you are using, you might be able to un-publish or deprecate a release, in order to prevent users from downloading it by accident. For example, npm allows you to [un-publish](https://docs.npmjs.com/cli/unpublish) [within 72 hours](https://www.npmjs.com/policies/unpublish) after release. You may also [deprecate](https://docs.npmjs.com/cli/deprecate) a release if you would rather avoid un-publishing.
 
-In any case **do not remove the Git tag associated with the buggy version**, otherwise **semantic-release** will later try to republish that version. Publishing a version after un-publishing is not supported by most package managers.
+In any case **do not remove the Git tag associated with the buggy version**, otherwise **semantic-release-plus** will later try to republish that version. Publishing a version after un-publishing is not supported by most package managers.
 
 **Note**: If you are using the default [Angular Commit Message Conventions](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines) be aware that it uses a different revert commit format than the standard one created by [git revert](https://git-scm.com/docs/git-revert), contrary to what is [claimed in the convention](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#revert). Therefore, if you revert a commit with [`git revert`](https://git-scm.com/docs/git-revert), use the [`--edit` option](https://git-scm.com/docs/git-revert#git-revert---edit) to format the message according to the [Angular revert commit message format](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#revert). See [conventional-changelog/conventional-changelog#348](https://github.com/conventional-changelog/conventional-changelog/issues/348) for more details.
 
@@ -176,7 +176,7 @@ Yes, every commits that contains `[skip release]` or `[release skip]` in their m
 
 ## How can I change the type of commits that trigger a release?
 
-By default **semantic-release** uses the [Angular Commit Message Conventions](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines) and triggers releases based on the following rules:
+By default **semantic-release-plus** uses the [Angular Commit Message Conventions](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines) and triggers releases based on the following rules:
 
 | Commit                      | Release type               |
 | --------------------------- | -------------------------- |
@@ -203,7 +203,7 @@ If you need more control over the timing of releases, see [Triggering a release]
 
 ## Can I set the initial release version of my package to `0.0.1`?
 
-This is not supported by **semantic-release** as it's not considered a good practice, mostly because [Semantic Versioning](https://semver.org) rules applies differently to major version zero.
+This is not supported by **semantic-release-plus** as it's not considered a good practice, mostly because [Semantic Versioning](https://semver.org) rules applies differently to major version zero.
 
 If your project is under heavy development, with frequent breaking changes, and is not production ready yet we recommend [publishing pre-releases](../recipes/release-workflow/pre-releases.md#publishing-pre-releases).
 
@@ -211,7 +211,7 @@ See [“Introduction to SemVer” - Irina Gebauer](https://blog.greenkeeper.io/i
 
 ## Can I trust semantic-release with my releases?
 
-**semantic-release** has a full unit and integration test suite that tests `npm` publishes against the [verdaccio](https://www.npmjs.com/package/verdaccio).
+**semantic-release-plus** has a full unit and integration test suite that tests `npm` publishes against the [verdaccio](https://www.npmjs.com/package/verdaccio).
 
 In addition, the [verify conditions step](../../README.md#release-steps) verifies that all necessary conditions for proceeding with a release are met, and a new release will be performed [only if all your tests pass](../usage/ci-configuration.md#run-semantic-release-only-after-all-tests-succeeded).
 

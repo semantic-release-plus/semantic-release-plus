@@ -39,7 +39,7 @@
 - [x] Print the next version only
   - semantic release can now be configured to run and have no impact on the git repository using the `skipTag` property. [example recipe](docs/recipes/expected-next-version.md)
 
-**semantic-release** automates the whole package release workflow including: determining the next version number, generating the release notes, and publishing the package.
+**semantic-release-plus** automates the whole package release workflow including: determining the next version number, generating the release notes, and publishing the package.
 
 This removes the immediate connection between human emotions and version numbers, strictly following the [Semantic Versioning](http://semver.org) specification and communicating the **impact** of changes to consumers.
 
@@ -62,10 +62,10 @@ This removes the immediate connection between human emotions and version numbers
 
 ### Commit message format
 
-**semantic-release** uses the commit messages to determine the consumer impact of changes in the codebase.
-Following formalized conventions for commit messages, **semantic-release** automatically determines the next [semantic version](https://semver.org) number, generates a changelog and publishes the release.
+**semantic-release-plus** uses the commit messages to determine the consumer impact of changes in the codebase.
+Following formalized conventions for commit messages, **semantic-release-plus** automatically determines the next [semantic version](https://semver.org) number, generates a changelog and publishes the release.
 
-By default, **semantic-release** uses [Angular Commit Message Conventions](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-format).
+By default, **semantic-release-plus** uses [Angular Commit Message Conventions](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-format).
 The commit message format can be changed with the [`preset` or `config` options](docs/usage/configuration.md#options) of the [@semantic-release/commit-analyzer](https://github.com/semantic-release/commit-analyzer#options) and [@semantic-release/release-notes-generator](https://github.com/semantic-release/release-notes-generator#options) plugins.
 
 Tools such as [commitizen](https://github.com/commitizen/cz-cli) or [commitlint](https://github.com/conventional-changelog/commitlint) can be used to help contributors and enforce valid commit messages.
@@ -80,14 +80,14 @@ The table below shows which commit message gets you which release type when `sem
 
 ### Automation with CI
 
-**semantic-release** is meant to be executed on the CI environment after every successful build on the release branch.
+**semantic-release-plus** is meant to be executed on the CI environment after every successful build on the release branch.
 This way no human is directly involved in the release process and the releases are guaranteed to be [unromantic and unsentimental](http://sentimentalversioning.org).
 
 ### Triggering a release
 
 For each new commit added to one of the release branches (for example: `master`, `next`, `beta`), with `git push` or by merging a pull request or merging from another branch, a CI build is triggered and runs the `semantic-release` command to make a release if there are codebase changes since the last release that affect the package functionalities.
 
-**semantic-release** offers various ways to control the timing, the content and the audience of published releases.
+**semantic-release-plus** offers various ways to control the timing, the content and the audience of published releases.
 See example workflows in the following recipes:
 
 - [Using distribution channels](docs/recipes/release-workflow/distribution-channels.md#publishing-on-distribution-channels)
@@ -112,7 +112,7 @@ After running the tests, the command `semantic-release` will execute the followi
 
 ## Requirements
 
-In order to use **semantic-release** you need:
+In order to use **semantic-release-plus** you need:
 
 - To host your code in a [Git repository](https://git-scm.com)
 - Use a Continuous Integration service that allows you to [securely set up credentials](docs/usage/ci-configuration.md#authentication)
@@ -156,7 +156,7 @@ In order to use **semantic-release** you need:
 
 ## Badge
 
-Let people know that your package is published using **semantic-release** and which [commit-convention](#commit-message-format) is followed by including this badge in your readme.
+Let people know that your package is published using **semantic-release-plus** and which [commit-convention](#commit-message-format) is followed by including this badge in your readme.
 
 [![semantic-release-plus](https://img.shields.io/badge/semantic-release-e10079.svg?logo=semantic-release)](https://github.com/semantic-release-plus/semantic-release-plus)
 
