@@ -10,7 +10,7 @@ Alternatively, the default `NPM_TOKEN` and `GH_TOKEN` can be easily [setup with 
 
 ### `.travis.yml` configuration for multiple Node.js jobs
 
-This example is a minimal configuration for **semantic-release** with a build running Node 14 and 16. See [Travis - Customizing the Build](https://docs.travis-ci.com/user/customizing-the-build) for additional configuration options.
+This example is a minimal configuration for **semantic-release-plus** with a build running Node 14 and 16. See [Travis - Customizing the Build](https://docs.travis-ci.com/user/customizing-the-build) for additional configuration options.
 
 This example creates a `release` [build stage](https://docs.travis-ci.com/user/build-stages) that [runs `semantic-release` only after all test jobs are successful](../../usage/ci-configuration.md#run-semantic-release-only-after-all-tests-succeeded).
 
@@ -43,7 +43,7 @@ jobs:
 
 ### `package.json` configuration for multiple Node jobs
 
-A `package.json` is required only for [local](../../usage/installation.md#local-installation) **semantic-release** installation.
+A `package.json` is required only for [local](../../usage/installation.md#local-installation) **semantic-release-plus** installation.
 
 ```json
 {
@@ -57,11 +57,11 @@ A `package.json` is required only for [local](../../usage/installation.md#local-
 
 For projects that require to be tested with one or multiple version of a Non-JavaScript [language](https://docs.travis-ci.com/user/languages), optionally on multiple [Operating Systems](https://docs.travis-ci.com/user/multi-os).
 
-This recipe cover the Travis specifics only. See [Non JavaScript projects recipe](../../support/FAQ.md#can-i-use-semantic-release-to-publish-non-javascript-packages) for more information on the **semantic-release** configuration.
+This recipe cover the Travis specifics only. See [Non JavaScript projects recipe](../../support/FAQ.md#can-i-use-semantic-release-to-publish-non-javascript-packages) for more information on the **semantic-release-plus** configuration.
 
 ### `.travis.yml` configuration for non-JavaScript projects
 
-This example is a minimal configuration for **semantic-release** with a build running [Go 1.6 and 1.7](https://docs.travis-ci.com/user/languages/go). See [Travis - Customizing the Build](https://docs.travis-ci.com/user/customizing-the-build) for additional configuration options.
+This example is a minimal configuration for **semantic-release-plus** with a build running [Go 1.6 and 1.7](https://docs.travis-ci.com/user/languages/go). See [Travis - Customizing the Build](https://docs.travis-ci.com/user/customizing-the-build) for additional configuration options.
 
 This example creates a `release` [build stage](https://docs.travis-ci.com/user/build-stages) that [runs `semantic-release` only after all test jobs are successful](../../usage/ci-configuration.md#run-semantic-release-only-after-all-tests-succeeded).
 

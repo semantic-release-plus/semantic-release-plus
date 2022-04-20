@@ -10,7 +10,8 @@
     "timeout": "2m"
   },
   "bin": {
-    "semantic-release-plus": "src/bin/semantic-release-plus.js"
+    "semantic-release-plus": "src/bin/semantic-release-plus.js",
+    "srp": "src/bin/semantic-release-plus.js"
   },
   "bugs": {
     "url": "https://github.com/semantic-release-plus/semantic-release-plus/issues"

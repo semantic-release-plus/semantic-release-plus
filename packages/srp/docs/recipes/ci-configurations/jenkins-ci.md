@@ -12,7 +12,7 @@ Alternatively, the default `NPM_TOKEN` and `GH_TOKEN` can be easily [setup with 
 
 **Note**: The publish pipeline must run a Node version that [meets our requirement](../../support/node-version.md).
 
-This example is a minimal configuration for **semantic-release** with a build running a version of Node labelled as "node LTS".
+This example is a minimal configuration for **semantic-release-plus** with a build running a version of Node labelled as "node LTS".
 Since versions of Node are manually downloaded and labelled, we recommend keeping the version used for the release steps up-to-date with the latest LTS version.
 See the [Jenkins documentation](https://www.jenkins.io/doc/) for additional configuration options.
 
@@ -50,7 +50,7 @@ pipeline {
 
 ### `package.json` configuration for a Node job
 
-A `package.json` is required only for [local](../../usage/installation.md#local-installation) **semantic-release** installation.
+A `package.json` is required only for [local](../../usage/installation.md#local-installation) **semantic-release-plus** installation.
 
 ```json
 {

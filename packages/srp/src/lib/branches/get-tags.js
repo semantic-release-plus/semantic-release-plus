@@ -1,7 +1,7 @@
 const { template, escapeRegExp } = require('lodash');
 const semver = require('semver');
 const pReduce = require('p-reduce');
-const debug = require('debug')('semantic-release:get-tags');
+const debug = require('debug')('semantic-release-plus:get-tags');
 const { getTags, getNote } = require('../git');
 const { stronsole } = require('../stronsole');
 

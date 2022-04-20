@@ -10,7 +10,7 @@ Alternatively, the default `NPM_TOKEN` and `GH_TOKEN` can be easily [setup with 
 
 ### `.circleci/config.yml` configuration for multiple Node jobs
 
-This example is a minimal configuration for **semantic-release** with tests running against Node 16 and 14.
+This example is a minimal configuration for **semantic-release-plus** with tests running against Node 16 and 14.
 See [CircleCI documentation](https://circleci.com/docs/2.0) for additional configuration options.
 
 In this example, the [`circleci/node`](https://circleci.com/developer/orbs/orb/circleci/node) orb is imported (Which makes some node operations easier), then a `release` job is defined which will run `semantic-release`.

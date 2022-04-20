@@ -71,13 +71,13 @@ try {
 
 ### semanticRelease([options], [config]) => Promise<Result>
 
-Run **semantic-release** and returns a `Promise` that resolves to a [Result](#result) object.
+Run **semantic-release-plus** and returns a `Promise` that resolves to a [Result](#result) object.
 
 #### options
 
 Type: `Object`
 
-**semantic-release** options.
+**semantic-release-plus** options.
 
 Can be used to set any [core option](../usage/configuration.md#configuration) or [plugin options](../usage/plugins.md#configuration).
 
@@ -87,7 +87,7 @@ Each option, will take precedence over options configured in the [configuration 
 
 Type: `Object`
 
-**semantic-release** configuration specific for API usage.
+**semantic-release-plus** configuration specific for API usage.
 
 ##### cwd
 
@@ -96,7 +96,7 @@ Default: `process.cwd()`
 
 The current working directory to use. It should be configured to the root of the Git repository to release from.
 
-It allows to run **semantic-release** from a specific path without having to change the local process `cwd` with `process.chdir()`.
+It allows to run **semantic-release-plus** from a specific path without having to change the local process `cwd` with `process.chdir()`.
 
 ##### env
 
@@ -105,7 +105,7 @@ Default: `process.env`
 
 The environment variables to use.
 
-It allows to run **semantic-release** with specific environment variables without having to modify the local `process.env`.
+It allows to run **semantic-release-plus** with specific environment variables without having to modify the local `process.env`.
 
 ##### stdout
 
@@ -114,7 +114,7 @@ Default: `process.stdout`
 
 The [writable stream](https://nodejs.org/api/stream.html#stream_writable_streams) used to log information.
 
-It allows to configure **semantic-release** to write logs to a specific stream rather than the local `process.stdout`.
+It allows to configure **semantic-release-plus** to write logs to a specific stream rather than the local `process.stdout`.
 
 ##### stderr
 
@@ -123,7 +123,7 @@ Default: `process.stderr`
 
 The [writable stream](https://nodejs.org/api/stream.html#stream_writable_streams) used to log errors.
 
-It allows to configure **semantic-release** to write errors to a specific stream rather than the local `process.stderr`.
+It allows to configure **semantic-release-plus** to write errors to a specific stream rather than the local `process.stderr`.
 
 ### Result
 

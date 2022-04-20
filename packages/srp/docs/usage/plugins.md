@@ -16,7 +16,7 @@ A plugin is a npm module that can implement one or more of the following steps:
 | `success`          | No       | Responsible for notifying of a new release.                                                                                                                                                                          |
 | `fail`             | No       | Responsible for notifying of a failed release.                                                                                                                                                                       |
 
-Release steps will run in that order. At each step, **semantic-release** will run every plugin in the [`plugins` array](#plugins-declaration-and-execution-order), as long as the plugin implements the step.
+Release steps will run in that order. At each step, **semantic-release-plus** will run every plugin in the [`plugins` array](#plugins-declaration-and-execution-order), as long as the plugin implements the step.
 
 **Note:** If no plugin with a `analyzeCommits` step is defined `@semantic-release/commit-analyzer` will be used.
 
@@ -24,7 +24,7 @@ Release steps will run in that order. At each step, **semantic-release** will ru
 
 ### Default plugins
 
-These four plugins are already part of **semantic-release** and are listed in order of execution. They do not have to be installed separately:
+These four plugins are already part of **semantic-release-plus** and are listed in order of execution. They do not have to be installed separately:
 
 ```
 "@semantic-release/commit-analyzer"
@@ -70,7 +70,7 @@ For each [release step](../../README.md#release-steps) the plugins that implemen
 }
 ```
 
-With this configuration **semantic-release** will:
+With this configuration **semantic-release-plus** will:
 
 - execute the `verifyConditions` implementation of `@semantic-release/npm` then `@semantic-release/git`
 - execute the `analyzeCommits` implementation of `@semantic-release/commit-analyzer`
@@ -84,7 +84,7 @@ Order is first determined by release steps (such as `verifyConditions` → `anay
 
 A plugin configuration can be specified by wrapping the name and an options object in an array. Options configured this way will be passed only to that specific plugin.
 
-Global plugin configuration can be defined at the root of the **semantic-release** configuration object. Options configured this way will be passed to all plugins.
+Global plugin configuration can be defined at the root of the **semantic-release-plus** configuration object. Options configured this way will be passed to all plugins.
 
 ```json
 {
