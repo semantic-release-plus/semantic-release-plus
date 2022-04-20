@@ -61,7 +61,6 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@nrwl/cli": "13.10.3",
     "@nrwl/devkit": "13.10.3",
     "@nrwl/eslint-plugin-nx": "13.10.3",
     "@nrwl/jest": "13.10.3",
