@@ -1,5 +1,5 @@
 const { isPlainObject, isFunction, noop, cloneDeep, omit } = require('lodash');
-const debug = require('debug')('semantic-release:plugins');
+const debug = require('debug')('semantic-release-plus:plugins');
 const getError = require('../get-error');
 const { extractErrors } = require('../utils');
 const PLUGINS_DEFINITIONS = require('../definitions/plugins');

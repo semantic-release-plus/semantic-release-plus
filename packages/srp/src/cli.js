@@ -96,7 +96,7 @@ Usage:
 
     if (options.debug) {
       // Debug must be enabled before other requires in order to work
-      require('debug').enable('semantic-release:*');
+      require('debug').enable('semantic-release-plus:*');
     }
 
     await require('.')(options);

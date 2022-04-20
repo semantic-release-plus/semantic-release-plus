@@ -1,4 +1,4 @@
-const debug = require('debug')('semantic-release:get-commits');
+const debug = require('debug')('semantic-release-plus:get-commits');
 const { getCommits } = require('./git');
 const { stronsole } = require('./stronsole');
 

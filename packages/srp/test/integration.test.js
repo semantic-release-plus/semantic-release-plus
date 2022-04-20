@@ -63,7 +63,9 @@ const npmTestEnv = {
   ).toString('base64'),
 };
 
-const cli = require.resolve('../src/bin/semantic-release-plus');
+const cli = require.resolve(
+  '../../../dist/packages/srp/src/bin/semantic-release-plus'
+);
 const pluginError = require.resolve('./fixtures/plugin-error');
 const pluginInheritedError = require.resolve(
   './fixtures/plugin-error-inherited'
@@ -72,6 +74,9 @@ const pluginLogEnv = require.resolve('./fixtures/plugin-log-env');
 
 test.before(async () => {
   await Promise.all([gitbox.start(), npmRegistry.start(), mockServer.start()]);
+  const res = await execa(cli, ['--version']);
+  console.log(__dirname);
+  console.log(res);
 });
 
 test.after.always(async () => {
