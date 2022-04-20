@@ -118,6 +118,9 @@ test('Release patch, minor and major versions', async (t) => {
     cwd,
     extendEnv: false,
   });
+  console.log('######################### DEBUG ########################');
+  console.log(stdout);
+  console.log('######################### DEBUG ########################');
   t.regex(
     stdout,
     /There are no relevant changes, so no new version is released/
@@ -474,7 +477,7 @@ test('Dry-run', async (t) => {
   const version = '1.0.0';
   t.log('Commit a feature');
   await gitCommits(['feat: Initial commit'], { cwd });
-  t.log('$ semantic-release -d');
+  t.log('$ semantic-release-plus -d');
   const { stdout, exitCode } = await execa(cli, ['-d'], {
     env,
     cwd,
@@ -533,7 +536,7 @@ test('Allow local releases with "noCi" option', async (t) => {
 
   t.log('Commit a feature');
   await gitCommits(['feat: Initial commit'], { cwd });
-  t.log('$ semantic-release --no-ci');
+  t.log('$ semantic-release-plus --no-ci');
   const { stdout, exitCode } = await execa(cli, ['--no-ci'], {
     env: envNoCi,
     cwd,
@@ -658,7 +661,7 @@ test('Run via JS API', async (t) => {
 
   t.log('Commit a feature');
   await gitCommits(['feat: Initial commit'], { cwd });
-  t.log('$ Call semantic-release via API');
+  t.log('$ Call semantic-release-plus via API');
   await semanticRelease(undefined, {
     cwd,
     env,
@@ -736,15 +739,14 @@ test('Log errors inheriting SemanticReleaseError and exit with 1', async (t) => 
 
   /* Initial release */
   t.log('Commit a feature');
-  gitCommits(['feat: Initial commit'], { cwd });
+  await gitCommits(['feat: Initial commit'], { cwd });
   t.log('$ semantic-release-plus');
-  const val = await execa(cli, ['--debug'], {
+  const val = await execa(cli, [], {
     env,
     cwd,
     reject: false,
     extendEnv: false,
   });
-  console.log(val);
   const { stderr, exitCode } = val;
   // Verify the type and message are logged
   t.regex(stderr, /EINHERITED Inherited error/);

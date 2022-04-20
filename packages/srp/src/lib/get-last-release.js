@@ -20,7 +20,7 @@ const { makeTag, isSameChannel } = require('./utils');
  * - Sort the versions
  * - Retrive the highest version
  *
- * @param {Object} context semantic-release context.
+ * @param {Object} context semantic-release-plus context.
  * @param {Object} params Function parameters.
  * @param {Object} params.before Find only releases with version number lower than this version.
  *

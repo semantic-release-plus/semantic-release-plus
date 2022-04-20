@@ -7,7 +7,7 @@ const { makeTag, getLowerBound } = require('./utils');
 /**
  * Find releases that have been merged from from a higher branch but not added on the channel of the current branch.
  *
- * @param {Object} context semantic-release context.
+ * @param {Object} context semantic-release-plus context.
  *
  * @return {Array<Object>} Last release and next release to be added on the channel of the current branch.
  */
