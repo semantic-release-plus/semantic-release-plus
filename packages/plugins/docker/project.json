@@ -21,7 +21,7 @@
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "options": {
         "outputPath": "dist/packages/plugins/docker",
         "tsConfig": "packages/plugins/docker/tsconfig.lib.json",
