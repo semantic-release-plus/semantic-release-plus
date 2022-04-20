@@ -21,7 +21,7 @@
         "lintFilePatterns": ["packages/srp/**/*.js"]
       }
     },
-    "test-jest": {
+    "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/srp"],
       "options": {
@@ -29,7 +29,7 @@
         "passWithNoTests": true
       }
     },
-    "test": {
+    "ava": {
       "executor": "@nrwl/workspace:run-script",
       "options": {
         "script": "test"
