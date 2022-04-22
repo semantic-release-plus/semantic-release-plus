@@ -26,6 +26,8 @@
         "outputPath": "dist/packages/plugins/docker",
         "tsConfig": "packages/plugins/docker/tsconfig.lib.json",
         "packageJson": "packages/plugins/docker/package.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true,
         "generatePackageJson": true,
         "main": "packages/plugins/docker/src/index.ts",
         "assets": ["packages/plugins/docker/*.md"]
@@ -33,10 +35,12 @@
     },
     "release": {
       "executor": "@nrwl/workspace:run-commands",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "commands": [
           "node ../../../dist/packages/srp/src/bin/semantic-release-plus.js --debug"
         ],
+        "outputPath": "dist/packages/plugins/docker",
         "cwd": "packages/plugins/docker/"
       }
     }

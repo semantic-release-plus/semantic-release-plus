@@ -45,7 +45,7 @@
     ],
     "release": [
       {
-        "target": "build",
+        "target": "release",
         "projects": "dependencies"
       },
       {
