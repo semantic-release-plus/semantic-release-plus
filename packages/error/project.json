@@ -10,7 +10,8 @@
         "outputPath": "dist/packages/error",
         "tsConfig": "packages/error/tsconfig.lib.json",
         "packageJson": "packages/error/package.json",
-        "generatePackageJson": true,
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true,
         "main": "packages/error/src/index.ts",
         "assets": ["packages/error/*.md"]
       }
@@ -31,10 +32,12 @@
     },
     "release": {
       "executor": "@nrwl/workspace:run-commands",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "commands": [
           "node ../../dist/packages/srp/src/bin/semantic-release-plus.js --debug"
         ],
+        "outputPath": "dist/packages/error",
         "cwd": "packages/error",
         "parallel": false
       }

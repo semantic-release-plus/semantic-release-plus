@@ -20,9 +20,5 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
-  "peerDependencies": {
-    "semantic-release-plus": "^19.0.0 || ^20.0.0 || >=20.0.0-alpha"
-  },
-  "devDependencies": {}
+  "dependencies": {}
 }

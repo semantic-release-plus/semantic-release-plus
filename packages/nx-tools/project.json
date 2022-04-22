@@ -16,6 +16,8 @@
         "outputPath": "dist/packages/nx-tools",
         "tsConfig": "packages/nx-tools/tsconfig.lib.json",
         "packageJson": "packages/nx-tools/package.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true,
         "main": "packages/nx-tools/src/index.ts",
         "assets": [
           "packages/nx-tools/*.md",
@@ -54,10 +56,12 @@
     },
     "release": {
       "executor": "@nrwl/workspace:run-commands",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "commands": [
           "node ../../dist/packages/srp/src/bin/semantic-release-plus.js --debug"
         ],
+        "outputPath": "dist/packages/nx-tools",
         "cwd": "packages/nx-tools"
       }
     }

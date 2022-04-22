@@ -10,6 +10,8 @@
         "outputPath": "dist/packages/srp",
         "tsConfig": "packages/srp/tsconfig.lib.json",
         "packageJson": "packages/srp/package.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true,
         "main": "packages/srp/src/index.js",
         "assets": ["packages/srp/*.md"]
       }
@@ -68,8 +70,10 @@
     },
     "release": {
       "executor": "@nrwl/workspace:run-script",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "script": "release"
+        "script": "release",
+        "outputPath": "dist/packages/srp"
       }
     }
   },
