@@ -4,6 +4,7 @@ export interface Context {
   branch?: Branch;
   branches?: Branch[];
   commits?: Commit[];
+  gitNotesRef?: string;
   cwd?: string;
   env?: NodeJS.ProcessEnv;
   envCi?: NodeJS.ProcessEnv;
