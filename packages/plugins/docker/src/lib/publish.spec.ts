@@ -11,6 +11,7 @@ describe('publish', () => {
   const dockerTagMock = mocked(dockerTag);
   const dockerPushMock = mocked(dockerPush);
   const baseContext: Context = {
+    branch: { name: 'main' },
     nextRelease: {
       version: '1.2.3',
     },

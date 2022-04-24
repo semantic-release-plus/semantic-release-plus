@@ -21,6 +21,7 @@ describe('verify', () => {
   } as PluginConfig;
 
   const context: Context = {
+    branch: { name: 'main' },
     nextRelease: {
       version: '1.1.1',
     },

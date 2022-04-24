@@ -1,6 +1,6 @@
 import execa = require('execa');
 import { mocked } from 'ts-jest/utils';
-import { Context } from 'vm';
+import { Context } from '@semantic-release-plus/core';
 import { addChannel } from './add-channel';
 import { dockerPull, dockerPush, dockerTag } from './docker-utils';
 
@@ -11,6 +11,7 @@ describe('add-channel', () => {
   const dockerTagMock = mocked(dockerTag);
   const dockerPushMock = mocked(dockerPush);
   const context: Context = {
+    branch: { name: 'alpha' },
     nextRelease: { channel: 'alpha', version: '1.0.1-alpha.1' },
     logger: {
       log: jest.fn(),
