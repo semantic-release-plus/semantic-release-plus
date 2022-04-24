@@ -1,7 +1,7 @@
 import { BranchType } from '../enums';
 
 export interface Context {
-  branch?: Branch;
+  branch: Branch;
   branches?: Branch[];
   commits?: Commit[];
   gitNotesRef?: string;
@@ -18,10 +18,13 @@ export interface Context {
 }
 
 export interface Options {
-  tagFormat?: unknown;
-  repositoryUrl?: unknown;
+  tagFormat?: string;
+  repositoryUrl?: string;
   branches?: unknown;
   publish?: boolean;
+  dryRun?: boolean;
+  noCi?: boolean;
+  skipTag?: boolean;
 }
 
 export interface Release {
@@ -42,13 +45,22 @@ export interface Logger {
 }
 
 export interface Branch {
-  channel: unknown;
-  tags: unknown;
-  type: unknown;
-  name: unknown;
-  range: unknown;
-  accept: unknown;
-  main: unknown;
+  name: string;
+  channel?: string;
+  tags?: Tag[];
+  type?: BranchType;
+  range?: string;
+  accept?: unknown;
+  main?: unknown;
+  mergeRange?: string;
+}
+
+export interface Tag {
+  version: string;
+  channel: string;
+  channels: string[];
+  gitTag: string;
+  gitHead: string;
 }
 
 export interface Commit {
