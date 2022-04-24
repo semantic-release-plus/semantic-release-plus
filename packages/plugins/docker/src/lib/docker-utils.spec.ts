@@ -11,6 +11,8 @@ describe('docker utils', () => {
   const dockerPassword = '!my-testing-password!';
 
   const context: Context = {
+    branch: { name: 'main' },
+
     // stdout: jest.fn(),
     // stderr: jest.fn(),
   };
@@ -100,6 +102,7 @@ describe('docker utils', () => {
     //   killed: false,
     // });
     await dockerPull('ghcr.io/joa-mos/node:omega', {
+      branch: { name: 'main' },
       stdout: process.stdout,
       stderr: process.stderr,
     });
@@ -115,7 +118,9 @@ describe('docker utils', () => {
     ];
 
     execaMock.mockResolvedValue({} as execa.ExecaReturnValue<Buffer>);
-    await dockerTag('joa-mos/node:omega', 'joa-mos/node:epsilon', {});
+    await dockerTag('joa-mos/node:omega', 'joa-mos/node:epsilon', {
+      branch: { name: 'main' },
+    });
     expect(execaMock).toHaveBeenCalledWith(...expectedTagArgs);
   });
 
@@ -123,7 +128,9 @@ describe('docker utils', () => {
     const expectedPushArgs = ['docker', ['push', 'joa-mos/node:omega'], {}];
 
     execaMock.mockResolvedValue({} as execa.ExecaReturnValue<Buffer>);
-    await dockerPush('joa-mos/node:omega', {});
+    await dockerPush('joa-mos/node:omega', {
+      branch: { name: 'main' },
+    });
     expect(execaMock).toHaveBeenCalledWith(...expectedPushArgs);
   });
 });
