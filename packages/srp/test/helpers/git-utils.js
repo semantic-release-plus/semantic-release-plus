@@ -44,9 +44,9 @@ async function initGit(withRemote) {
  *
  * @param {Boolean} withRemote `true` to create a shallow clone of a bare repository.
  * @param {String} [branch='master'] The branch to initialize.
- * @return {String} The path of the clone if `withRemote` is `true`, the path of the repository otherwise.
+ * @return {Promise<{cwd:string, repositoryUrl:string}>} The path of the clone if `withRemote` is `true`, the path of the repository otherwise.
  */
-async function gitRepo(withRemote, branch = 'master') {
+async function gitRepo(withRemote = false, branch = 'master') {
   let { cwd, repositoryUrl } = await initGit(withRemote);
   if (withRemote) {
     await initBareRepo(repositoryUrl, branch);
@@ -111,7 +111,7 @@ async function gitCommits(messages, execaOptions) {
  * @param {String} [from] Git reference from which to seach commits.
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
- * @return {Array<Object>} The list of parsed commits.
+ * @return {Promise<Array<Object>>} The list of parsed commits.
  */
 async function gitGetCommits(from, execaOptions) {
   Object.assign(gitLogParser.fields, {
@@ -164,7 +164,7 @@ async function gitFetch(repositoryUrl, execaOptions) {
  *
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
- * @return {String} The sha of the head commit in the current git repository.
+ * @return {Promise<String>} The sha of the head commit in the current git repository.
  */
 async function gitHead(execaOptions) {
   return (await execa('git', ['rev-parse', 'HEAD'], execaOptions)).stdout;
@@ -192,7 +192,7 @@ async function gitTagVersion(tagName, sha, execaOptions) {
  * @param {String} repositoryUrl The path of the repository to clone.
  * @param {String} [branch='master'] the branch to clone.
  * @param {Number} [depth=1] The number of commit to clone.
- * @return {String} The path of the cloned repository.
+ * @return {Promise<String>} The path of the cloned repository.
  */
 async function gitShallowClone(repositoryUrl, branch = 'master', depth = 1) {
   const cwd = tempy.directory();
@@ -222,7 +222,7 @@ async function gitShallowClone(repositoryUrl, branch = 'master', depth = 1) {
  *
  * @param {String} repositoryUrl The path of the repository to clone.
  * @param {Number} head A commit sha of the remote repo that will become the detached head of the new one.
- * @return {String} The path of the new repository.
+ * @return {Promise<String>} The path of the new repository.
  */
 async function gitDetachedHead(repositoryUrl, head) {
   const cwd = tempy.directory();
@@ -266,7 +266,7 @@ async function gitAddConfig(name, value, execaOptions) {
  * @param {String} tagName Tag name for which to retrieve the commit sha.
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
- * @return {String} The sha of the commit associated with `tagName` on the local repository.
+ * @return {Promise<String>} The sha of the commit associated with `tagName` on the local repository.
  */
 async function gitTagHead(tagName, execaOptions) {
   return (await execa('git', ['rev-list', '-1', tagName], execaOptions)).stdout;
@@ -279,7 +279,7 @@ async function gitTagHead(tagName, execaOptions) {
  * @param {String} tagName The tag name to seach for.
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
- * @return {String} The sha of the commit associated with `tagName` on the remote repository.
+ * @return {Promise<String>} The sha of the commit associated with `tagName` on the remote repository.
  */
 async function gitRemoteTagHead(repositoryUrl, tagName, execaOptions) {
   return (
@@ -300,7 +300,7 @@ async function gitRemoteTagHead(repositoryUrl, tagName, execaOptions) {
  * @param {String} gitHead The commit sha for which to retrieve the associated tag.
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
- * @return {String} The tag associatedwith the sha in parameter or `null`.
+ * @return {Promise<String>} The tag associatedwith the sha in parameter or `null`.
  */
 async function gitCommitTag(gitHead, execaOptions) {
   return (
