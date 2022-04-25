@@ -16,8 +16,8 @@ const {
   getNote,
   addNote,
   fetchNotes,
-} = require('../src/lib/git');
-const { gitNotesShow, gitAddNote } = require('../src/lib/git-note-utils');
+} = require('./git');
+const { gitNotesShow, gitAddNote } = require('./git-note-utils');
 const {
   gitRepo,
   gitCommits,
@@ -33,7 +33,7 @@ const {
   gitDetachedHeadFromBranch,
   gitFetch,
   initGit,
-} = require('./helpers/git-utils');
+} = require('../../test/helpers/git-utils');
 
 const gitNotesRef = 'semantic-release-plus/v_';
 
