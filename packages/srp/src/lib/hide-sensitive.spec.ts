@@ -1,5 +1,5 @@
 import { repeat } from 'lodash';
-import hideSensitive = require('./hide-sensitive');
+import * as hideSensitive from './hide-sensitive';
 import { SECRET_REPLACEMENT, SECRET_MIN_SIZE } from './definitions/constants';
 
 describe('hide-sensitive', () => {

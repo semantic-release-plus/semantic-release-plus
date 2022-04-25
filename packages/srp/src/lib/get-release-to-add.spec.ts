@@ -1,4 +1,4 @@
-import getReleaseToAdd = require('./get-release-to-add');
+import * as getReleaseToAdd from './get-release-to-add';
 
 describe('get-release-to-add', () => {
   test('Return versions merged from release to maintenance branch, excluding lower than branch start range', () => {

@@ -1,4 +1,4 @@
-import getAuthUrl = require('./get-git-auth-url');
+import * as getAuthUrl from './get-git-auth-url';
 import { gitRepo } from '../../test/helpers/git-utils';
 
 const env = { GIT_ASKPASS: 'echo', GIT_TERMINAL_PROMPT: 0 };

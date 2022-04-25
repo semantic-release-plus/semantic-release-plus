@@ -1,4 +1,4 @@
-import getLastRelease = require('./get-last-release');
+import * as getLastRelease from './get-last-release';
 
 describe('get-last-release', () => {
   test('Get the highest non-prerelease valid tag', () => {

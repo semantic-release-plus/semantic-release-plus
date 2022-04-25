@@ -1,5 +1,5 @@
 import { Context } from '@semantic-release-plus/core';
-import getNextVersion = require('./get-next-version');
+import * as getNextVersion from './get-next-version';
 
 describe('get-next-version', () => {
   const context: Partial<Context> = {};

@@ -1,5 +1,5 @@
-import tempy = require('tempy');
-import verify = require('./verify');
+import * as tempy from 'tempy';
+import * as verify from './verify';
 import { gitRepo } from '../../test/helpers/git-utils';
 
 describe('verify', () => {

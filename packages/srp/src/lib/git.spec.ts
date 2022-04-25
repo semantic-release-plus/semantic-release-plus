@@ -1,4 +1,4 @@
-import tempy = require('tempy');
+import * as tempy from 'tempy';
 import {
   getTagHead,
   isRefExists,
