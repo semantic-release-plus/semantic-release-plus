@@ -61,7 +61,7 @@ async function ensureValidAuthUrl({ cwd, env, branch }, authUrl) {
  *
  * @param {Object} context semantic-release-plus context.
  *
- * @return {String} The formatted Git repository URL.
+ * @return {Promise<String>} The formatted Git repository URL.
  */
 module.exports = async (context) => {
   const { cwd, env, branch } = context;
