@@ -1,5 +1,5 @@
 const test = require('ava');
-const getLastRelease = require('../src/lib/get-last-release');
+const getLastRelease = require('./get-last-release');
 
 test('Get the highest non-prerelease valid tag', (t) => {
   const result = getLastRelease({
