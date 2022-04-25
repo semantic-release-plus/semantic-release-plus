@@ -1,133 +1,152 @@
-const test = require('ava');
-const tempy = require('tempy');
-const verify = require('../src/lib/verify');
-const { gitRepo } = require('./helpers/git-utils');
+import tempy = require('tempy');
+import verify = require('./verify');
+import { gitRepo } from '../../test/helpers/git-utils';
 
-test('Throw a AggregateError', async (t) => {
-  const { cwd } = await gitRepo();
-  const options = { branches: [{ name: 'master' }, { name: '' }] };
+describe('verify', () => {
+  test('Throw a AggregateError', async () => {
+    const { cwd } = await gitRepo();
+    const options = { branches: [{ name: 'master' }, { name: '' }] };
 
-  const errors = [...(await t.throwsAsync(verify({ cwd, options })))];
+    try {
+      await verify({ cwd, options });
+      expect(true).toBe(false);
+    } catch ([...errors]) {
+      expect(errors[0].name).toBe('SemanticReleaseError');
+      expect(errors[0].code).toBe('ENOREPOURL');
+      expect(errors[0].message).toBeTruthy();
+      expect(errors[0].details).toBeTruthy();
+      expect(errors[1].name).toBe('SemanticReleaseError');
+      expect(errors[1].code).toBe('EINVALIDTAGFORMAT');
+      expect(errors[1].message).toBeTruthy();
+      expect(errors[1].details).toBeTruthy();
+      expect(errors[2].name).toBe('SemanticReleaseError');
+      expect(errors[2].code).toBe('ETAGNOVERSION');
+      expect(errors[2].message).toBeTruthy();
+      expect(errors[2].details).toBeTruthy();
+      expect(errors[3].name).toBe('SemanticReleaseError');
+      expect(errors[3].code).toBe('EINVALIDBRANCH');
+      expect(errors[3].message).toBeTruthy();
+      expect(errors[3].details).toBeTruthy();
+    }
+  });
 
-  t.is(errors[0].name, 'SemanticReleaseError');
-  t.is(errors[0].code, 'ENOREPOURL');
-  t.truthy(errors[0].message);
-  t.truthy(errors[0].details);
-  t.is(errors[1].name, 'SemanticReleaseError');
-  t.is(errors[1].code, 'EINVALIDTAGFORMAT');
-  t.truthy(errors[1].message);
-  t.truthy(errors[1].details);
-  t.is(errors[2].name, 'SemanticReleaseError');
-  t.is(errors[2].code, 'ETAGNOVERSION');
-  t.truthy(errors[2].message);
-  t.truthy(errors[2].details);
-  t.is(errors[3].name, 'SemanticReleaseError');
-  t.is(errors[3].code, 'EINVALIDBRANCH');
-  t.truthy(errors[3].message);
-  t.truthy(errors[3].details);
-});
+  test('Throw a SemanticReleaseError if does not run on a git repository', async () => {
+    const cwd = tempy.directory();
+    const options = { branches: [] };
 
-test('Throw a SemanticReleaseError if does not run on a git repository', async (t) => {
-  const cwd = tempy.directory();
-  const options = { branches: [] };
+    try {
+      await verify({ cwd, options });
+      expect(true).toBe(false);
+    } catch ([...errors]) {
+      expect(errors[0].name).toBe('SemanticReleaseError');
+      expect(errors[0].code).toBe('ENOGITREPO');
+      expect(errors[0].message).toBeTruthy();
+      expect(errors[0].details).toBeTruthy();
+    }
+  });
 
-  const errors = [...(await t.throwsAsync(verify({ cwd, options })))];
+  test('Throw a SemanticReleaseError if the "tagFormat" is not valid', async () => {
+    const { cwd, repositoryUrl } = await gitRepo(true);
+    const options = { repositoryUrl, tagFormat: `?\${version}`, branches: [] };
 
-  t.is(errors[0].name, 'SemanticReleaseError');
-  t.is(errors[0].code, 'ENOGITREPO');
-  t.truthy(errors[0].message);
-  t.truthy(errors[0].details);
-});
+    try {
+      await verify({ cwd, options });
+      expect(true).toBe(false);
+    } catch ([...errors]) {
+      expect(errors[0].name).toBe('SemanticReleaseError');
+      expect(errors[0].code).toBe('EINVALIDTAGFORMAT');
+      expect(errors[0].message).toBeTruthy();
+      expect(errors[0].details).toBeTruthy();
+    }
+  });
 
-test('Throw a SemanticReleaseError if the "tagFormat" is not valid', async (t) => {
-  const { cwd, repositoryUrl } = await gitRepo(true);
-  const options = { repositoryUrl, tagFormat: `?\${version}`, branches: [] };
+  test('Throw a SemanticReleaseError if the "tagFormat" does not contains the "version" variable', async () => {
+    const { cwd, repositoryUrl } = await gitRepo(true);
+    const options = { repositoryUrl, tagFormat: 'test', branches: [] };
 
-  const errors = [...(await t.throwsAsync(verify({ cwd, options })))];
+    try {
+      await verify({ cwd, options });
+      expect(true).toBe(false);
+    } catch ([...errors]) {
+      expect(errors[0].name).toBe('SemanticReleaseError');
+      expect(errors[0].code).toBe('ETAGNOVERSION');
+      expect(errors[0].message).toBeTruthy();
+      expect(errors[0].details).toBeTruthy();
+    }
+  });
 
-  t.is(errors[0].name, 'SemanticReleaseError');
-  t.is(errors[0].code, 'EINVALIDTAGFORMAT');
-  t.truthy(errors[0].message);
-  t.truthy(errors[0].details);
-});
+  test('Throw a SemanticReleaseError if the "tagFormat" contains multiple "version" variables', async () => {
+    const { cwd, repositoryUrl } = await gitRepo(true);
+    const options = {
+      repositoryUrl,
+      tagFormat: `\${version}v\${version}`,
+      branches: [],
+    };
 
-test('Throw a SemanticReleaseError if the "tagFormat" does not contains the "version" variable', async (t) => {
-  const { cwd, repositoryUrl } = await gitRepo(true);
-  const options = { repositoryUrl, tagFormat: 'test', branches: [] };
+    try {
+      await verify({ cwd, options });
+      expect(true).toBe(false);
+    } catch ([...errors]) {
+      expect(errors[0].name).toBe('SemanticReleaseError');
+      expect(errors[0].code).toBe('ETAGNOVERSION');
+      expect(errors[0].message).toBeTruthy();
+      expect(errors[0].details).toBeTruthy();
+    }
+  });
 
-  const errors = [...(await t.throwsAsync(verify({ cwd, options })))];
+  test('Throw a SemanticReleaseError for each invalid branch', async () => {
+    const { cwd, repositoryUrl } = await gitRepo(true);
+    const options = {
+      repositoryUrl,
+      tagFormat: `v\${version}`,
+      branches: [
+        { name: '' },
+        { name: '  ' },
+        { name: 1 },
+        {},
+        { name: '' },
+        1,
+        'master',
+      ],
+    };
 
-  t.is(errors[0].name, 'SemanticReleaseError');
-  t.is(errors[0].code, 'ETAGNOVERSION');
-  t.truthy(errors[0].message);
-  t.truthy(errors[0].details);
-});
+    try {
+      await verify({ cwd, options });
+      expect(true).toBe(false);
+    } catch ([...errors]) {
+      expect(errors[0].name).toBe('SemanticReleaseError');
+      expect(errors[0].code).toBe('EINVALIDBRANCH');
+      expect(errors[0].message).toBeTruthy();
+      expect(errors[0].details).toBeTruthy();
+      expect(errors[1].name).toBe('SemanticReleaseError');
+      expect(errors[1].code).toBe('EINVALIDBRANCH');
+      expect(errors[1].message).toBeTruthy();
+      expect(errors[1].details).toBeTruthy();
+      expect(errors[2].name).toBe('SemanticReleaseError');
+      expect(errors[2].code).toBe('EINVALIDBRANCH');
+      expect(errors[2].message).toBeTruthy();
+      expect(errors[2].details).toBeTruthy();
+      expect(errors[3].name).toBe('SemanticReleaseError');
+      expect(errors[3].code).toBe('EINVALIDBRANCH');
+      expect(errors[3].message).toBeTruthy();
+      expect(errors[3].details).toBeTruthy();
+      expect(errors[4].code).toBe('EINVALIDBRANCH');
+      expect(errors[4].message).toBeTruthy();
+      expect(errors[4].details).toBeTruthy();
+      expect(errors[5].code).toBe('EINVALIDBRANCH');
+      expect(errors[5].message).toBeTruthy();
+      expect(errors[5].details).toBeTruthy();
+    }
+  });
 
-test('Throw a SemanticReleaseError if the "tagFormat" contains multiple "version" variables', async (t) => {
-  const { cwd, repositoryUrl } = await gitRepo(true);
-  const options = {
-    repositoryUrl,
-    tagFormat: `\${version}v\${version}`,
-    branches: [],
-  };
+  test('Return "true" if all verification pass', async () => {
+    const { cwd, repositoryUrl } = await gitRepo(true);
+    const options = {
+      repositoryUrl,
+      tagFormat: `v\${version}`,
+      branches: [{ name: 'master' }],
+    };
 
-  const errors = [...(await t.throwsAsync(verify({ cwd, options })))];
-
-  t.is(errors[0].name, 'SemanticReleaseError');
-  t.is(errors[0].code, 'ETAGNOVERSION');
-  t.truthy(errors[0].message);
-  t.truthy(errors[0].details);
-});
-
-test('Throw a SemanticReleaseError for each invalid branch', async (t) => {
-  const { cwd, repositoryUrl } = await gitRepo(true);
-  const options = {
-    repositoryUrl,
-    tagFormat: `v\${version}`,
-    branches: [
-      { name: '' },
-      { name: '  ' },
-      { name: 1 },
-      {},
-      { name: '' },
-      1,
-      'master',
-    ],
-  };
-
-  const errors = [...(await t.throwsAsync(verify({ cwd, options })))];
-
-  t.is(errors[0].name, 'SemanticReleaseError');
-  t.is(errors[0].code, 'EINVALIDBRANCH');
-  t.truthy(errors[0].message);
-  t.truthy(errors[0].details);
-  t.is(errors[1].name, 'SemanticReleaseError');
-  t.is(errors[1].code, 'EINVALIDBRANCH');
-  t.truthy(errors[1].message);
-  t.truthy(errors[1].details);
-  t.is(errors[2].name, 'SemanticReleaseError');
-  t.is(errors[2].code, 'EINVALIDBRANCH');
-  t.truthy(errors[2].message);
-  t.truthy(errors[2].details);
-  t.is(errors[3].name, 'SemanticReleaseError');
-  t.is(errors[3].code, 'EINVALIDBRANCH');
-  t.truthy(errors[3].message);
-  t.truthy(errors[3].details);
-  t.is(errors[4].code, 'EINVALIDBRANCH');
-  t.truthy(errors[4].message);
-  t.truthy(errors[4].details);
-  t.is(errors[5].code, 'EINVALIDBRANCH');
-  t.truthy(errors[5].message);
-  t.truthy(errors[5].details);
-});
-
-test('Return "true" if all verification pass', async (t) => {
-  const { cwd, repositoryUrl } = await gitRepo(true);
-  const options = {
-    repositoryUrl,
-    tagFormat: `v\${version}`,
-    branches: [{ name: 'master' }],
-  };
-
-  await t.notThrowsAsync(verify({ cwd, options }));
+    await expect(verify({ cwd, options })).resolves.not.toThrow();
+  });
 });
