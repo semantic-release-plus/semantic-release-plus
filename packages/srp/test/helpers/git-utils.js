@@ -20,7 +20,7 @@ const getStream = require('get-stream');
  * If `withRemote` is `false`, creates a regular repository and initialize it.
  *
  * @param {Boolean} withRemote `true` to create a shallow clone of a bare repository.
- * @return {String} The path of the repository
+ * @return {Promise<{cwd:string,repositoryUrl:string}>} The path of the repository
  */
 async function initGit(withRemote) {
   const cwd = tempy.directory();
@@ -221,7 +221,7 @@ async function gitShallowClone(repositoryUrl, branch = 'master', depth = 1) {
  * Create a git repo with a detached head from another git repository and change the current working directory to the new repository root.
  *
  * @param {String} repositoryUrl The path of the repository to clone.
- * @param {Number} head A commit sha of the remote repo that will become the detached head of the new one.
+ * @param {String} head A commit sha of the remote repo that will become the detached head of the new one.
  * @return {Promise<String>} The path of the new repository.
  */
 async function gitDetachedHead(repositoryUrl, head) {
