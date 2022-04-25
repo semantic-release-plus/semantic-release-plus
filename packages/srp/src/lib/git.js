@@ -169,7 +169,7 @@ async function fetch(repositoryUrl, branch, ciBranch, execaOptions) {
 /**
  * Unshallow the git repository if necessary and fetch all the notes.
  *
- * @param {{repositoryUrl:string, tagFormat:string}} options
+ * @param {{repositoryUrl:string, gitNotesRef:string}} options
  * @param {Object} [execaOpts] Options to pass to `execa`.
  */
 async function fetchNotes({ repositoryUrl, gitNotesRef }, execaOptions) {
@@ -291,9 +291,9 @@ async function pushNotes({ repositoryUrl, gitNotesRef }, execaOptions) {
  * @param {String} tagName the tag name to verify.
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
- * @return {Boolean} `true` if valid, falsy otherwise.
+ * @return {Promise<Boolean>} `true` if valid, falsy otherwise.
  */
-async function verifyTagName(tagName, execaOptions) {
+async function verifyTagName(tagName, execaOptions = undefined) {
   try {
     return (
       (
@@ -358,7 +358,7 @@ async function isBranchUpToDate(repositoryUrl, branch, execaOptions) {
 /**
  * Get and parse the JSON note of a given reference.
  *
- * @param {{commitish:string, tagFormat:string}} options The Git reference for which to retrieve the note.
+ * @param {{commitish:string, gitNotesRef:string}} options The Git reference for which to retrieve the note.
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
  * @return {Object} the parsed JSON note if there is one, an empty object otherwise.
