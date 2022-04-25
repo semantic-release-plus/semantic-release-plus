@@ -1,6 +1,5 @@
-const test = require('ava');
-const AggregateError = require('aggregate-error');
-const {
+import AggregateError = require('aggregate-error');
+import {
   extractErrors,
   tagsToVersions,
   isMajorRange,
@@ -15,221 +14,225 @@ const {
   getRange,
   makeTag,
   isSameChannel,
-} = require('../src/lib/utils');
+} from './utils';
 
-test('extractErrors', (t) => {
-  const errors = [new Error('Error 1'), new Error('Error 2')];
+describe('utils', () => {
+  test('extractErrors', () => {
+    const errors = [new Error('Error 1'), new Error('Error 2')];
 
-  t.deepEqual(extractErrors(new AggregateError(errors)), errors);
-  t.deepEqual(extractErrors(errors[0]), [errors[0]]);
-});
+    expect(extractErrors(new AggregateError(errors))).toEqual(errors);
+    expect(extractErrors(errors[0])).toEqual([errors[0]]);
+  });
 
-test('tagsToVersions', (t) => {
-  t.deepEqual(
-    tagsToVersions([
-      { version: '1.0.0' },
-      { version: '1.1.0' },
-      { version: '1.2.0' },
-    ]),
-    ['1.0.0', '1.1.0', '1.2.0']
-  );
-});
+  test('tagsToVersions', () => {
+    expect(
+      tagsToVersions([
+        { version: '1.0.0' },
+        { version: '1.1.0' },
+        { version: '1.2.0' },
+      ])
+    ).toEqual(['1.0.0', '1.1.0', '1.2.0']);
+  });
 
-test('isMajorRange', (t) => {
-  t.false(isMajorRange('1.1.x'));
-  t.false(isMajorRange('1.11.x'));
-  t.false(isMajorRange('11.1.x'));
-  t.false(isMajorRange('11.11.x'));
-  t.false(isMajorRange('1.1.X'));
-  t.false(isMajorRange('1.1.0'));
+  test('isMajorRange', () => {
+    expect(isMajorRange('1.1.x')).toBe(false);
+    expect(isMajorRange('1.11.x')).toBe(false);
+    expect(isMajorRange('11.1.x')).toBe(false);
+    expect(isMajorRange('11.11.x')).toBe(false);
+    expect(isMajorRange('1.1.X')).toBe(false);
+    expect(isMajorRange('1.1.0')).toBe(false);
 
-  t.true(isMajorRange('1.x.x'));
-  t.true(isMajorRange('11.x.x'));
-  t.true(isMajorRange('1.X.X'));
-  t.true(isMajorRange('1.x'));
-  t.true(isMajorRange('11.x'));
-  t.true(isMajorRange('1.X'));
-});
+    expect(isMajorRange('1.x.x')).toBe(true);
+    expect(isMajorRange('11.x.x')).toBe(true);
+    expect(isMajorRange('1.X.X')).toBe(true);
+    expect(isMajorRange('1.x')).toBe(true);
+    expect(isMajorRange('11.x')).toBe(true);
+    expect(isMajorRange('1.X')).toBe(true);
+  });
 
-test('isMaintenanceRange', (t) => {
-  t.true(isMaintenanceRange('1.1.x'));
-  t.true(isMaintenanceRange('11.1.x'));
-  t.true(isMaintenanceRange('11.11.x'));
-  t.true(isMaintenanceRange('1.11.x'));
-  t.true(isMaintenanceRange('1.x.x'));
-  t.true(isMaintenanceRange('11.x.x'));
-  t.true(isMaintenanceRange('1.x'));
-  t.true(isMaintenanceRange('11.x'));
-  t.true(isMaintenanceRange('1.1.X'));
-  t.true(isMaintenanceRange('1.X.X'));
-  t.true(isMaintenanceRange('1.X'));
+  test('isMaintenanceRange', () => {
+    expect(isMaintenanceRange('1.1.x')).toBe(true);
+    expect(isMaintenanceRange('11.1.x')).toBe(true);
+    expect(isMaintenanceRange('11.11.x')).toBe(true);
+    expect(isMaintenanceRange('1.11.x')).toBe(true);
+    expect(isMaintenanceRange('1.x.x')).toBe(true);
+    expect(isMaintenanceRange('11.x.x')).toBe(true);
+    expect(isMaintenanceRange('1.x')).toBe(true);
+    expect(isMaintenanceRange('11.x')).toBe(true);
+    expect(isMaintenanceRange('1.1.X')).toBe(true);
+    expect(isMaintenanceRange('1.X.X')).toBe(true);
+    expect(isMaintenanceRange('1.X')).toBe(true);
 
-  t.false(isMaintenanceRange('1.1.0'));
-  t.false(isMaintenanceRange('11.1.0'));
-  t.false(isMaintenanceRange('1.11.0'));
-  t.false(isMaintenanceRange('11.11.0'));
-  t.false(isMaintenanceRange('~1.0.0'));
-  t.false(isMaintenanceRange('^1.0.0'));
-});
+    expect(isMaintenanceRange('1.1.0')).toBe(false);
+    expect(isMaintenanceRange('11.1.0')).toBe(false);
+    expect(isMaintenanceRange('1.11.0')).toBe(false);
+    expect(isMaintenanceRange('11.11.0')).toBe(false);
+    expect(isMaintenanceRange('~1.0.0')).toBe(false);
+    expect(isMaintenanceRange('^1.0.0')).toBe(false);
+  });
 
-test('getUpperBound', (t) => {
-  t.is(getUpperBound('1.x.x'), '2.0.0');
-  t.is(getUpperBound('1.X.X'), '2.0.0');
-  t.is(getUpperBound('10.x.x'), '11.0.0');
-  t.is(getUpperBound('1.x'), '2.0.0');
-  t.is(getUpperBound('10.x'), '11.0.0');
-  t.is(getUpperBound('1.0.x'), '1.1.0');
-  t.is(getUpperBound('10.0.x'), '10.1.0');
-  t.is(getUpperBound('10.10.x'), '10.11.0');
-  t.is(getUpperBound('1.0.0'), '1.0.0');
-  t.is(getUpperBound('10.0.0'), '10.0.0');
+  test('getUpperBound', () => {
+    expect(getUpperBound('1.x.x')).toBe('2.0.0');
+    expect(getUpperBound('1.X.X')).toBe('2.0.0');
+    expect(getUpperBound('10.x.x')).toBe('11.0.0');
+    expect(getUpperBound('1.x')).toBe('2.0.0');
+    expect(getUpperBound('10.x')).toBe('11.0.0');
+    expect(getUpperBound('1.0.x')).toBe('1.1.0');
+    expect(getUpperBound('10.0.x')).toBe('10.1.0');
+    expect(getUpperBound('10.10.x')).toBe('10.11.0');
+    expect(getUpperBound('1.0.0')).toBe('1.0.0');
+    expect(getUpperBound('10.0.0')).toBe('10.0.0');
 
-  t.is(getUpperBound('foo'), undefined);
-});
+    expect(getUpperBound('foo')).toBe(undefined);
+  });
 
-test('getLowerBound', (t) => {
-  t.is(getLowerBound('1.x.x'), '1.0.0');
-  t.is(getLowerBound('1.X.X'), '1.0.0');
-  t.is(getLowerBound('10.x.x'), '10.0.0');
-  t.is(getLowerBound('1.x'), '1.0.0');
-  t.is(getLowerBound('10.x'), '10.0.0');
-  t.is(getLowerBound('1.0.x'), '1.0.0');
-  t.is(getLowerBound('10.0.x'), '10.0.0');
-  t.is(getLowerBound('1.10.x'), '1.10.0');
-  t.is(getLowerBound('1.0.0'), '1.0.0');
-  t.is(getLowerBound('10.0.0'), '10.0.0');
+  test('getLowerBound', () => {
+    expect(getLowerBound('1.x.x')).toBe('1.0.0');
+    expect(getLowerBound('1.X.X')).toBe('1.0.0');
+    expect(getLowerBound('10.x.x')).toBe('10.0.0');
+    expect(getLowerBound('1.x')).toBe('1.0.0');
+    expect(getLowerBound('10.x')).toBe('10.0.0');
+    expect(getLowerBound('1.0.x')).toBe('1.0.0');
+    expect(getLowerBound('10.0.x')).toBe('10.0.0');
+    expect(getLowerBound('1.10.x')).toBe('1.10.0');
+    expect(getLowerBound('1.0.0')).toBe('1.0.0');
+    expect(getLowerBound('10.0.0')).toBe('10.0.0');
 
-  t.is(getLowerBound('foo'), undefined);
-});
+    expect(getLowerBound('foo')).toBe(undefined);
+  });
 
-test('highest', (t) => {
-  t.is(highest('1.0.0', '2.0.0'), '2.0.0');
-  t.is(highest('1.1.1', '1.1.0'), '1.1.1');
-  t.is(highest(null, '1.0.0'), '1.0.0');
-  t.is(highest('1.0.0'), '1.0.0');
-  t.is(highest(), undefined);
-});
+  test('highest', () => {
+    expect(highest('1.0.0', '2.0.0')).toBe('2.0.0');
+    expect(highest('1.1.1', '1.1.0')).toBe('1.1.1');
+    expect(highest(null, '1.0.0')).toBe('1.0.0');
+    expect(highest('1.0.0')).toBe('1.0.0');
+    expect(highest()).toBe(undefined);
+  });
 
-test('lowest', (t) => {
-  t.is(lowest('1.0.0', '2.0.0'), '1.0.0');
-  t.is(lowest('1.1.1', '1.1.0'), '1.1.0');
-  t.is(lowest(null, '1.0.0'), '1.0.0');
-  t.is(lowest(), undefined);
-});
+  test('lowest', () => {
+    expect(lowest('1.0.0', '2.0.0')).toBe('1.0.0');
+    expect(lowest('1.1.1', '1.1.0')).toBe('1.1.0');
+    expect(lowest(null, '1.0.0')).toBe('1.0.0');
+    expect(lowest()).toBe(undefined);
+  });
 
-test.serial('getLatestVersion', (t) => {
-  t.is(
-    getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1']),
-    '1.2.0'
-  );
-  t.is(getLatestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2']), undefined);
+  test('getLatestVersion', () => {
+    expect(
+      getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1'])
+    ).toBe('1.2.0');
+    expect(getLatestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'])).toBe(
+      undefined
+    );
 
-  t.is(
-    getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1']),
-    '1.2.0'
-  );
-  t.is(getLatestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2']), undefined);
+    expect(
+      getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1'])
+    ).toBe('1.2.0');
+    expect(getLatestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'])).toBe(
+      undefined
+    );
 
-  t.is(
-    getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1'], {
-      withPrerelease: true,
-    }),
-    '1.2.3-alpha.3'
-  );
-  t.is(
-    getLatestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'], {
-      withPrerelease: true,
-    }),
-    '1.2.3-alpha.3'
-  );
+    expect(
+      getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1'], {
+        withPrerelease: true,
+      })
+    ).toBe('1.2.3-alpha.3');
+    expect(
+      getLatestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'], {
+        withPrerelease: true,
+      })
+    ).toBe('1.2.3-alpha.3');
 
-  t.is(getLatestVersion([]), undefined);
-});
+    expect(getLatestVersion([])).toBe(undefined);
+  });
 
-test.serial('getEarliestVersion', (t) => {
-  t.is(
-    getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.0', '1.0.1-alpha.1']),
-    '1.0.0'
-  );
-  t.is(getEarliestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2']), undefined);
+  test('getEarliestVersion', () => {
+    expect(
+      getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.0', '1.0.1-alpha.1'])
+    ).toBe('1.0.0');
+    expect(getEarliestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'])).toBe(
+      undefined
+    );
 
-  t.is(
-    getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.0', '1.0.1-alpha.1']),
-    '1.0.0'
-  );
-  t.is(getEarliestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2']), undefined);
+    expect(
+      getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.0', '1.0.1-alpha.1'])
+    ).toBe('1.0.0');
+    expect(getEarliestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'])).toBe(
+      undefined
+    );
 
-  t.is(
-    getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1'], {
-      withPrerelease: true,
-    }),
-    '1.0.0-alpha.1'
-  );
-  t.is(
-    getEarliestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'], {
-      withPrerelease: true,
-    }),
-    '1.2.3-alpha.2'
-  );
+    expect(
+      getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1'], {
+        withPrerelease: true,
+      })
+    ).toBe('1.0.0-alpha.1');
+    expect(
+      getEarliestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'], {
+        withPrerelease: true,
+      })
+    ).toBe('1.2.3-alpha.2');
 
-  t.is(getEarliestVersion([]), undefined);
-});
+    expect(getEarliestVersion([])).toBe(undefined);
+  });
 
-test('getFirstVersion', (t) => {
-  t.is(
-    getFirstVersion(['1.2.0', '1.0.0', '1.3.0', '1.1.0', '1.4.0'], []),
-    '1.0.0'
-  );
-  t.is(
-    getFirstVersion(
-      ['1.2.0', '1.0.0', '1.3.0', '1.1.0', '1.4.0'],
-      [
-        { name: 'master', tags: [{ version: '1.0.0' }, { version: '1.1.0' }] },
-        {
-          name: 'next',
-          tags: [
-            { version: '1.0.0' },
-            { version: '1.1.0' },
-            { version: '1.2.0' },
-          ],
-        },
-      ]
-    ),
-    '1.3.0'
-  );
-  t.is(
-    getFirstVersion(
-      ['1.2.0', '1.0.0', '1.1.0'],
-      [
-        { name: 'master', tags: [{ version: '1.0.0' }, { version: '1.1.0' }] },
-        {
-          name: 'next',
-          tags: [
-            { version: '1.0.0' },
-            { version: '1.1.0' },
-            { version: '1.2.0' },
-          ],
-        },
-      ]
-    ),
-    undefined
-  );
-});
+  test('getFirstVersion', () => {
+    expect(
+      getFirstVersion(['1.2.0', '1.0.0', '1.3.0', '1.1.0', '1.4.0'], [])
+    ).toBe('1.0.0');
+    expect(
+      getFirstVersion(
+        ['1.2.0', '1.0.0', '1.3.0', '1.1.0', '1.4.0'],
+        [
+          {
+            name: 'master',
+            tags: [{ version: '1.0.0' }, { version: '1.1.0' }],
+          },
+          {
+            name: 'next',
+            tags: [
+              { version: '1.0.0' },
+              { version: '1.1.0' },
+              { version: '1.2.0' },
+            ],
+          },
+        ]
+      )
+    ).toBe('1.3.0');
+    expect(
+      getFirstVersion(
+        ['1.2.0', '1.0.0', '1.1.0'],
+        [
+          {
+            name: 'master',
+            tags: [{ version: '1.0.0' }, { version: '1.1.0' }],
+          },
+          {
+            name: 'next',
+            tags: [
+              { version: '1.0.0' },
+              { version: '1.1.0' },
+              { version: '1.2.0' },
+            ],
+          },
+        ]
+      )
+    ).toBe(undefined);
+  });
 
-test('getRange', (t) => {
-  t.is(getRange('1.0.0', '1.1.0'), '>=1.0.0 <1.1.0');
-  t.is(getRange('1.0.0'), '>=1.0.0');
-});
+  test('getRange', () => {
+    expect(getRange('1.0.0', '1.1.0')).toBe('>=1.0.0 <1.1.0');
+    expect(getRange('1.0.0')).toBe('>=1.0.0');
+  });
 
-test('makeTag', (t) => {
-  t.is(makeTag(`v\${version}`, '1.0.0'), 'v1.0.0');
-});
+  test('makeTag', () => {
+    expect(makeTag(`v\${version}`, '1.0.0')).toBe('v1.0.0');
+  });
 
-test('isSameChannel', (t) => {
-  t.true(isSameChannel('next', 'next'));
-  t.true(isSameChannel(null, undefined));
-  t.true(isSameChannel(false, undefined));
-  t.true(isSameChannel('', false));
+  test('isSameChannel', () => {
+    expect(isSameChannel('next', 'next')).toBe(true);
+    expect(isSameChannel(null, undefined)).toBe(true);
+    expect(isSameChannel(false, undefined)).toBe(true);
+    expect(isSameChannel('', false)).toBe(true);
 
-  t.false(isSameChannel('next', false));
+    expect(isSameChannel('next', false)).toBe(false);
+  });
 });
