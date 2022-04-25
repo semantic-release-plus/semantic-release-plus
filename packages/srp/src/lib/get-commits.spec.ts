@@ -51,7 +51,9 @@ describe('get-commits', () => {
 
   test('Get all commits since gitHead (from lastRelease) on a detached head repo', async () => {
     // Create a git repository, set the current working directory at the root of the repo
-    let { cwd, repositoryUrl } = await gitRepo();
+    const testRepo = await gitRepo();
+    const { repositoryUrl } = testRepo;
+    let { cwd } = testRepo;
     // Add commits to the master branch
     const commits = await gitCommits(['First', 'Second', 'Third'], { cwd });
     // Create a detached head repo at commit 'feat: Second'

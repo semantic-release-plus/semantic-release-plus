@@ -57,7 +57,9 @@ describe('git', () => {
 
   test('Unshallow and fetch repository', async () => {
     // Create a git repository, set the current working directory at the root of the repo
-    let { cwd, repositoryUrl } = await gitRepo();
+    const testRepo = await gitRepo();
+    const { repositoryUrl } = testRepo;
+    let { cwd } = testRepo;
     // Add commits to the master branch
     await gitCommits(['First', 'Second'], { cwd });
     // Create a shallow clone with only 1 commit
@@ -90,7 +92,9 @@ describe('git', () => {
   });
 
   test('Fetch all tags on a detached head repository', async () => {
-    let { cwd, repositoryUrl } = await gitRepo();
+    const testRepo = await gitRepo();
+    const { repositoryUrl } = testRepo;
+    let { cwd } = testRepo;
 
     await gitCommits(['First'], { cwd });
     await gitTagVersion('v1.0.0', undefined, { cwd });
@@ -109,7 +113,9 @@ describe('git', () => {
   });
 
   test('Fetch all tags on a repository with a detached head from branch (CircleCI)', async () => {
-    let { cwd, repositoryUrl } = await gitRepo();
+    const testRepo = await gitRepo();
+    const { repositoryUrl } = testRepo;
+    let { cwd } = testRepo;
 
     await gitCommits(['First'], { cwd });
     await gitTagVersion('v1.0.0', undefined, { cwd });
@@ -233,7 +239,9 @@ describe('git', () => {
 
   test('Return git remote repository url set while cloning', async () => {
     // Create a git repository, set the current working directory at the root of the repo
-    let { cwd, repositoryUrl } = await gitRepo();
+    const testRepo = await gitRepo();
+    const { repositoryUrl } = testRepo;
+    let { cwd } = testRepo;
     await gitCommits(['First'], { cwd });
     // Create a clone
     cwd = await gitShallowClone(repositoryUrl);
@@ -346,7 +354,9 @@ describe('git', () => {
   });
 
   test('Return falsy if detached head repository is not up to date', async () => {
-    let { cwd, repositoryUrl } = await gitRepo();
+    const testRepo = await gitRepo();
+    const { repositoryUrl } = testRepo;
+    let { cwd } = testRepo;
 
     const [commit] = await gitCommits(['First'], { cwd });
     await gitCommits(['Second'], { cwd });
@@ -461,7 +471,9 @@ describe('git', () => {
 
   test('Unshallow and fetch repository with notes', async () => {
     // Create a git repository, set the current working directory at the root of the repo
-    let { cwd, repositoryUrl } = await gitRepo();
+    const testRepo = await gitRepo();
+    const { repositoryUrl } = testRepo;
+    let { cwd } = testRepo;
     // Add commits to the master branch
     const commits = await gitCommits(['First', 'Second'], { cwd });
     await gitAddNote(
@@ -490,7 +502,9 @@ describe('git', () => {
   });
 
   test('Fetch all notes on a detached head repository', async () => {
-    let { cwd, repositoryUrl } = await gitRepo();
+    const testRepo = await gitRepo();
+    const { repositoryUrl } = testRepo;
+    let { cwd } = testRepo;
 
     await gitCommits(['First'], { cwd });
     const [commit] = await gitCommits(['Second'], { cwd });
