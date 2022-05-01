@@ -1,5 +1,6 @@
 const { argv, env, stderr } = require('process');
 const util = require('util');
+const { hideBin } = require('yargs/helpers');
 const hideSensitive = require('./lib/hide-sensitive');
 
 const stringList = {
@@ -88,7 +89,7 @@ Usage:
     .exitProcess(false);
 
   try {
-    const { help, version, ...options } = cli.parse(argv.slice(2));
+    const { help, version, ...options } = cli.parse(hideBin(argv));
 
     if (Boolean(help) || Boolean(version)) {
       return 0;

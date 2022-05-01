@@ -1,101 +1,98 @@
-const test = require('ava');
-const { escapeRegExp } = require('lodash');
-const proxyquire = require('proxyquire').noPreserveCache();
-const { stub } = require('sinon');
-const { SECRET_REPLACEMENT } = require('../src/lib/definitions/constants');
+import { escapeRegExp } from 'lodash';
+import { SECRET_REPLACEMENT } from '../src/lib/definitions/constants';
 
-test.beforeEach((t) => {
-  t.context.logs = '';
-  t.context.errors = '';
-  t.context.stdout = stub(process.stdout, 'write').callsFake((value) => {
-    t.context.logs += value.toString();
-  });
-  t.context.stderr = stub(process.stderr, 'write').callsFake((value) => {
-    t.context.errors += value.toString();
-  });
-});
+// TODO: Refactor to isolate this so it's only testing cli
+describe('cli', () => {
+  let originalArgv: string[];
+  const indexMock = jest.fn();
+  const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+  const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+  // const stdoutSpy = jest.spyOn(process.stdout, 'write').mockImplementation();
+  const stderrSpy = jest.spyOn(process.stderr, 'write').mockImplementation();
 
-test.afterEach.always((t) => {
-  t.context.stdout.restore();
-  t.context.stderr.restore();
-});
+  beforeEach(() => {
+    jest.mock('./index', () => indexMock);
+    // Remove all cached modules. The cache needs to be cleared before running
+    // each command, otherwise you will see the same results from the command
+    // run in your first test in subsequent tests.
+    jest.resetModules();
 
-test.serial('Pass options to semantic-release-plus API', async (t) => {
-  const run = stub().resolves(true);
-  const argv = [
-    '',
-    '',
-    '-b',
-    'master',
-    'next',
-    '-r',
-    'https://github/com/owner/repo.git',
-    '-t',
-    `v\${version}`,
-    '-p',
-    'plugin1',
-    'plugin2',
-    '-e',
-    'config1',
-    'config2',
-    '--verify-conditions',
-    'condition1',
-    'condition2',
-    '--analyze-commits',
-    'analyze',
-    '--verify-release',
-    'verify1',
-    'verify2',
-    '--generate-notes',
-    'notes',
-    '--prepare',
-    'prepare1',
-    'prepare2',
-    '--publish',
-    'publish1',
-    'publish2',
-    '--success',
-    'success1',
-    'success2',
-    '--fail',
-    'fail1',
-    'fail2',
-    '--debug',
-    '-d',
-  ];
-  const cli = proxyquire('../src/cli', {
-    '.': run,
-    process: { ...process, argv },
+    // Each test overwrites process arguments so store the original arguments
+    originalArgv = process.argv;
   });
 
-  const exitCode = await cli();
+  afterEach(() => {
+    jest.resetAllMocks();
 
-  t.deepEqual(run.args[0][0].branches, ['master', 'next']);
-  t.is(run.args[0][0].repositoryUrl, 'https://github/com/owner/repo.git');
-  t.is(run.args[0][0].tagFormat, `v\${version}`);
-  t.deepEqual(run.args[0][0].plugins, ['plugin1', 'plugin2']);
-  t.deepEqual(run.args[0][0].extends, ['config1', 'config2']);
-  t.deepEqual(run.args[0][0].verifyConditions, ['condition1', 'condition2']);
-  t.is(run.args[0][0].analyzeCommits, 'analyze');
-  t.deepEqual(run.args[0][0].verifyRelease, ['verify1', 'verify2']);
-  t.deepEqual(run.args[0][0].generateNotes, ['notes']);
-  t.deepEqual(run.args[0][0].prepare, ['prepare1', 'prepare2']);
-  t.deepEqual(run.args[0][0].publish, ['publish1', 'publish2']);
-  t.deepEqual(run.args[0][0].success, ['success1', 'success2']);
-  t.deepEqual(run.args[0][0].fail, ['fail1', 'fail2']);
-  t.is(run.args[0][0].debug, true);
-  t.is(run.args[0][0].dryRun, true);
+    // Set process arguments back to the original value
+    process.argv = originalArgv;
+  });
+  test('Pass options to semantic-release-plus API', async () => {
+    const testArgs = [
+      '-b',
+      'master',
+      'next',
+      '-r',
+      'https://github/com/owner/repo.git',
+      '-t',
+      `v\${version}`,
+      '-p',
+      'plugin1',
+      'plugin2',
+      '-e',
+      'config1',
+      'config2',
+      '--verify-conditions',
+      'condition1',
+      'condition2',
+      '--analyze-commits',
+      'analyze',
+      '--verify-release',
+      'verify1',
+      'verify2',
+      '--generate-notes',
+      'notes',
+      '--prepare',
+      'prepare1',
+      'prepare2',
+      '--publish',
+      'publish1',
+      'publish2',
+      '--success',
+      'success1',
+      'success2',
+      '--fail',
+      'fail1',
+      'fail2',
+      '--debug',
+      '-d',
+    ];
 
-  t.is(exitCode, 0);
-});
+    const exitCode = await runCommand(testArgs);
+    expect(indexMock).toBeCalledWith(
+      expect.objectContaining({
+        branches: ['master', 'next'],
+        repositoryUrl: 'https://github/com/owner/repo.git',
+        tagFormat: `v\${version}`,
+        plugins: ['plugin1', 'plugin2'],
+        extends: ['config1', 'config2'],
+        verifyConditions: ['condition1', 'condition2'],
+        analyzeCommits: 'analyze',
+        verifyRelease: ['verify1', 'verify2'],
+        generateNotes: ['notes'],
+        prepare: ['prepare1', 'prepare2'],
+        publish: ['publish1', 'publish2'],
+        success: ['success1', 'success2'],
+        fail: ['fail1', 'fail2'],
+        debug: true,
+        dryRun: true,
+      })
+    );
+    expect(exitCode).toBe(0);
+  });
 
-test.serial(
-  'Pass options to semantic-release-plus API with alias arguments',
-  async (t) => {
-    const run = stub().resolves(true);
-    const argv = [
-      '',
-      '',
+  test('Pass options to semantic-release-plus API with alias arguments', async () => {
+    const testArgs = [
       '--branches',
       'master',
       '--repository-url',
@@ -110,180 +107,160 @@ test.serial(
       'config2',
       '--dry-run',
     ];
-    const cli = proxyquire('../src/cli', {
-      '.': run,
-      process: { ...process, argv },
-    });
 
-    const exitCode = await cli();
-
-    t.deepEqual(run.args[0][0].branches, ['master']);
-    t.is(run.args[0][0].repositoryUrl, 'https://github/com/owner/repo.git');
-    t.is(run.args[0][0].tagFormat, `v\${version}`);
-    t.deepEqual(run.args[0][0].plugins, ['plugin1', 'plugin2']);
-    t.deepEqual(run.args[0][0].extends, ['config1', 'config2']);
-    t.is(run.args[0][0].dryRun, true);
-
-    t.is(exitCode, 0);
-  }
-);
-
-test.serial('Pass unknown options to semantic-release-plus API', async (t) => {
-  const run = stub().resolves(true);
-  const argv = [
-    '',
-    '',
-    '--bool',
-    '--first-option',
-    'value1',
-    '--second-option',
-    'value2',
-    '--second-option',
-    'value3',
-  ];
-  const cli = proxyquire('../src/cli', {
-    '.': run,
-    process: { ...process, argv },
+    const exitCode = await runCommand(testArgs);
+    expect(indexMock).toBeCalledWith(
+      expect.objectContaining({
+        branches: ['master'],
+        repositoryUrl: 'https://github/com/owner/repo.git',
+        tagFormat: `v\${version}`,
+        plugins: ['plugin1', 'plugin2'],
+        extends: ['config1', 'config2'],
+        dryRun: true,
+      })
+    );
+    expect(exitCode).toBe(0);
   });
 
-  const exitCode = await cli();
+  test('Pass unknown options to semantic-release-plus API', async () => {
+    const testArgs = [
+      '--bool',
+      '--first-option',
+      'value1',
+      '--second-option',
+      'value2',
+      '--second-option',
+      'value3',
+    ];
 
-  t.is(run.args[0][0].bool, true);
-  t.is(run.args[0][0].firstOption, 'value1');
-  t.deepEqual(run.args[0][0].secondOption, ['value2', 'value3']);
+    const exitCode = await runCommand(testArgs);
 
-  t.is(exitCode, 0);
-});
+    expect(indexMock).toBeCalledWith(
+      expect.objectContaining({
+        bool: true,
+        firstOption: 'value1',
+        secondOption: ['value2', 'value3'],
+      })
+    );
 
-test.serial(
-  'Pass empty Array to semantic-release-plus API for list option set to "false"',
-  async (t) => {
-    const run = stub().resolves(true);
-    const argv = ['', '', '--publish', 'false'];
-    const cli = proxyquire('../src/cli', {
-      '.': run,
-      process: { ...process, argv },
-    });
-
-    const exitCode = await cli();
-
-    t.deepEqual(run.args[0][0].publish, []);
-
-    t.is(exitCode, 0);
-  }
-);
-
-test.serial(
-  'Do not set properties in option for which arg is not in command line',
-  async (t) => {
-    const run = stub().resolves(true);
-    const argv = ['', '', '-b', 'master'];
-    const cli = proxyquire('../src/cli', {
-      '.': run,
-      process: { ...process, argv },
-    });
-
-    await cli();
-
-    t.false('ci' in run.args[0][0]);
-    t.false('d' in run.args[0][0]);
-    t.false('dry-run' in run.args[0][0]);
-    t.false('debug' in run.args[0][0]);
-    t.false('r' in run.args[0][0]);
-    t.false('t' in run.args[0][0]);
-    t.false('p' in run.args[0][0]);
-    t.false('e' in run.args[0][0]);
-  }
-);
-
-test.serial('Display help', async (t) => {
-  const run = stub().resolves(true);
-  const argv = ['', '', '--help'];
-  const cli = proxyquire('../src/cli', {
-    '.': run,
-    process: { ...process, argv },
+    expect(exitCode).toBe(0);
   });
 
-  const exitCode = await cli();
+  test('Pass empty Array to semantic-release-plus API for list option set to "false"', async () => {
+    const testArgs = ['--publish', 'false'];
 
-  t.regex(t.context.logs, /Run automated package publishing/);
-  t.is(exitCode, 0);
-});
+    const exitCode = await runCommand(testArgs);
 
-test.serial(
-  'Return error exitCode and prints help if called with a command',
-  async (t) => {
-    const run = stub().resolves(true);
-    const argv = ['', '', 'pre'];
-    const cli = proxyquire('../src/cli', {
-      '.': run,
-      process: { ...process, argv },
-    });
+    expect(indexMock).toBeCalledWith(
+      expect.objectContaining({
+        publish: [],
+      })
+    );
 
-    const exitCode = await cli();
+    expect(exitCode).toBe(0);
+  });
 
-    t.regex(t.context.errors, /Run automated package publishing/);
-    t.regex(t.context.errors, /Too many non-option arguments/);
-    t.is(exitCode, 1);
-  }
-);
+  test('Do not set properties in option for which arg is not in command line', async () => {
+    const testArgs = ['-b', 'master'];
 
-test.serial(
-  'Return error exitCode if multiple plugin are set for single plugin',
-  async (t) => {
-    const run = stub().resolves(true);
-    const argv = ['', '', '--analyze-commits', 'analyze1', 'analyze2'];
-    const cli = proxyquire('../src/cli', {
-      '.': run,
-      process: { ...process, argv },
-    });
+    await runCommand(testArgs);
 
-    const exitCode = await cli();
+    expect('ci' in indexMock.mock.calls[0][0]).toBe(false);
+    expect('d' in indexMock.mock.calls[0][0]).toBe(false);
+    expect('dry-run' in indexMock.mock.calls[0][0]).toBe(false);
+    expect('debug' in indexMock.mock.calls[0][0]).toBe(false);
+    expect('r' in indexMock.mock.calls[0][0]).toBe(false);
+    expect('t' in indexMock.mock.calls[0][0]).toBe(false);
+    expect('p' in indexMock.mock.calls[0][0]).toBe(false);
+    expect('e' in indexMock.mock.calls[0][0]).toBe(false);
+  });
 
-    t.regex(t.context.errors, /Run automated package publishing/);
-    t.regex(t.context.errors, /Too many non-option arguments/);
-    t.is(exitCode, 1);
-  }
-);
+  test('Display help', async () => {
+    const testArgs = ['--help'];
 
-test.serial(
-  'Return error exitCode if semantic-release-plus throw error',
-  async (t) => {
-    const run = stub().rejects(new Error('semantic-release-plus error'));
-    const argv = ['', ''];
-    const cli = proxyquire('../src/cli', {
-      '.': run,
-      process: { ...process, argv },
-    });
+    const exitCode = await runCommand(testArgs);
 
-    const exitCode = await cli();
+    expect(consoleLogSpy).toBeCalledWith(
+      expect.stringMatching(/Run automated package publishing/)
+    );
+    expect(exitCode).toBe(0);
+  });
 
-    t.regex(t.context.errors, /semantic-release-plus error/);
-    t.is(exitCode, 1);
-  }
-);
+  test('Return error exitCode and prints help if called with a command', async () => {
+    const testArgs = ['pre'];
 
-test.serial(
-  'Hide sensitive environment variable values from the logs',
-  async (t) => {
+    const exitCode = await runCommand(testArgs);
+
+    expect(consoleErrorSpy).toBeCalledWith(
+      expect.stringMatching(/Run automated package publishing/)
+    );
+    expect(consoleErrorSpy).toBeCalledWith(
+      expect.stringMatching(/Too many non-option arguments/)
+    );
+    expect(exitCode).toBe(1);
+  });
+
+  test('Return error exitCode if multiple plugin are set for single plugin', async () => {
+    indexMock.mockResolvedValue(true);
+    const testArgs = ['--analyze-commits', 'analyze1', 'analyze2'];
+
+    const exitCode = await runCommand(testArgs);
+
+    expect(consoleErrorSpy).toBeCalledWith(
+      expect.stringMatching(/Run automated package publishing/)
+    );
+    expect(consoleErrorSpy).toBeCalledWith(
+      expect.stringMatching(/Too many non-option arguments/)
+    );
+    expect(exitCode).toBe(1);
+  });
+
+  test('Return error exitCode if semantic-release-plus throw error', async () => {
+    indexMock.mockRejectedValue(new Error('semantic-release-plus error'));
+    const testArgs = [];
+
+    const exitCode = await runCommand(testArgs);
+
+    expect(stderrSpy).toBeCalledWith(
+      expect.stringMatching(/semantic-release-plus error/)
+    );
+
+    expect(exitCode).toBe(1);
+  });
+
+  test('Hide sensitive environment variable values from the logs', async () => {
     const env = { MY_TOKEN: 'secret token' };
-    const run = stub().rejects(
+    indexMock.mockRejectedValue(
       new Error(`Throw error: Exposing token ${env.MY_TOKEN}`)
     );
-    const argv = ['', ''];
-    const cli = proxyquire('../src/cli', {
-      '.': run,
-      process: { ...process, argv, env: { ...process.env, ...env } },
-    });
+    const testArgs = [];
 
-    const exitCode = await cli();
-
-    t.regex(
-      t.context.errors,
-      new RegExp(
-        `Throw error: Exposing token ${escapeRegExp(SECRET_REPLACEMENT)}`
+    const exitCode = await runCommand(testArgs, env);
+    expect(stderrSpy).toBeCalledWith(
+      expect.stringMatching(
+        new RegExp(
+          `Throw error: Exposing token ${escapeRegExp(SECRET_REPLACEMENT)}`
+        )
       )
     );
-    t.is(exitCode, 1);
-  }
-);
+    expect(exitCode).toBe(1);
+  });
+});
+
+async function runCommand(args, env?) {
+  process = {
+    ...process,
+    argv: [
+      'node', // Not used but a value is required at this index in the array
+      'cli.js', // Not used but a value is required at this index in the array
+      ...args,
+    ],
+    env: {
+      ...process.env,
+      ...env,
+    },
+  };
+
+  // Require the yargs CLI script
+  return (await require('./cli'))();
+}
