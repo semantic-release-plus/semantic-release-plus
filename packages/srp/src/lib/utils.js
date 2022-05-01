@@ -1,4 +1,6 @@
-const { isFunction, union, template } = require('lodash');
+const isFunction = require('lodash/isFunction');
+const template = require('lodash/template');
+const union = require('lodash/union');
 const semver = require('semver');
 const hideSensitive = require('./hide-sensitive');
 
