@@ -1,6 +1,6 @@
 {
   "name": "@semantic-release-plus/docker",
-  "version": "0.0.1",
+  "version": "*",
   "description": "semantic-release plugin to release a docker container",
   "private": false,
   "publishConfig": {

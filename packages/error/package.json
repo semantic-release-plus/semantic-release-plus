@@ -1,6 +1,6 @@
 {
   "name": "@semantic-release-plus/error",
-  "version": "0.0.1",
+  "version": "*",
   "description": "semantic-release-plus error",
   "private": false,
   "publishConfig": {

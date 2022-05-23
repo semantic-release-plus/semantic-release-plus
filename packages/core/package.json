@@ -1,6 +1,6 @@
 {
   "name": "@semantic-release-plus/core",
-  "version": "0.0.1-automated",
+  "version": "*",
   "description": "semantic-release-plus core interfaces and functionality",
   "private": false,
   "publishConfig": {
