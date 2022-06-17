@@ -31,7 +31,7 @@
   "dependencies": {
     "aggregate-error": "4.0.0",
     "debug": "4.3.3",
-    "execa": "5.1.1",
+    "execa": "6.1.0",
     "semver": "7.3.7"
   },
   "devDependencies": {
