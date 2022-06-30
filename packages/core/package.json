@@ -19,6 +19,5 @@
   "homepage": "https://github.com/semantic-release-plus/semantic-release-plus/tree/master/packages/plugins/docker",
   "engines": {
     "node": ">=14.0.0"
-  },
-  "dependencies": {}
+  }
 }
