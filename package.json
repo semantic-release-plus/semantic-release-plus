@@ -26,7 +26,7 @@
     "help": "nx help",
     "prepare": "husky install",
     "register-local-nx-plugins": "nx run-many --target=link-plugin --all",
-    "postinstall": "npm run register-local-nx-plugins"
+    "XXXpostinstall": "npm run register-local-nx-plugins"
   },
   "private": true,
   "dependencies": {

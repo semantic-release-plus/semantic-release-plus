@@ -24,7 +24,8 @@
     "@semantic-release/error": "^3.0.0",
     "@semantic-release/github": "^8.0.0",
     "@semantic-release/npm": "^9.0.0",
-    "@semantic-release/release-notes-generator": "^10.0.0"
+    "@semantic-release/release-notes-generator": "^10.0.0",
+    "@semantic-release-plus/core": "*"
   },
   "peerDependencies": {
     "tslib": "^2.0.0"
