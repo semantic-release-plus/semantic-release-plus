@@ -21,6 +21,6 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "@semantic-release-plus/core": "*"
+    "@semantic-release-plus/core": "alpha"
   }
 }
