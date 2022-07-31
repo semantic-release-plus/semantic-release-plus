@@ -1,10 +1,10 @@
 import { Release } from '@semantic-release-plus/core';
 import { getChannel } from './get-channel';
-import { PluginConfig } from './plugin-config.interface';
+import { NormalizedPluginConfig } from './plugin-config.interface';
 
 export function getTags(
   { channel, version }: Release,
-  { publishChannelTag }: PluginConfig
+  { publishChannelTag }: NormalizedPluginConfig
 ): string[] {
   const tags: string[] = [version];
   if (publishChannelTag) {

@@ -5,22 +5,20 @@ import { normalizeConfig } from './normalize-config';
 import { PluginConfig } from './plugin-config.interface';
 
 export async function publish(pluginConfig: PluginConfig, context: Context) {
-  pluginConfig = normalizeConfig(pluginConfig);
+  const normalizedPluginConfig = normalizeConfig(pluginConfig);
 
-  const { name, registry } = pluginConfig;
+  const { image } = normalizedPluginConfig;
   const {
     nextRelease: { version, channel },
     logger,
   } = context;
 
-  const registryPath = registry ? registry + '/' : '';
-
-  let tags = getTags({ channel, version }, pluginConfig);
-  tags = tags.map((tag) => `${registryPath}${name}:${tag}`);
+  let tags = getTags({ channel, version }, normalizedPluginConfig);
+  tags = tags.map((tag) => `${image.name}:${tag}`);
 
   for (const tag of tags) {
-    logger.log(`Tagging ${name} as ${tag}`);
-    const { stdout } = await dockerTag(name, tag, context);
+    logger.log(`Tagging ${image.localNameWithSuffix} as ${tag}`);
+    const { stdout } = await dockerTag(image.localNameWithSuffix, tag, context);
     logger.log(stdout);
   }
 
