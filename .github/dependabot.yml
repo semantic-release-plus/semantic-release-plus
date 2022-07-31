@@ -14,8 +14,29 @@ updates:
     schedule:
       interval: 'daily'
 
+  # Maintain dependencies for docker
+  - package-ecosystem: 'docker'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    target-branch: 'alpha'
+
+  # Maintain dependencies for npm
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    target-branch: 'alpha'
+
   # Maintain dependencies for Composer
   - package-ecosystem: 'docker'
     directory: '/'
     schedule:
       interval: 'daily'
+    target-branch: 'alpha'
