@@ -36,33 +36,6 @@
     "appsDir": "packages",
     "libsDir": "packages"
   },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ],
-    "release": [
-      {
-        "target": "release",
-        "projects": "dependencies"
-      },
-      {
-        "target": "build",
-        "projects": "self"
-      }
-    ],
-    "link-plugin": [
-      {
-        "target": "build",
-        "projects": "self"
-      }
-    ]
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  },
   "generators": {
     "@nrwl/workspace": {
       "library": {
@@ -120,6 +93,18 @@
       "library": {
         "linter": "eslint"
       }
+    }
+  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    },
+    "release": {
+      "dependsOn": ["^release", "build"]
+    },
+    "link-plugin": {
+      "dependsOn": ["build"]
     }
   }
 }
