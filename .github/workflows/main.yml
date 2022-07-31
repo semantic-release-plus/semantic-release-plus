@@ -80,7 +80,7 @@ jobs:
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{secrets.NX_CLOUD_ACCESS_TOKEN}}
       - name: Save build output
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: packages
           path: dist/packages
