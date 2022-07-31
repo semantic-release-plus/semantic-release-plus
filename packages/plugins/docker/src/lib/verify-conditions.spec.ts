@@ -26,6 +26,9 @@ describe('verify', () => {
     },
     logger: {
       log: jest.fn(),
+      error: jest.fn(),
+      success: jest.fn(),
+      warn: jest.fn(),
     },
   };
 
@@ -49,7 +52,7 @@ describe('verify', () => {
       {
         userName: dockerUser,
         password: dockerPassword,
-        registry: '',
+        registry: undefined,
       },
       tstContext
     );
@@ -82,8 +85,34 @@ describe('verify', () => {
   });
 
   it('should throw error if login fails', async () => {
-    dockerLoginMock.mockRejectedValue(new Error('test error'));
-    await expect(verifyConditions(pluginConfig, context)).rejects.toThrow();
+    const tstContext: Context = {
+      ...context,
+      env: {
+        DOCKER_USERNAME: dockerUser,
+        DOCKER_PASSWORD: dockerPassword,
+      },
+    };
+    dockerLoginMock.mockImplementation(() => {
+      throw new Error('docker cli login error');
+    });
+    expect.assertions(2);
+    try {
+      await verifyConditions(pluginConfig, tstContext);
+    } catch (e) {
+      expect(tstContext.logger.error).toBeCalledWith(
+        new Error('docker cli login error')
+      );
+      expect(e.message).toBe('docker login failed');
+    }
+  });
+
+  it('should throw error if docker user and password env variables are not populated and skip login is false', async () => {
+    expect.assertions(1);
+    try {
+      await verifyConditions(pluginConfig, context);
+    } catch (e) {
+      expect(e.message).toBe('Environment variable DOCKER_USERNAME is not set');
+    }
   });
 
   it('should skip logging in to docker if set to in config', async () => {
