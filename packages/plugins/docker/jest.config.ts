@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   name: 'plugins-docker',
   preset: '../../../jest.preset.js',
   globals: {

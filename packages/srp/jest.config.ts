@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'srp',
   preset: '../../jest.preset.js',
   // override default test matcher to allow jest test with .spec.ts files and ava with .test.js files

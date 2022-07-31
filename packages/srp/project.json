@@ -1,5 +1,5 @@
 {
-  "root": "packages/srp",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/srp/src",
   "projectType": "library",
   "targets": {
@@ -44,18 +44,18 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/srp"],
       "options": {
-        "jestConfig": "packages/srp/jest.config.js",
+        "jestConfig": "packages/srp/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "ava": {
-      "executor": "@nrwl/workspace:run-script",
+      "executor": "nx:run-script",
       "options": {
         "script": "test"
       }
     },
     "e2e": {
-      "executor": "@nrwl/workspace:run-script",
+      "executor": "nx:run-script",
       "options": {
         "script": "e2e"
       },
@@ -67,7 +67,7 @@
       ]
     },
     "release": {
-      "executor": "@nrwl/workspace:run-script",
+      "executor": "nx:run-script",
       "outputs": ["{options.outputPath}"],
       "options": {
         "script": "release",

@@ -7,5 +7,6 @@
     "nx-tools-e2e": "packages/nx-tools-e2e",
     "plugins-docker": "packages/plugins/docker",
     "srp": "packages/srp"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
