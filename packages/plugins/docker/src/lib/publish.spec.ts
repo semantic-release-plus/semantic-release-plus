@@ -1,5 +1,5 @@
 import { BranchType, Context } from '@semantic-release-plus/core';
-import { mocked } from 'ts-jest/utils';
+import { mocked } from 'jest-mock';
 import { dockerPull, dockerPush, dockerTag } from './docker-utils';
 import { PluginConfig } from './plugin-config.interface';
 import { publish } from './publish';
