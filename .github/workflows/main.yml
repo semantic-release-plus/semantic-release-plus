@@ -9,65 +9,40 @@ on:
       - alpha
       - '*.x' # maintenance releases branches
   pull_request:
-    types:
-      - opened
-      - synchronize
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
 
 env:
-  NX_CLOUD_DISTRIBUTED_EXECUTION: true
   NX_CLOUD_ACCESS_TOKEN: ${{secrets.NX_CLOUD_ACCESS_TOKEN}}
   GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_GITHUB_PAT }}
   NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
 
 jobs:
   main:
-    runs-on: ubuntu-latest
-    steps:
-      - run: git config --global user.name github-actions
-      - run: git config --global user.email github-actions@github.com
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-        with:
-          main-branch-name: master
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: npm
-      - run: npm ci --ignore-scripts
-      - run: npx nx workspace-lint
-      - run: npx nx-cloud start-ci-run
-      - name: '📝 Lint'
-        run: npx nx affected --target=lint --parallel --max-parallel=3
-      - name: '🧪 Test'
-        run: npx nx affected --target=test --parallel --max-parallel=3
-      - name: '🧪 Test ava'
-        run: npx nx affected --target=ava --parallel --max-parallel=3
-      # - name: '🔎 E2E'
-      #   run: NX_CLOUD_DISTRIBUTED_EXECUTION=false npx nx affected --target=e2e --parallel --max-parallel=3
-      - name: '🏗️ Build'
-        run: npx nx affected --target=build --configuration=production --parallel --max-parallel=3
-      - name: '📦 Release'
-        run: NX_CLOUD_DISTRIBUTED_EXECUTION=false npx nx affected --target=release
-      - run: npx nx-cloud stop-all-agents
+    name: Nx Cloud - Main Job
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.8
+    secrets: inherit
+    with:
+      main-branch-name: master
+      number-of-agents: 3
+      init-commands: |
+        npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
+      parallel-commands: |
+        npx nx-cloud record -- npx nx workspace-lint
+        npx nx-cloud record -- npx nx format:check
+      parallel-commands-on-agents: |
+        npx nx affected --target=lint --parallel=3
+        npx nx affected --target=test --parallel=3 --ci --code-coverage
+        npx nx affected --target=ava --parallel --max-parallel=3
+        npx nx affected --target=build --parallel=3
+      final-commands: |
+        npx nx affected --target=release
 
   agents:
-    runs-on: ubuntu-latest
-    name: Agent 1
-    timeout-minutes: 60
-    strategy:
-      matrix:
-        agent: [1, 2, 3]
-    steps:
-      - run: git config --global user.name github-actions
-      - run: git config --global user.email github-actions@github.com
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: npm
-      - run: npm ci --ignore-scripts
-      - name: Start Nx Agent ${{ matrix.agent }}
-        run: npx nx-cloud start-agent
+    name: Nx Cloud - Agents
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.8
+    secrets: inherit
+    with:
+      number-of-agents: 3
