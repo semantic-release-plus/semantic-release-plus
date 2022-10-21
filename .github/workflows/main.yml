@@ -36,7 +36,7 @@ jobs:
         with:
           cache: npm
       - run: npm ci
-      - uses: mansagroup/nrwl-nx-action@v2.1.0
+      - uses: mansagroup/nrwl-nx-action@v3.1.0
         with:
           targets: lint
           nxCloud: 'true'
@@ -53,7 +53,7 @@ jobs:
         with:
           cache: npm
       - run: npm ci
-      - uses: mansagroup/nrwl-nx-action@v2.1.0
+      - uses: mansagroup/nrwl-nx-action@v3.1.0
         with:
           targets: test
           args: --code-coverage
@@ -72,7 +72,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Build affected
-        uses: mansagroup/nrwl-nx-action@v2.1.0
+        uses: mansagroup/nrwl-nx-action@v3.1.0
         with:
           targets: build
           args: --configuration=production
@@ -106,7 +106,7 @@ jobs:
           name: packages
           path: dist/packages
       - name: Release affected
-        uses: mansagroup/nrwl-nx-action@v2.1.0
+        uses: mansagroup/nrwl-nx-action@v3.1.0
         with:
           targets: release
           nxCloud: 'true'
