@@ -24,14 +24,14 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/error"],
+      "outputs": ["coverage/packages/error"],
       "options": {
         "jestConfig": "packages/error/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "release": {
-      "executor": "nx:run-commands",
+      "executor": "@nrwl/workspace:run-commands",
       "outputs": ["{options.outputPath}"],
       "options": {
         "commands": [
