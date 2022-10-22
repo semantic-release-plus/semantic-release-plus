@@ -17,7 +17,7 @@
       }
     },
     "chmod": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/srp",
