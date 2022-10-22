@@ -45,7 +45,7 @@
       }
     },
     "link-plugin": {
-      "executor": "nx:run-commands",
+      "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
           "npm link ./dist/packages/nx-tools",
@@ -55,7 +55,7 @@
       }
     },
     "release": {
-      "executor": "nx:run-commands",
+      "executor": "@nrwl/workspace:run-commands",
       "outputs": ["{options.outputPath}"],
       "options": {
         "commands": [

@@ -1,6 +1,6 @@
 import { Context } from '@semantic-release-plus/core';
 import * as execa from 'execa';
-import { mocked } from 'jest-mock';
+import { mocked } from 'ts-jest/utils';
 import { dockerLogin, dockerPull, dockerPush, dockerTag } from './docker-utils';
 
 jest.mock('execa');

@@ -17,7 +17,7 @@
       }
     },
     "chmod": {
-      "executor": "nx:run-commands",
+      "executor": "@nrwl/workspace:run-commands",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/srp",
@@ -42,7 +42,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/srp"],
+      "outputs": ["coverage/packages/srp"],
       "options": {
         "jestConfig": "packages/srp/jest.config.ts",
         "passWithNoTests": true
