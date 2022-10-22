@@ -58,7 +58,7 @@
     "semver-diff": "^3.1.1",
     "signale": "^1.2.1",
     "tslib": "^2.0.0",
-    "yargs": "^16.2.0"
+    "yargs": "^17.6.0"
   },
   "devDependencies": {
     "@nrwl/devkit": "14.8.6",
