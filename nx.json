@@ -3,9 +3,6 @@
   "affected": {
     "defaultBase": "master"
   },
-  "implicitDependencies": {
-    ".github/workflows/main.yml": "*"
-  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
