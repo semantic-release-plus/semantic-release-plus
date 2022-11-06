@@ -1,4 +1,4 @@
-import { mocked } from 'ts-jest/utils';
+import { mocked } from 'jest-mock';
 import { Context } from '@semantic-release-plus/core';
 import { dockerLogin } from './docker-utils';
 import { PluginConfig } from './plugin-config.interface';

@@ -1,5 +1,5 @@
 {
-  "root": "packages/plugins/docker",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/plugins/docker/src",
   "projectType": "library",
   "generators": {},
@@ -14,7 +14,7 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
-        "jestConfig": "packages/plugins/docker/jest.config.js",
+        "jestConfig": "packages/plugins/docker/jest.config.ts",
         "tsConfig": "packages/plugins/docker/tsconfig.spec.json",
         "passWithNoTests": true,
         "coverageReporters": ["html", "text", "text-summary"]
@@ -32,7 +32,7 @@
       }
     },
     "release": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": ["npx semantic-release-plus"],
         "cwd": "packages/plugins/docker/"
