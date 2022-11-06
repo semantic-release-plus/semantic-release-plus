@@ -27,10 +27,9 @@ jobs:
     with:
       main-branch-name: master
       number-of-agents: 3
-      environment-variables: |
-        GIT_COMMITTER_NAME=github-actions
-        GIT_COMMITTER_EMAIL=github-actions@github.com
       init-commands: |
+        git config --global user.name github-actions
+        git config --global user.email github-actions@github.com
         npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
       parallel-commands: |
         npx nx-cloud record -- npx nx workspace-lint
@@ -49,6 +48,3 @@ jobs:
     secrets: inherit
     with:
       number-of-agents: 3
-      environment-variables: |
-        GIT_COMMITTER_NAME=github-actions
-        GIT_COMMITTER_EMAIL=github-actions@github.com
