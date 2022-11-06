@@ -48,3 +48,7 @@ jobs:
     secrets: inherit
     with:
       number-of-agents: 3
+      install-commands: |
+        git config --global user.name github-actions
+        git config --global user.email github-actions@github.com
+        npm ci
