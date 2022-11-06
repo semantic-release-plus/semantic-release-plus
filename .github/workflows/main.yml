@@ -37,10 +37,10 @@ jobs:
       parallel-commands-on-agents: |
         npx nx affected --target=lint --parallel=3
         npx nx affected --target=test --parallel=3 --ci --code-coverage
-        npx nx affected --target=ava --parallel --max-parallel=3
+        npx nx affected --target=ava --parallel=3
         npx nx affected --target=build --parallel=3
       final-commands: |
-        npx nx affected --target=release
+        NX_CLOUD_DISTRIBUTED_EXECUTION=false npx nx affected --target=release
 
   agents:
     name: Nx Cloud - Agents
