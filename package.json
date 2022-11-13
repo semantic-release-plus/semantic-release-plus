@@ -89,6 +89,7 @@
     "dotenv": "10.0.0",
     "eslint": "8.15.0",
     "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-jest": "^27.1.5",
     "esm": "3.2.25",
     "file-url": "3.0.0",
     "fs-extra": "9.1.0",
