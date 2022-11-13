@@ -141,10 +141,7 @@ describe('get-config', () => {
     // Verify the options contains the plugin config from package.json
     expect(result).toEqual(expected);
     // Verify the plugins module is called with the plugin options from package.json
-    expect(mockedPlugins).toHaveBeenCalledWith(
-      expect.objectContaining({ options: expected, cwd }),
-      {}
-    );
+    expect(mockedPlugins).toHaveBeenCalledWith({ options: expected, cwd }, {});
   });
 
   test('Read options from .releaserc.yml', async () => {
