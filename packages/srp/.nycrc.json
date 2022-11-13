@@ -1,8 +1,8 @@
 {
   "include": ["src/lib/**/*.js", "src/index.js", "src/cli.js"],
-  "reporter": ["json", "text", "html"],
-  "reportDir": "../../coverage/packages/srp",
-  "tempDirectory": "../../.nyc_output/packages/srp",
-  "cacheDir": "../../node_modules/.cache/nyc/srp",
+  "reporter": ["json", "lcov", "text", "text-summary"],
+  "reportDir": "../../coverage/packages/srp-ava",
+  "tempDirectory": "../../.nyc_output/packages/srp-ava",
+  "cacheDir": "../../node_modules/.cache/nyc/srp-ava",
   "all": true
 }
