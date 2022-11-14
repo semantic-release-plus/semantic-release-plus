@@ -45,6 +45,12 @@ jobs:
         run: npx nx affected --target=test --codeCoverage --parallel --max-parallel=3
       - name: '🧪 Test ava'
         run: npx nx affected --target=ava --parallel --max-parallel=3
+        # must run after tests to get coverage info
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       # - name: '🔎 E2E'
       #   run: NX_CLOUD_DISTRIBUTED_EXECUTION=false npx nx affected --target=e2e --parallel --max-parallel=3
       - name: '🏗️ Build'
