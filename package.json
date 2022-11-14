@@ -100,7 +100,7 @@
     "js-yaml": "4.1.0",
     "lint-staged": "12.5.0",
     "mockserver-client": "5.11.2",
-    "nock": "13.2.1",
+    "nock": "13.2.9",
     "nx": "15.0.10",
     "nyc": "15.1.0",
     "p-retry": "4.6.1",
