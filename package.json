@@ -69,7 +69,7 @@
     "@nrwl/node": "15.0.10",
     "@nrwl/nx-cloud": "15.0.2",
     "@nrwl/nx-plugin": "15.0.10",
-    "@nrwl/workspace": "15.0.10",
+    "@nrwl/workspace": "15.4.5",
     "@swc-node/register": "^1.4.2",
     "@swc/core": "^1.2.173",
     "@types/debug": "^4.1.7",
