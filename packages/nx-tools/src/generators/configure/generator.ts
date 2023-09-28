@@ -6,7 +6,7 @@ import {
   readProjectConfiguration,
   Tree,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { detectPackageManager } from '@nrwl/tao/src/shared/package-manager';
 import * as path from 'path';
 import { ConfigureGeneratorSchema } from './schema';
@@ -77,7 +77,7 @@ export default async function (host: Tree, options: ConfigureGeneratorSchema) {
   };
 
   projectConfig.targets['release'] = {
-    executor: '@nrwl/workspace:run-commands',
+    executor: '@nx/workspace:run-commands',
     options: {
       commands: [
         {

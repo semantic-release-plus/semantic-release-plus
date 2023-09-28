@@ -6,7 +6,7 @@ import { dockerLogin, dockerPull, dockerPush, dockerTag } from './docker-utils';
 jest.mock('execa');
 
 describe('docker utils', () => {
-  const execaMock = mocked(execa, true);
+  const execaMock = mocked(execa, { shallow: true });
   const dockerUser = 'user-name';
   const dockerPassword = '!my-testing-password!';
 

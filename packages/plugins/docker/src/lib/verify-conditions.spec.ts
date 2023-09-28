@@ -1,5 +1,5 @@
-import { mocked } from 'jest-mock';
 import { Context } from '@semantic-release-plus/core';
+import { mocked } from 'jest-mock';
 import { dockerLogin } from './docker-utils';
 import { PluginConfig } from './plugin-config.interface';
 import { verifyConditions } from './verify-conditions';
@@ -7,7 +7,8 @@ import { verifyConditions } from './verify-conditions';
 jest.mock('./docker-utils');
 
 describe('verify', () => {
-  const dockerLoginMock = mocked(dockerLogin, true);
+  const dockerLoginMock = mocked(dockerLogin, { shallow: true });
+
   const dockerUser = 'dockerUserName';
   const dockerPassword = 'dockerPW';
 
