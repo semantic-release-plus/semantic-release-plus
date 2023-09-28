@@ -88,7 +88,7 @@
     "dockerode": "3.3.1",
     "dotenv": "10.0.0",
     "eslint": "8.46.0",
-    "eslint-config-prettier": "8.3.0",
+    "eslint-config-prettier": "9.0.0",
     "eslint-plugin-jest": "^27.1.5",
     "esm": "3.2.25",
     "file-url": "3.0.0",
