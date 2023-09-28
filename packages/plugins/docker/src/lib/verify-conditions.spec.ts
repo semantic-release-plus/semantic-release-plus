@@ -1,5 +1,5 @@
-import { mocked } from 'ts-jest/utils';
 import { Context } from '@semantic-release-plus/core';
+import { mocked } from 'jest-mock';
 import { dockerLogin } from './docker-utils';
 import { PluginConfig } from './plugin-config.interface';
 import { verifyConditions } from './verify-conditions';
@@ -7,7 +7,9 @@ import { verifyConditions } from './verify-conditions';
 jest.mock('./docker-utils');
 
 describe('verify', () => {
-  const dockerLoginMock = mocked(dockerLogin, true);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
+  const dockerLoginMock = mocked(dockerLogin, () => jest.fn());
   const dockerUser = 'dockerUserName';
   const dockerPassword = 'dockerPW';
 

@@ -1,11 +1,13 @@
 import { Context } from '@semantic-release-plus/core';
 import * as execa from 'execa';
-import { mocked } from 'ts-jest/utils';
+import { mocked } from 'jest-mock';
 import { dockerLogin, dockerPull, dockerPush, dockerTag } from './docker-utils';
 
 jest.mock('execa');
 
 describe('docker utils', () => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   const execaMock = mocked(execa, true);
   const dockerUser = 'user-name';
   const dockerPassword = '!my-testing-password!';

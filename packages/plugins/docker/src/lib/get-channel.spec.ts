@@ -1,5 +1,5 @@
 import { validRange } from 'semver';
-import { mocked } from 'ts-jest/utils';
+import { mocked } from 'jest-mock';
 import { getChannel } from './get-channel';
 
 jest.mock('semver');
