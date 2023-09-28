@@ -1,4 +1,4 @@
-import { appRootPath } from '@nrwl/workspace/src/utils/app-root';
+import { appRootPath } from '@nx/workspace/src/utils/app-root';
 import { execSync } from 'child_process';
 import { copySync, removeSync } from 'fs-extra';
 import { getPublishableLibNames } from './utils';

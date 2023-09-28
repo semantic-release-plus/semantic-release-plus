@@ -1,18 +1,19 @@
 {
+  "name": "plugins-docker",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/plugins/docker/src",
   "projectType": "library",
   "generators": {},
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/plugins/docker/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "packages/plugins/docker/jest.config.ts",
         "tsConfig": "packages/plugins/docker/tsconfig.spec.json",
@@ -21,14 +22,15 @@
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "options": {
         "outputPath": "dist/packages/plugins/docker",
         "tsConfig": "packages/plugins/docker/tsconfig.lib.json",
         "packageJson": "packages/plugins/docker/package.json",
         "generatePackageJson": true,
         "main": "packages/plugins/docker/src/index.ts",
-        "assets": ["packages/plugins/docker/*.md"]
+        "assets": ["packages/plugins/docker/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "release": {

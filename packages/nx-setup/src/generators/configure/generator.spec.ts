@@ -1,6 +1,6 @@
-import { readProjectConfiguration, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyV1Workspace } from '@nrwl/devkit/testing';
-import { libraryGenerator } from '@nrwl/workspace/generators';
+import { readProjectConfiguration, Tree } from '@nx/devkit';
+import { createTreeWithEmptyV1Workspace } from '@nx/devkit/testing';
+import { libraryGenerator } from '@nx/workspace/generators';
 import generator from './generator';
 import { ConfigureGeneratorSchema } from './schema';
 

@@ -1,14 +1,16 @@
 {
+  "name": "nx-setup-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "packages/nx-setup-e2e/src",
   "targets": {
     "test-local": {
-      "executor": "@nrwl/nx-plugin:e2e",
+      "executor": "@nx/jest:jest",
       "options": {
-        "target": "nx-setup:build",
-        "jestConfig": "packages/nx-setup-e2e/jest.config.js"
-      }
+        "jestConfig": "packages/nx-setup-e2e/jest.config.js",
+        "runInBand": true
+      },
+      "dependsOn": ["nx-setup:build"]
     }
   },
   "tags": [],
