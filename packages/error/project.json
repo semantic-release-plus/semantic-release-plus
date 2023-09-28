@@ -4,7 +4,7 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/error",
@@ -25,7 +25,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/error"],
       "options": {
-        "jestConfig": "packages/error/jest.config.js",
+        "jestConfig": "packages/error/jest.config.ts",
         "passWithNoTests": true
       }
     },

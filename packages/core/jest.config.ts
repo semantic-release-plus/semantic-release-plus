@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'error',
-  preset: '../../jest.preset.js',
+  displayName: 'core',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -11,5 +11,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/packages/error',
+  coverageDirectory: '../../coverage/packages/core',
+  preset: '../../jest.preset.ts',
 };
