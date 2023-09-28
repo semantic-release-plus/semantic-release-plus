@@ -1,16 +1,17 @@
 {
+  "name": "nx-tools",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-tools/src",
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": ["packages/nx-tools/**/*.ts"]
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-tools",
@@ -56,12 +57,11 @@
     },
     "release": {
       "executor": "nx:run-commands",
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{workspaceRoot}/dist/packages/nx-tools"],
       "options": {
         "commands": [
           "node ../../dist/packages/srp/src/bin/semantic-release-plus.js --debug"
         ],
-        "outputPath": "dist/packages/nx-tools",
         "cwd": "packages/nx-tools"
       }
     }

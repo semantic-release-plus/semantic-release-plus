@@ -1,8 +1,4 @@
-import {
-  ensureNxProject,
-  runNxCommandAsync,
-  uniq,
-} from '@nrwl/nx-plugin/testing';
+import { ensureNxProject, runNxCommandAsync, uniq } from '@nx/plugin/testing';
 describe('nx-tools e2e', () => {
   it('should create nx-tools', async () => {
     const plugin = uniq('nx-tools');
@@ -12,7 +8,7 @@ describe('nx-tools e2e', () => {
       'dist/packages/nx-tools'
     );
     await runNxCommandAsync(
-      `generate @nrwl/node:library --name=${plugin} --buildable --publishable --importPath=${plugin}`
+      `generate @nx/node:library --name=${plugin} --buildable --publishable --importPath=${plugin}`
     );
     await runNxCommandAsync(
       `generate @semantic-release-plus/nx-tools:configure --project=${plugin}`

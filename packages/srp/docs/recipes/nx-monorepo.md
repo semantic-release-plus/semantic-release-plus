@@ -69,7 +69,7 @@ Add a section to each releasable project in the angular/workspace.json calling s
 
 ```text
   "release": {
-    "builder": "@nrwl/workspace:run-commands",
+    "builder": "@nx/workspace:run-commands",
     "options": {
       "commands": [
         {

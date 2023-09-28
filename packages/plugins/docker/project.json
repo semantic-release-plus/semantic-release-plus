@@ -1,18 +1,19 @@
 {
+  "name": "plugins-docker",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/plugins/docker/src",
   "projectType": "library",
   "generators": {},
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/plugins/docker/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "packages/plugins/docker/jest.config.ts",
         "tsConfig": "packages/plugins/docker/tsconfig.spec.json",
@@ -21,7 +22,7 @@
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "options": {
         "outputPath": "dist/packages/plugins/docker",
         "tsConfig": "packages/plugins/docker/tsconfig.lib.json",
@@ -35,12 +36,11 @@
     },
     "release": {
       "executor": "nx:run-commands",
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{workspaceRoot}/dist/packages/plugins/docker"],
       "options": {
         "commands": [
           "node ../../../dist/packages/srp/src/bin/semantic-release-plus.js --debug"
         ],
-        "outputPath": "dist/packages/plugins/docker",
         "cwd": "packages/plugins/docker/"
       }
     }
