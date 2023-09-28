@@ -1,5 +1,5 @@
 import execa = require('execa');
-import { mocked } from 'ts-jest/utils';
+import { mocked } from 'jest-mock';
 import { Context } from 'vm';
 import { addChannel } from './add-channel';
 import { dockerPull, dockerPush, dockerTag } from './docker-utils';

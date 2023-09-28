@@ -1,5 +1,5 @@
 {
-  "root": "packages/nx-setup",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-setup/src",
   "projectType": "library",
   "targets": {
@@ -43,13 +43,13 @@
       }
     },
     "build-plugin": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "nx run nx-setup:build"
       }
     },
     "link-plugin": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "cd ./dist/packages/nx-setup && npm link",
@@ -59,7 +59,7 @@
       }
     },
     "XXXrelease": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": ["npx semantic-release-plus"],
         "cwd": "packages/nx-setup"

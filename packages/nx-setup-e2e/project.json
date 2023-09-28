@@ -1,6 +1,6 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "root": "packages/nx-setup-e2e",
   "sourceRoot": "packages/nx-setup-e2e/src",
   "targets": {
     "test-local": {
