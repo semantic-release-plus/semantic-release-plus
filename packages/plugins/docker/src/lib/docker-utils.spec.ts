@@ -6,6 +6,8 @@ import { dockerLogin, dockerPull, dockerPush, dockerTag } from './docker-utils';
 jest.mock('execa');
 
 describe('docker utils', () => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   const execaMock = mocked(execa, true);
   const dockerUser = 'user-name';
   const dockerPassword = '!my-testing-password!';
