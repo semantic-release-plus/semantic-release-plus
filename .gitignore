@@ -42,3 +42,6 @@ Thumbs.db
 
 # e2e srp cert
 packages/srp/CertificateAuthorityCertificate.pem
+
+# env files
+.env.local

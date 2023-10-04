@@ -20,6 +20,7 @@
       "@semantic-release-plus/docker": ["packages/plugins/docker/src/index.ts"],
       "@semantic-release-plus/error": ["packages/error/src/index.js"],
       "@semantic-release-plus/nx-tools": ["packages/nx-tools/src/index.ts"],
+      "commitmatic": ["packages/commitmatic/src/index.ts"],
       "semantic-release-plus": ["packages/srp/src/index.js"]
     }
   },

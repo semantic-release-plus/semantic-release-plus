@@ -1,0 +1,13 @@
+{
+  "name": "commitmatic",
+  "version": "0.0.1",
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "cosmiconfig": "^7.1.0",
+    "openai": "^4.10.0"
+  },
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "bin": "./src/bin/index.js",
+  "typings": "./src/index.d.ts"
+}
