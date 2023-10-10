@@ -4,7 +4,8 @@
   "dependencies": {
     "tslib": "^2.3.0",
     "cosmiconfig": "^7.1.0",
-    "openai": "^4.10.0"
+    "openai": "^4.10.0",
+    "yargs": "^17.7.2"
   },
   "type": "commonjs",
   "main": "./src/index.js",

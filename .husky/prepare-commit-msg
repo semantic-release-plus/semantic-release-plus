@@ -1,8 +1,30 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo "1: $1"
-echo "2: $2"
-echo "3: $3"
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+SHA1=$3
 
-echo "TESTING" > $1
+ts-node packages/commitmatic/src/bin/index.ts
+
+# Path to the custom commit message created by your Node.js script
+COMMITMATIC_MSG_FILE="$(git rev-parse --git-dir)/COMMITMATIC_EDITMSG"
+
+if [ -f "$COMMITMATIC_MSG_FILE" ]; then
+    # Concatenate the messages and overwrite the default commit message
+    {
+        cat "$COMMITMATIC_MSG_FILE"
+        echo ""
+        cat "$COMMIT_MSG_FILE" 
+    } > "$COMMIT_MSG_FILE".new
+    
+    # Replace the original message file with the concatenated one
+    mv "$COMMIT_MSG_FILE".new "$COMMIT_MSG_FILE"
+    
+    # Optionally, remove the COMMITMATIC_EDITMSG file if no longer needed
+    rm "$COMMITMATIC_MSG_FILE"
+fi
+# Send the updated message from commitmatic to the message file and forward on
+# to the next hook
+
+
