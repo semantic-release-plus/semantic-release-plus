@@ -5,7 +5,8 @@
     "tslib": "^2.3.0",
     "cosmiconfig": "^7.1.0",
     "openai": "^4.10.0",
-    "yargs": "^17.7.2"
+    "yargs": "^17.7.2",
+    "dedent": "^1.5.1"
   },
   "type": "commonjs",
   "main": "./src/index.js",

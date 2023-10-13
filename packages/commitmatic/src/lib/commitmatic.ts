@@ -8,13 +8,9 @@ export async function createCommitMessage() {
   // read config
   const config = normalizeConfig(defaultConfig, await getUserConfig());
 
-  // console.log({ config });
-
   const openai = new OpenAI({});
 
   const prompt = createPrompt(config);
-
-  // console.log({ prompt });
 
   const chatCompletion = await openai.chat.completions.create({
     messages: [

@@ -38,6 +38,7 @@
     "aggregate-error": "3.0.0",
     "cosmiconfig": "^7.1.0",
     "debug": "4.3.3",
+    "dedent": "^1.5.1",
     "env-ci": "^5.0.0",
     "execa": "5.1.1",
     "figures": "^3.0.0",
