@@ -1,0 +1,62 @@
+{
+  "name": "commitmatic",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/commitmatic/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/commitmatic",
+        "main": "packages/commitmatic/src/index.ts",
+        "tsConfig": "packages/commitmatic/tsconfig.lib.json",
+        "assets": ["packages/commitmatic/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "options": {
+        "buildTarget": "commitmatic:build"
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs commitmatic {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/commitmatic/**/*.ts",
+          "packages/commitmatic/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/commitmatic/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "release": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node ../../dist/packages/srp/src/bin/semantic-release-plus.js --debug",
+        "cwd": "packages/commitmatic",
+        "parallel": false
+      },
+      "dependsOn": ["srp:build"]
+    }
+  },
+  "tags": []
+}
