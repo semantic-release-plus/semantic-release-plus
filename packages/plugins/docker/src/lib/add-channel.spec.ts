@@ -31,7 +31,8 @@ describe('add-channel', () => {
       stdout: 'pushing image2',
     } as execa.ExecaReturnValue<string>);
 
-    await addChannel({ name: 'joamos/test' }, context);
+    const channel = await addChannel({ name: 'joamos/test' }, context);
+
     expect(dockerPullMock).toHaveBeenCalledWith(
       'joamos/test:1.0.1-alpha.1',
       context
@@ -48,6 +49,12 @@ describe('add-channel', () => {
     expect(context.logger.log).toBeCalledWith(
       `Added joamos/test:1.0.1-alpha.1 to tag alpha on docker.io`
     );
+
+    expect(channel).toEqual({
+      name: 'docker.io container (@alpha dist-tag)',
+      url: 'https://hub.docker.com/r/joamos/test',
+      channel: 'alpha'
+    });
   });
 
   it('should add tag to existing published image on alternate registry', async () => {
@@ -61,7 +68,8 @@ describe('add-channel', () => {
       stdout: 'pushing image2',
     } as execa.ExecaReturnValue<string>);
 
-    await addChannel({ name: 'joamos/test', registry: 'ghcr.io' }, context);
+    const channel = await addChannel({ name: 'joamos/test', registry: 'ghcr.io' }, context);
+
     expect(dockerPullMock).toHaveBeenCalledWith(
       'ghcr.io/joamos/test:1.0.1-alpha.1',
       context
@@ -81,5 +89,11 @@ describe('add-channel', () => {
     expect(context.logger.log).toBeCalledWith(
       `Added ghcr.io/joamos/test:1.0.1-alpha.1 to tag alpha on ghcr.io`
     );
+
+    expect(channel).toEqual({
+      name: 'ghcr.io container (@alpha dist-tag)',
+      url: 'https://ghcr.io/joamos/test',
+      channel: 'alpha'
+    });
   });
 });

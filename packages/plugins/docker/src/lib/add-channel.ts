@@ -6,6 +6,7 @@ import {
   NormalizedPluginConfig,
   PluginConfig,
 } from './plugin-config.interface';
+import { getReleaseInfo } from './get-release-info';
 
 export interface NewChannel {
   name: string;
@@ -47,15 +48,7 @@ export async function addChannel(
   const { stdout: pushStdout } = await dockerPush(imageChannelTag, context);
   logger.log(pushStdout);
 
-  logger.log(
-    `Added ${imageVersionTag} to tag ${channelTag} on ${
-      image.registry || 'docker.io'
-    }`
-  );
+  logger.log(`Added ${imageVersionTag} to tag ${channelTag} on ${image.registry || 'docker.io'}`);
 
-  return {
-    name: `docker container ${channelTag} tag`,
-    url: image.registry || 'docker.io',
-    channel: channelTag,
-  };
+  return getReleaseInfo(image, channelTag);
 }
