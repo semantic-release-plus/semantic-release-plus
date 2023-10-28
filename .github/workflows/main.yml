@@ -37,7 +37,6 @@ jobs:
         with:
           package-json-path: '${{ github.workspace }}/package.json'
       - run: npm ci --ignore-scripts
-      - run: npx nx workspace-lint
       - run: npx nx-cloud start-ci-run
       - name: '📝 Lint'
         run: npx nx affected --target=lint --parallel --max-parallel=3
