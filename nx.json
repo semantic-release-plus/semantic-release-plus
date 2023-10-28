@@ -1,17 +1,12 @@
 {
-  "npmScope": "semantic-release-plus",
   "affected": {
     "defaultBase": "master"
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx-cloud",
       "options": {
-        "accessToken": "MDAwNWM4NjktMDY1Yi00YmFkLTg5OTUtZjNhMjhmYjEzNzU0fHJlYWQ=",
-        "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": true,
-        "showUsageWarnings": true,
-        "parallel": 1
+        "showUsageWarnings": true
       }
     }
   },
@@ -82,13 +77,19 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+      "inputs": ["production", "^production"],
+      "cache": true
     },
     "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "cache": true
     },
     "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "cache": true
+    },
+    "e2e": {
+      "cache": true
     }
   },
   "namedInputs": {
@@ -107,5 +108,7 @@
       "!{projectRoot}/.eslintrc.json",
       "!{projectRoot}/src/test-setup.[jt]s"
     ]
-  }
+  },
+  "nxCloudAccessToken": "MDAwNWM4NjktMDY1Yi00YmFkLTg5OTUtZjNhMjhmYjEzNzU0fHJlYWQ=",
+  "parallel": 1
 }
