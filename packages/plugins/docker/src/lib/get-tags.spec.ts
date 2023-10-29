@@ -19,7 +19,7 @@ describe('get docker tags', () => {
         version: '1.2.5',
         // type: BranchType.Maintenance,
       },
-      normalizeConfig(expectedConfig)
+      normalizeConfig(expectedConfig),
     );
   });
 });

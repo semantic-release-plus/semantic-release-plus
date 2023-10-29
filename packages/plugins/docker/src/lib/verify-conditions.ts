@@ -5,7 +5,7 @@ import { PluginConfig } from './plugin-config.interface';
 
 export async function verifyConditions(
   pluginConfig: PluginConfig,
-  context: Context
+  context: Context,
 ) {
   const { logger, env } = context;
   const {
@@ -30,7 +30,7 @@ export async function verifyConditions(
         password: env.DOCKER_PASSWORD,
         registry: registry,
       },
-      context
+      context,
     );
   } catch (err) {
     logger.error(err);

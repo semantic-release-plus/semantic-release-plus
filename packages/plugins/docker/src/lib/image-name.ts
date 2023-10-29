@@ -67,7 +67,7 @@ export class ImageName implements ImageDetailsInterface {
 
   private _fromString(image: string): ImageNameInterface {
     const match = image.match(
-      /^(?:(?<registry>[^/]+)\/)?(?:(?<namespace>[^/]+)\/)?(?<repository>[^@:/]+)(?::(?<tag>.+))?(?:@(?<sha>.+))?$/
+      /^(?:(?<registry>[^/]+)\/)?(?:(?<namespace>[^/]+)\/)?(?<repository>[^@:/]+)(?::(?<tag>.+))?(?:@(?<sha>.+))?$/,
     );
     if (!match) {
       throw Error('Invalid docker image name');
@@ -105,7 +105,7 @@ export class ImageName implements ImageDetailsInterface {
   }
 
   static isObject(
-    imageName: string | ImageNameInterface
+    imageName: string | ImageNameInterface,
   ): imageName is ImageNameInterface {
     return (imageName as ImageNameInterface).repository !== undefined;
   }

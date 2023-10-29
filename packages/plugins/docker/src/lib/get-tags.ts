@@ -4,7 +4,7 @@ import { NormalizedPluginConfig } from './plugin-config.interface';
 
 export function getTags(
   { channel, version }: Release,
-  { publishChannelTag }: NormalizedPluginConfig
+  { publishChannelTag }: NormalizedPluginConfig,
 ): string[] {
   const tags: string[] = [version];
   if (publishChannelTag) {
