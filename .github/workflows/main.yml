@@ -14,6 +14,17 @@ on:
       - synchronize
 
 jobs:
+  lint_workspace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          cache: npm
+      - run: npm ci
+      - run: npx nx format:check
   lint:
     needs: lint_workspace
     runs-on: ubuntu-latest
