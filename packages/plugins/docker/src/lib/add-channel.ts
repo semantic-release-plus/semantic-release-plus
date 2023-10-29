@@ -15,7 +15,7 @@ export interface NewChannel {
 
 export async function addChannel(
   pluginConfig: PluginConfig,
-  context: Context
+  context: Context,
 ): Promise<NewChannel> {
   const {
     nextRelease: { version, channel },
@@ -39,7 +39,7 @@ export async function addChannel(
   const { stdout: tagStdout } = await dockerTag(
     imageVersionTag,
     imageChannelTag,
-    context
+    context,
   );
   logger.log(tagStdout);
 
@@ -50,7 +50,7 @@ export async function addChannel(
   logger.log(
     `Added ${imageVersionTag} to tag ${channelTag} on ${
       image.registry || 'docker.io'
-    }`
+    }`,
   );
 
   return {

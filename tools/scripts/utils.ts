@@ -6,6 +6,6 @@ export function getPublishableLibNames(workspaceJson = readWorkspaceJson()) {
   return Object.keys(projects).filter(
     (key) =>
       projects[key].projectType === 'library' &&
-      projects[key].targets?.build?.executor === '@nx/node:package'
+      projects[key].targets?.build?.executor === '@nx/node:package',
   );
 }

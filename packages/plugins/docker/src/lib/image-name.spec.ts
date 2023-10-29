@@ -20,7 +20,7 @@ describe('ImageName Spec', () => {
 
       it('with registry, port, namespace, repo, and sha', () => {
         const i = new ImageName(
-          'my-reg:9876/my-namespace/my-repo@sha256:49cb0d58e7fee6e86d061f152bbbd529cf41059e9da00868babed2380c4a3d61'
+          'my-reg:9876/my-namespace/my-repo@sha256:49cb0d58e7fee6e86d061f152bbbd529cf41059e9da00868babed2380c4a3d61',
         );
         const expectedImageDetails: ImageDetailsInterface = {
           registry: 'my-reg:9876',

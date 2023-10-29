@@ -23,11 +23,7 @@ throw new SemanticReleaseError('An error happened');
 throw new SemanticReleaseError('An error happened', 'ECODE');
 
 // With error message, error code and details
-throw new SemanticReleaseError(
-  'An error happened',
-  'ECODE',
-  'Here is some suggestions to solve this error.'
-);
+throw new SemanticReleaseError('An error happened', 'ECODE', 'Here is some suggestions to solve this error.');
 
 // With inheritance
 class InheritedError extends SemanticReleaseError {
@@ -41,9 +37,5 @@ class InheritedError extends SemanticReleaseError {
   }
 }
 
-throw new InheritedError(
-  'An error happened',
-  'ECODE',
-  'Here is some suggestions to solve this error.'
-);
+throw new InheritedError('An error happened', 'ECODE', 'Here is some suggestions to solve this error.');
 ```

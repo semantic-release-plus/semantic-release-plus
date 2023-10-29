@@ -24,7 +24,7 @@ jobs:
         with:
           cache: npm
       - run: npm ci
-      - run: npx nx workspace-lint
+      - run: npx nx format:check
   lint:
     needs: lint_workspace
     runs-on: ubuntu-latest

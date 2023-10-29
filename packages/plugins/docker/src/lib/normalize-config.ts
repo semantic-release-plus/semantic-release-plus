@@ -5,7 +5,7 @@ import {
 } from './plugin-config.interface';
 
 export function normalizeConfig(
-  pluginConfig: PluginConfig
+  pluginConfig: PluginConfig,
 ): NormalizedPluginConfig {
   const { name, registry, skipLogin, publishChannelTag } = {
     registry: '',

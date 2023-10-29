@@ -59,7 +59,7 @@ describe('publish', () => {
     expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
 
     expect(context.logger.log).toBeCalledWith(
-      `Tagging ${name} as ${channelTag}`
+      `Tagging ${name} as ${channelTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(name, channelTag, context);
 
@@ -102,7 +102,7 @@ describe('publish', () => {
     expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
 
     expect(context.logger.log).toBeCalledWith(
-      `Tagging ${name} as ${channelTag}`
+      `Tagging ${name} as ${channelTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(name, channelTag, context);
 
@@ -178,7 +178,7 @@ describe('publish', () => {
     expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
 
     expect(context.logger.log).toBeCalledWith(
-      `Tagging ${name} as ${channelTag}`
+      `Tagging ${name} as ${channelTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(name, channelTag, context);
 
@@ -209,12 +209,12 @@ describe('publish', () => {
 
     await publish(pluginConfig, context);
     expect(context.logger.log).toBeCalledWith(
-      `Tagging ${fullname} as ${exactTag}`
+      `Tagging ${fullname} as ${exactTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(fullname, exactTag, context);
 
     expect(context.logger.log).toBeCalledWith(
-      `Tagging ${fullname} as ${channelTag}`
+      `Tagging ${fullname} as ${channelTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(fullname, channelTag, context);
 
@@ -245,12 +245,12 @@ describe('publish', () => {
 
     await publish(pluginConfig, context);
     expect(context.logger.log).toBeCalledWith(
-      `Tagging ${fullname} as ${exactTag}`
+      `Tagging ${fullname} as ${exactTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(fullname, exactTag, context);
 
     expect(context.logger.log).toBeCalledWith(
-      `Tagging ${fullname} as ${channelTag}`
+      `Tagging ${fullname} as ${channelTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(fullname, channelTag, context);
 

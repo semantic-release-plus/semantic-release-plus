@@ -20,7 +20,7 @@ interface NormalizedSchema extends ConfigureGeneratorSchema {
 
 function normalizeOptions(
   host: Tree,
-  options: ConfigureGeneratorSchema
+  options: ConfigureGeneratorSchema,
 ): NormalizedSchema {
   const projectName = options.project;
   const projectConfig = readProjectConfiguration(host, projectName);
@@ -28,7 +28,7 @@ function normalizeOptions(
   const outputPath = projectConfig.targets?.build?.options?.outputPath;
   const projectPackageJson = readJson(
     host,
-    path.join(projectRoot, 'package.json')
+    path.join(projectRoot, 'package.json'),
   );
   const releaseName = projectPackageJson?.name;
 
@@ -59,7 +59,7 @@ function addProjectFiles(host: Tree, options: NormalizedSchema) {
     host,
     path.join(__dirname, 'project-files'),
     options.projectRoot,
-    templateOptions
+    templateOptions,
   );
 }
 
@@ -67,7 +67,7 @@ export default async function (host: Tree, options: ConfigureGeneratorSchema) {
   const normalizedOptions = normalizeOptions(host, options);
   const projectConfig = readProjectConfiguration(
     host,
-    normalizedOptions.projectName
+    normalizedOptions.projectName,
   );
   const pm = detectPackageManager();
   const npxLikeCommand = {
@@ -89,7 +89,7 @@ export default async function (host: Tree, options: ConfigureGeneratorSchema) {
   updateProjectConfiguration(
     host,
     normalizedOptions.projectName,
-    projectConfig
+    projectConfig,
   );
   addRootFiles(host, normalizedOptions);
   addProjectFiles(host, normalizedOptions);
