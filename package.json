@@ -40,7 +40,7 @@
     "debug": "4.3.3",
     "dedent": "^1.5.1",
     "env-ci": "^5.0.0",
-    "execa": "5.1.1",
+    "execa": "8.0.1",
     "figures": "^3.0.0",
     "find-versions": "^4.0.0",
     "get-stream": "^6.0.0",
