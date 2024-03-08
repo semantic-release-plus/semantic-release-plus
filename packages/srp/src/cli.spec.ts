@@ -69,7 +69,7 @@ describe('cli', () => {
     ];
 
     const exitCode = await runCommand(testArgs);
-    expect(indexMock).toBeCalledWith(
+    expect(indexMock).toHaveBeenCalledWith(
       expect.objectContaining({
         branches: ['master', 'next'],
         repositoryUrl: 'https://github/com/owner/repo.git',
@@ -86,7 +86,7 @@ describe('cli', () => {
         fail: ['fail1', 'fail2'],
         debug: true,
         dryRun: true,
-      })
+      }),
     );
     expect(exitCode).toBe(0);
   });
@@ -109,7 +109,7 @@ describe('cli', () => {
     ];
 
     const exitCode = await runCommand(testArgs);
-    expect(indexMock).toBeCalledWith(
+    expect(indexMock).toHaveBeenCalledWith(
       expect.objectContaining({
         branches: ['master'],
         repositoryUrl: 'https://github/com/owner/repo.git',
@@ -117,7 +117,7 @@ describe('cli', () => {
         plugins: ['plugin1', 'plugin2'],
         extends: ['config1', 'config2'],
         dryRun: true,
-      })
+      }),
     );
     expect(exitCode).toBe(0);
   });
@@ -135,12 +135,12 @@ describe('cli', () => {
 
     const exitCode = await runCommand(testArgs);
 
-    expect(indexMock).toBeCalledWith(
+    expect(indexMock).toHaveBeenCalledWith(
       expect.objectContaining({
         bool: true,
         firstOption: 'value1',
         secondOption: ['value2', 'value3'],
-      })
+      }),
     );
 
     expect(exitCode).toBe(0);
@@ -151,10 +151,10 @@ describe('cli', () => {
 
     const exitCode = await runCommand(testArgs);
 
-    expect(indexMock).toBeCalledWith(
+    expect(indexMock).toHaveBeenCalledWith(
       expect.objectContaining({
         publish: [],
-      })
+      }),
     );
 
     expect(exitCode).toBe(0);
@@ -180,8 +180,8 @@ describe('cli', () => {
 
     const exitCode = await runCommand(testArgs);
 
-    expect(consoleLogSpy).toBeCalledWith(
-      expect.stringMatching(/Run automated package publishing/)
+    expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/Run automated package publishing/),
     );
     expect(exitCode).toBe(0);
   });
@@ -191,11 +191,11 @@ describe('cli', () => {
 
     const exitCode = await runCommand(testArgs);
 
-    expect(consoleErrorSpy).toBeCalledWith(
-      expect.stringMatching(/Run automated package publishing/)
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/Run automated package publishing/),
     );
-    expect(consoleErrorSpy).toBeCalledWith(
-      expect.stringMatching(/Too many non-option arguments/)
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/Too many non-option arguments/),
     );
     expect(exitCode).toBe(1);
   });
@@ -206,11 +206,11 @@ describe('cli', () => {
 
     const exitCode = await runCommand(testArgs);
 
-    expect(consoleErrorSpy).toBeCalledWith(
-      expect.stringMatching(/Run automated package publishing/)
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/Run automated package publishing/),
     );
-    expect(consoleErrorSpy).toBeCalledWith(
-      expect.stringMatching(/Too many non-option arguments/)
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/Too many non-option arguments/),
     );
     expect(exitCode).toBe(1);
   });
@@ -221,8 +221,8 @@ describe('cli', () => {
 
     const exitCode = await runCommand(testArgs);
 
-    expect(stderrSpy).toBeCalledWith(
-      expect.stringMatching(/semantic-release-plus error/)
+    expect(stderrSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/semantic-release-plus error/),
     );
 
     expect(exitCode).toBe(1);
@@ -231,17 +231,17 @@ describe('cli', () => {
   test('Hide sensitive environment variable values from the logs', async () => {
     const env = { MY_TOKEN: 'secret token' };
     indexMock.mockRejectedValue(
-      new Error(`Throw error: Exposing token ${env.MY_TOKEN}`)
+      new Error(`Throw error: Exposing token ${env.MY_TOKEN}`),
     );
     const testArgs = [];
 
     const exitCode = await runCommand(testArgs, env);
-    expect(stderrSpy).toBeCalledWith(
+    expect(stderrSpy).toHaveBeenCalledWith(
       expect.stringMatching(
         new RegExp(
-          `Throw error: Exposing token ${escapeRegExp(SECRET_REPLACEMENT)}`
-        )
-      )
+          `Throw error: Exposing token ${escapeRegExp(SECRET_REPLACEMENT)}`,
+        ),
+      ),
     );
     expect(exitCode).toBe(1);
   });

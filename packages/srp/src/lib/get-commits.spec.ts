@@ -126,7 +126,7 @@ describe('get-commits', () => {
     expect(result).toEqual([]);
   });
 
-  test('Get all commits under a path when there is no last release ', async () => {
+  test('Get all commits under a path when there is no last release', async () => {
     /**
      * FIXME: to be able to properly test this we will need to mock the git
      * repository differently so that we can add files to a commit during test
