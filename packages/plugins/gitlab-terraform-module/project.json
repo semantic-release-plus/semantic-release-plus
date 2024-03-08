@@ -1,0 +1,33 @@
+{
+  "name": "gitlab-terraform-module",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/plugins/gitlab-terraform-module/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/plugins/gitlab-terraform-module",
+        "main": "packages/plugins/gitlab-terraform-module/src/index.ts",
+        "tsConfig": "packages/plugins/gitlab-terraform-module/tsconfig.lib.json",
+        "assets": ["packages/plugins/gitlab-terraform-module/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs gitlab-terraform-module {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/plugins/gitlab-terraform-module/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
