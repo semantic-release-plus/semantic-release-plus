@@ -30,7 +30,7 @@ test('Get the valid tags', async (t) => {
         gitNotesRef,
       },
     },
-    [{ name: 'master' }]
+    [{ name: 'master' }],
   );
 
   t.deepEqual(result, [
@@ -57,7 +57,7 @@ test('Get the valid tags from multiple branches', async (t) => {
     },
     {
       cwd,
-    }
+    },
   );
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
@@ -69,7 +69,7 @@ test('Get the valid tags from multiple branches', async (t) => {
     },
     {
       cwd,
-    }
+    },
   );
   await gitCheckout('1.x', true, { cwd });
   await gitCheckout('master', false, { cwd });
@@ -83,7 +83,7 @@ test('Get the valid tags from multiple branches', async (t) => {
     },
     {
       cwd,
-    }
+    },
   );
   await gitCheckout('next', true, { cwd });
   await gitCommits(['Fourth'], { cwd });
@@ -94,7 +94,7 @@ test('Get the valid tags from multiple branches', async (t) => {
       commitish: 'v3.0.0',
       gitNotesRef,
     },
-    { cwd }
+    { cwd },
   );
 
   const result = await getTags(
@@ -105,7 +105,7 @@ test('Get the valid tags from multiple branches', async (t) => {
         tagFormat: `v\${version}`,
       },
     },
-    [{ name: '1.x' }, { name: 'master' }, { name: 'next' }]
+    [{ name: '1.x' }, { name: 'master' }, { name: 'next' }],
   );
 
   t.deepEqual(result, [
@@ -147,7 +147,7 @@ test('Return branches with and empty tags array if no valid tag is found', async
       cwd,
       options: { tagFormat: `prefix@v\${version}`, gitNotesRef: `prefix@v_` },
     },
-    [{ name: 'master' }]
+    [{ name: 'master' }],
   );
 
   t.deepEqual(result, [{ name: 'master', tags: [] }]);
@@ -167,7 +167,7 @@ test('Return branches with and empty tags array if no valid tag is found in hist
     },
     {
       cwd,
-    }
+    },
   );
   await gitCommits(['Third'], { cwd });
   await gitTagVersion('v2.0.0', undefined, { cwd });
@@ -179,7 +179,7 @@ test('Return branches with and empty tags array if no valid tag is found in hist
     },
     {
       cwd,
-    }
+    },
   );
   await gitCommits(['Fourth'], { cwd });
   await gitTagVersion('v3.0.0', undefined, { cwd });
@@ -191,7 +191,7 @@ test('Return branches with and empty tags array if no valid tag is found in hist
     },
     {
       cwd,
-    }
+    },
   );
   await gitCheckout('master', false, { cwd });
 
@@ -203,7 +203,7 @@ test('Return branches with and empty tags array if no valid tag is found in hist
         gitNotesRef: `prefix@v_`,
       },
     },
-    [{ name: 'master' }, { name: 'next' }]
+    [{ name: 'master' }, { name: 'next' }],
   );
 
   t.deepEqual(result, [
@@ -226,7 +226,7 @@ test('Get the highest valid tag corresponding to the "tagFormat"', async (t) => 
         name: 'master',
         tags: [{ gitTag: '1.0.0', version: '1.0.0', channels: [null] }],
       },
-    ]
+    ],
   );
 
   await gitTagVersion('foo-1.0.0-bar', undefined, { cwd });
@@ -239,7 +239,7 @@ test('Get the highest valid tag corresponding to the "tagFormat"', async (t) => 
         name: 'master',
         tags: [{ gitTag: 'foo-1.0.0-bar', version: '1.0.0', channels: [null] }],
       },
-    ]
+    ],
   );
 
   await gitTagVersion('foo-v1.0.0-bar', undefined, { cwd });
@@ -254,7 +254,7 @@ test('Get the highest valid tag corresponding to the "tagFormat"', async (t) => 
           { gitTag: 'foo-v1.0.0-bar', version: '1.0.0', channels: [null] },
         ],
       },
-    ]
+    ],
   );
 
   await gitTagVersion('(.+)/1.0.0/(a-z)', undefined, { cwd });
@@ -269,7 +269,7 @@ test('Get the highest valid tag corresponding to the "tagFormat"', async (t) => 
           { gitTag: '(.+)/1.0.0/(a-z)', version: '1.0.0', channels: [null] },
         ],
       },
-    ]
+    ],
   );
 
   await gitTagVersion('2.0.0-1.0.0-bar.1', undefined, { cwd });
@@ -284,7 +284,7 @@ test('Get the highest valid tag corresponding to the "tagFormat"', async (t) => 
           { gitTag: '2.0.0-1.0.0-bar.1', version: '1.0.0', channels: [null] },
         ],
       },
-    ]
+    ],
   );
 
   await gitTagVersion('3.0.0-bar.2', undefined, { cwd });
@@ -297,6 +297,6 @@ test('Get the highest valid tag corresponding to the "tagFormat"', async (t) => 
         name: 'master',
         tags: [{ gitTag: '3.0.0-bar.2', version: '3.0.0', channels: [null] }],
       },
-    ]
+    ],
   );
 });

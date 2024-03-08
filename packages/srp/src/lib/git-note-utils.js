@@ -14,7 +14,7 @@ async function gitNotesShow({ gitNotesRef, commitish }, execaOptions) {
   const { stdout, escapedCommand } = await execa(
     'git',
     ['notes', '--ref', gitNotesRef, 'show', commitish],
-    execaOptions
+    execaOptions,
   );
   debug(escapedCommand);
   debug(stdout);
@@ -31,7 +31,7 @@ async function gitFetchNotes({ repositoryUrl, gitNotesRef }, execaOptions) {
         repositoryUrl,
         `+refs/notes/${gitNotesRef}:refs/notes/${gitNotesRef}`,
       ],
-      execaOptions
+      execaOptions,
     );
   } catch {
     return await execa(
@@ -44,14 +44,14 @@ async function gitFetchNotes({ repositoryUrl, gitNotesRef }, execaOptions) {
       {
         ...execaOptions,
         reject: false,
-      }
+      },
     );
   }
 }
 
 async function gitAddNote(
   { gitNotesRef, note, commitish, overwrite = false },
-  execaOptions
+  execaOptions,
 ) {
   const gitNoteAddArgs = [
     'notes',
@@ -72,7 +72,7 @@ async function gitPushNotes({ repositoryUrl, gitNotesRef }, execaOptions) {
   return await execa(
     'git',
     ['push', repositoryUrl, `refs/notes/${gitNotesRef}`],
-    execaOptions
+    execaOptions,
   );
 }
 

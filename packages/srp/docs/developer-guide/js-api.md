@@ -13,14 +13,7 @@ try {
   const result = await semanticRelease(
     {
       // Core options
-      branches: [
-        '+([0-9])?(.{+([0-9]),x}).x',
-        'master',
-        'next',
-        'next-major',
-        { name: 'beta', prerelease: true },
-        { name: 'alpha', prerelease: true },
-      ],
+      branches: ['+([0-9])?(.{+([0-9]),x}).x', 'master', 'next', 'next-major', { name: 'beta', prerelease: true }, { name: 'alpha', prerelease: true }],
       repositoryUrl: 'https://github.com/me/my-package.git',
       // Shareable config
       extends: 'my-shareable-config',
@@ -36,24 +29,20 @@ try {
       // Store stdout and stderr to use later instead of writing to `process.stdout` and `process.stderr`
       stdout: stdoutBuffer,
       stderr: stderrBuffer,
-    }
+    },
   );
 
   if (result) {
     const { lastRelease, commits, nextRelease, releases } = result;
 
-    console.log(
-      `Published ${nextRelease.type} release version ${nextRelease.version} containing ${commits.length} commits.`
-    );
+    console.log(`Published ${nextRelease.type} release version ${nextRelease.version} containing ${commits.length} commits.`);
 
     if (lastRelease.version) {
       console.log(`The last release was "${lastRelease.version}".`);
     }
 
     for (const release of releases) {
-      console.log(
-        `The release was published with plugin "${release.pluginName}".`
-      );
+      console.log(`The release was published with plugin "${release.pluginName}".`);
     }
   } else {
     console.log('No release published.');

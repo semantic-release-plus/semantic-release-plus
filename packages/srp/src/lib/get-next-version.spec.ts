@@ -16,7 +16,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'patch', channel: 'latest' },
         lastRelease: { version: '1.0.0', channels: [null] },
         logger: context.logger,
-      })
+      }),
     ).toBe('1.0.1');
   });
 
@@ -31,7 +31,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'minor', channel: 'latest' },
         lastRelease: { version: '1.0.0', channels: [null] },
         logger: context.logger,
-      })
+      }),
     ).toBe('1.1.0');
   });
 
@@ -46,7 +46,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'major', channel: 'latest' },
         lastRelease: { version: '1.0.0', channels: [null] },
         logger: context.logger,
-      })
+      }),
     ).toBe('2.0.0');
   });
 
@@ -57,7 +57,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'minor', channel: 'latest' },
         lastRelease: {},
         logger: context.logger,
-      })
+      }),
     ).toBe('1.0.0');
   });
 
@@ -73,7 +73,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'patch', channel: 'beta' },
         lastRelease: { version: '1.0.0', channels: [null] },
         logger: context.logger,
-      })
+      }),
     ).toBe('1.0.1-beta.1');
 
     expect(
@@ -94,7 +94,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'patch', channel: 'beta' },
         lastRelease: { version: '1.0.1-beta.1', channels: ['beta'] },
         logger: context.logger,
-      })
+      }),
     ).toBe('1.0.1-beta.2');
 
     expect(
@@ -114,7 +114,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'patch', channel: 'alpha' },
         lastRelease: { version: '1.0.1-beta.1', channels: ['beta'] },
         logger: context.logger,
-      })
+      }),
     ).toBe('1.0.2-alpha.1');
   });
 
@@ -130,7 +130,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'minor', channel: 'beta' },
         lastRelease: { version: '1.0.0', channels: [null] },
         logger: context.logger,
-      })
+      }),
     ).toBe('1.1.0-beta.1');
 
     expect(
@@ -151,7 +151,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'minor', channel: 'beta' },
         lastRelease: { version: '1.1.0-beta.1', channels: ['beta'] },
         logger: context.logger,
-      })
+      }),
     ).toBe('1.1.0-beta.2');
 
     expect(
@@ -171,7 +171,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'minor', channel: 'alpha' },
         lastRelease: { version: '1.1.0-beta.1', channels: ['beta'] },
         logger: context.logger,
-      })
+      }),
     ).toBe('1.2.0-alpha.1');
   });
 
@@ -187,7 +187,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'major', channel: 'beta' },
         lastRelease: { version: '1.0.0', channels: [null] },
         logger: context.logger,
-      })
+      }),
     ).toBe('2.0.0-beta.1');
 
     expect(
@@ -208,7 +208,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'major', channel: 'beta' },
         lastRelease: { version: '2.0.0-beta.1', channels: ['beta'] },
         logger: context.logger,
-      })
+      }),
     ).toBe('2.0.0-beta.2');
 
     expect(
@@ -228,7 +228,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'major', channel: 'alpha' },
         lastRelease: { version: '2.0.0-beta.1', channels: ['beta'] },
         logger: context.logger,
-      })
+      }),
     ).toBe('3.0.0-alpha.1');
   });
 
@@ -244,7 +244,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'minor', channel: 'beta' },
         lastRelease: {},
         logger: context.logger,
-      })
+      }),
     ).toBe('1.0.0-beta.1');
   });
 
@@ -268,7 +268,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'minor', channel: 'beta' },
         lastRelease: { version: '1.1.0', channels: [null] },
         logger: context.logger,
-      })
+      }),
     ).toBe('1.2.0-beta.1');
   });
 
@@ -291,7 +291,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'major', channel: 'beta' },
         lastRelease: { version: 'v1.1.0-beta.1', channels: [null] },
         logger: context.logger,
-      })
+      }),
     ).toBe('2.0.0-beta.1');
   });
 
@@ -313,7 +313,7 @@ describe('get-next-version', () => {
         nextRelease: { type: 'minor', channel: 'beta' },
         lastRelease: { version: 'v1.0.0-beta.1', channels: ['beta'] },
         logger: context.logger,
-      })
+      }),
     ).toBe('1.0.0-beta.2');
   });
 });

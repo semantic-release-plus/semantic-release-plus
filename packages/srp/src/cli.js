@@ -12,7 +12,7 @@ const stringList = {
       : values.reduce(
           (values, value) =>
             values.concat(value.split(',').map((value) => value.trim())),
-          []
+          [],
         ),
 };
 

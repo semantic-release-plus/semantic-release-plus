@@ -15,7 +15,7 @@ removeSync(`${appRootPath}/node_modules/@semantic-release-plus`);
 
 copySync(
   `${appRootPath}/dist/packages`,
-  `${appRootPath}/node_modules/@semantic-release-plus`
+  `${appRootPath}/node_modules/@semantic-release-plus`,
 );
 
 console.log('\nUpdate complete.');

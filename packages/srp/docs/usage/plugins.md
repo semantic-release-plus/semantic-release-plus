@@ -47,11 +47,7 @@ Each plugin must be configured with the [`plugins` options](./configuration.md#p
 
 ```json
 {
-  "plugins": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/npm"
-  ]
+  "plugins": ["@semantic-release/commit-analyzer", "@semantic-release/release-notes-generator", "@semantic-release/npm"]
 }
 ```
 
@@ -61,12 +57,7 @@ For each [release step](../../README.md#release-steps) the plugins that implemen
 
 ```json
 {
-  "plugins": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/npm",
-    "@semantic-release/git"
-  ]
+  "plugins": ["@semantic-release/commit-analyzer", "@semantic-release/release-notes-generator", "@semantic-release/npm", "@semantic-release/git"]
 }
 ```
 

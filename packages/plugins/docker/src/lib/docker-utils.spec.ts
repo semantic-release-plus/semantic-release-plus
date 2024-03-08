@@ -51,7 +51,7 @@ describe('docker utils', () => {
         userName: dockerUser,
         password: dockerPassword,
       },
-      context
+      context,
     );
     expect(execaMock).toHaveBeenCalledWith(...expectedLoginArgs);
   });
@@ -73,7 +73,7 @@ describe('docker utils', () => {
         password: dockerPassword,
         registry: 'ghcr.io',
       },
-      context
+      context,
     );
     expect(execaMock).toHaveBeenCalledWith(...expectedLoginArgs);
   });

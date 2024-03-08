@@ -24,7 +24,7 @@ test('Normalize and load plugin from string', (t) => {
     { cwd, options: {}, logger: t.context.logger },
     'verifyConditions',
     './test/fixtures/plugin-noop',
-    {}
+    {},
   );
 
   t.is(plugin.pluginName, './test/fixtures/plugin-noop');
@@ -39,7 +39,7 @@ test('Normalize and load plugin from object', (t) => {
     { cwd, options: {}, logger: t.context.logger },
     'publish',
     { path: './test/fixtures/plugin-noop' },
-    {}
+    {},
   );
 
   t.is(plugin.pluginName, './test/fixtures/plugin-noop');
@@ -56,7 +56,7 @@ test('Normalize and load plugin from a base file path', (t) => {
     './plugin-noop',
     {
       './plugin-noop': './test/fixtures',
-    }
+    },
   );
 
   t.is(plugin.pluginName, './plugin-noop');
@@ -73,7 +73,7 @@ test('Wrap plugin in a function that add the "pluginName" to the error"', async 
     './plugin-error',
     {
       './plugin-error': './test/fixtures',
-    }
+    },
   );
 
   const error = await t.throwsAsync(plugin({ options: {} }));
@@ -88,7 +88,7 @@ test('Wrap plugin in a function that add the "pluginName" to multiple errors"', 
     './plugin-errors',
     {
       './plugin-errors': './test/fixtures',
-    }
+    },
   );
 
   const errors = [...(await t.throwsAsync(plugin({ options: {} })))];
@@ -103,7 +103,7 @@ test('Normalize and load plugin from function', (t) => {
     { cwd, options: {}, logger: t.context.logger },
     '',
     pluginFunction,
-    {}
+    {},
   );
 
   t.is(plugin.pluginName, '[Function: pluginFunction]');
@@ -115,7 +115,7 @@ test('Normalize and load plugin that retuns multiple functions', (t) => {
     { cwd, options: {}, logger: t.context.logger },
     'verifyConditions',
     './test/fixtures/multi-plugin',
-    {}
+    {},
   );
 
   t.is(typeof plugin, 'function');
@@ -130,7 +130,7 @@ test('Wrap "analyzeCommits" plugin in a function that validate the output of the
     { cwd, options: {}, stderr: t.context.stderr, logger: t.context.logger },
     'analyzeCommits',
     analyzeCommits,
-    {}
+    {},
   );
 
   const error = await t.throwsAsync(plugin({ options: {} }));
@@ -148,7 +148,7 @@ test('Wrap "generateNotes" plugin in a function that validate the output of the 
     { cwd, options: {}, stderr: t.context.stderr, logger: t.context.logger },
     'generateNotes',
     generateNotes,
-    {}
+    {},
   );
 
   const error = await t.throwsAsync(plugin({ options: {} }));
@@ -166,7 +166,7 @@ test('Wrap "publish" plugin in a function that validate the output of the plugin
     { cwd, options: {}, stderr: t.context.stderr, logger: t.context.logger },
     'publish',
     publish,
-    {}
+    {},
   );
 
   const error = await t.throwsAsync(plugin({ options: {} }));
@@ -184,7 +184,7 @@ test('Wrap "addChannel" plugin in a function that validate the output of the plu
     { cwd, options: {}, stderr: t.context.stderr, logger: t.context.logger },
     'addChannel',
     addChannel,
-    {}
+    {},
   );
 
   const error = await t.throwsAsync(plugin({ options: {} }));
@@ -204,15 +204,15 @@ test('Plugin is called with "pluginConfig" (with object definition) and input', 
     { cwd, options, logger: t.context.logger },
     '',
     pluginConf,
-    {}
+    {},
   );
   await plugin({ options: {}, param: 'param' });
 
   t.true(
     pluginFunction.calledWithMatch(
       { conf: 'confValue', global: 'globalValue' },
-      { param: 'param', logger: t.context.logger }
-    )
+      { param: 'param', logger: t.context.logger },
+    ),
   );
 });
 
@@ -224,15 +224,15 @@ test('Plugin is called with "pluginConfig" (with array definition) and input', a
     { cwd, options, logger: t.context.logger },
     '',
     pluginConf,
-    {}
+    {},
   );
   await plugin({ options: {}, param: 'param' });
 
   t.true(
     pluginFunction.calledWithMatch(
       { conf: 'confValue', global: 'globalValue' },
-      { param: 'param', logger: t.context.logger }
-    )
+      { param: 'param', logger: t.context.logger },
+    ),
   );
 });
 
@@ -249,7 +249,7 @@ test('Prevent plugins to modify "pluginConfig"', async (t) => {
     { cwd, options, logger: t.context.logger },
     '',
     pluginConf,
-    {}
+    {},
   );
   await plugin({ options: {} });
 
@@ -266,7 +266,7 @@ test('Prevent plugins to modify its input', async (t) => {
     { cwd, options: {}, logger: t.context.logger },
     '',
     pluginFunction,
-    {}
+    {},
   );
   await plugin(input);
 
@@ -285,7 +285,7 @@ test('Always pass a defined "pluginConfig" for plugin defined with string', asyn
     { cwd, options: {}, logger: t.context.logger },
     '',
     './test/fixtures/plugin-result-config',
-    {}
+    {},
   );
   const pluginResult = await plugin({ options: {} });
 
@@ -298,7 +298,7 @@ test('Always pass a defined "pluginConfig" for plugin defined with path', async 
     { cwd, options: {}, logger: t.context.logger },
     '',
     { path: './test/fixtures/plugin-result-config' },
-    {}
+    {},
   );
   const pluginResult = await plugin({ options: {} });
 
@@ -311,8 +311,8 @@ test('Throws an error if the plugin return an object without the expected plugin
       { cwd, options: {}, logger: t.context.logger },
       'inexistantPlugin',
       './test/fixtures/multi-plugin',
-      {}
-    )
+      {},
+    ),
   );
 
   t.is(error.code, 'EPLUGIN');
@@ -328,12 +328,12 @@ test('Throws an error if the plugin is not found', (t) => {
         { cwd, options: {}, logger: t.context.logger },
         'inexistantPlugin',
         'non-existing-path',
-        {}
+        {},
       ),
     {
       message: /Cannot find module 'non-existing-path'/,
       code: 'MODULE_NOT_FOUND',
       instanceOf: Error,
-    }
+    },
   );
 });

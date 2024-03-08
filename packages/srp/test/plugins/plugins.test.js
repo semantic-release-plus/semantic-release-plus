@@ -22,7 +22,7 @@ test.beforeEach((t) => {
 test('Export default plugins', (t) => {
   const plugins = getPlugins(
     { cwd, options: {}, logger: t.context.logger },
-    {}
+    {},
   );
 
   // Verify the module returns a function for each plugin
@@ -51,7 +51,7 @@ test('Export plugins based on steps config', (t) => {
         verifyRelease: () => {},
       },
     },
-    {}
+    {},
   );
 
   // Verify the module returns a function for each plugin
@@ -74,7 +74,7 @@ test('Export plugins based on "plugins" config (array)', async (t) => {
       logger: t.context.logger,
       options: { plugins: [plugin1, [plugin2, {}]], verifyRelease: () => {} },
     },
-    {}
+    {},
   );
 
   await plugins.verifyConditions({ options: {} });
@@ -102,7 +102,7 @@ test('Export plugins based on "plugins" config (single definition)', async (t) =
   const plugin1 = { verifyConditions: stub(), publish: stub() };
   const plugins = getPlugins(
     { cwd, logger: t.context.logger, options: { plugins: plugin1 } },
-    {}
+    {},
   );
 
   await plugins.verifyConditions({ options: {} });
@@ -139,7 +139,7 @@ test('Merge global options, "plugins" options and step options', async (t) => {
         verifyRelease: [plugin3],
       },
     },
-    {}
+    {},
   );
 
   await plugins.verifyConditions({ options: {} });
@@ -169,7 +169,7 @@ test('Unknown steps of plugins configured in "plugins" are ignored', (t) => {
   const plugin1 = { verifyConditions: () => {}, unknown: () => {} };
   const plugins = getPlugins(
     { cwd, logger: t.context.logger, options: { plugins: [plugin1] } },
-    {}
+    {},
   );
 
   t.is(typeof plugins.verifyConditions, 'function');
@@ -182,12 +182,12 @@ test('Export plugins loaded from the dependency of a shareable config module', a
     './test/fixtures/plugin-noop.js',
     path.resolve(
       cwd,
-      'node_modules/shareable-config/node_modules/custom-plugin/index.js'
-    )
+      'node_modules/shareable-config/node_modules/custom-plugin/index.js',
+    ),
   );
   await outputFile(
     path.resolve(cwd, 'node_modules/shareable-config/index.js'),
-    ''
+    '',
   );
 
   const plugins = getPlugins(
@@ -201,7 +201,7 @@ test('Export plugins loaded from the dependency of a shareable config module', a
         verifyRelease: () => {},
       },
     },
-    { 'custom-plugin': 'shareable-config' }
+    { 'custom-plugin': 'shareable-config' },
   );
 
   // Verify the module returns a function for each plugin
@@ -219,7 +219,7 @@ test('Export plugins loaded from the dependency of a shareable config file', asy
   const cwd = tempy.directory();
   await copy(
     './test/fixtures/plugin-noop.js',
-    path.resolve(cwd, 'plugin/plugin-noop.js')
+    path.resolve(cwd, 'plugin/plugin-noop.js'),
   );
   await outputFile(path.resolve(cwd, 'shareable-config.js'), '');
 
@@ -237,7 +237,7 @@ test('Export plugins loaded from the dependency of a shareable config file', asy
         verifyRelease: () => {},
       },
     },
-    { './plugin/plugin-noop': './shareable-config.js' }
+    { './plugin/plugin-noop': './shareable-config.js' },
   );
 
   // Verify the module returns a function for each plugin
@@ -274,7 +274,7 @@ test('Use default when only options are passed for a single plugin', (t) => {
         fail,
       },
     },
-    {}
+    {},
   );
 
   // Verify the module returns a function for each plugin
@@ -303,7 +303,7 @@ test('Merge global options with plugin options', async (t) => {
         },
       },
     },
-    {}
+    {},
   );
 
   const [result] = await plugins.verifyRelease({ options: {} });
@@ -333,8 +333,8 @@ test('Throw an error for each invalid plugin configuration', (t) => {
             generateNotes: [{ path: null }],
           },
         },
-        {}
-      )
+        {},
+      ),
     ),
   ];
 
@@ -363,8 +363,8 @@ test('Throw EPLUGINSCONF error if the "plugins" option contains an old plugin de
             ],
           },
         },
-        {}
-      )
+        {},
+      ),
     ),
   ];
 
@@ -383,8 +383,8 @@ test('Throw EPLUGINSCONF error for each invalid definition if the "plugins" opti
           logger: t.context.logger,
           options: { plugins: [1, { path: 1 }, [() => {}, {}, {}]] },
         },
-        {}
-      )
+        {},
+      ),
     ),
   ];
 

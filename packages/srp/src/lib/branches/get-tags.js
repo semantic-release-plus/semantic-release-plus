@@ -7,14 +7,14 @@ const { stronsole } = require('../stronsole');
 
 module.exports = async (
   { cwd, env, gitNotesRef, options: { tagFormat } },
-  branches
+  branches,
 ) => {
   // Generate a regex to parse tags formatted with `tagFormat`
   // by replacing the `version` variable in the template by `(.+)`.
   // The `tagFormat` is compiled with space as the `version` as it's an invalid tag character,
   // so it's guaranteed to no be present in the `tagFormat`.
   const tagRegexp = `^${escapeRegExp(
-    template(tagFormat)({ version: ' ' })
+    template(tagFormat)({ version: ' ' }),
   ).replace(' ', '(.+)')}`;
 
   return pReduce(
@@ -37,15 +37,15 @@ module.exports = async (
               ]
             : branchTags;
         },
-        []
+        [],
       );
       debug(
         'found tags for branch %s:\n\r%s',
         branch.name,
-        stronsole.table(branchTags)
+        stronsole.table(branchTags),
       );
       return [...branches, { ...branch, tags: branchTags }];
     },
-    []
+    [],
   );
 };

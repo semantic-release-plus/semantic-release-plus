@@ -36,7 +36,7 @@ function getUpperBound(range) {
   const result = semver.valid(range)
     ? range
     : ((semver.validRange(range) || '').match(
-        /<(?<upperBound>\d+\.\d+\.\d+(-\d+)?)$/
+        /<(?<upperBound>\d+\.\d+\.\d+(-\d+)?)$/,
       ) || [])[1];
 
   return result
@@ -47,7 +47,7 @@ function getUpperBound(range) {
 
 function getLowerBound(range) {
   return ((semver.validRange(range) || '').match(
-    /(?<lowerBound>\d+\.\d+\.\d+)/
+    /(?<lowerBound>\d+\.\d+\.\d+)/,
   ) || [])[1];
 }
 
@@ -81,7 +81,7 @@ function getEarliestVersion(versions, { withPrerelease } = {}) {
 
 function getFirstVersion(versions, lowerBranches) {
   const lowerVersion = union(
-    ...lowerBranches.map(({ tags }) => tagsToVersions(tags))
+    ...lowerBranches.map(({ tags }) => tagsToVersions(tags)),
   ).sort(semver.rcompare);
   if (lowerVersion[0]) {
     return versions

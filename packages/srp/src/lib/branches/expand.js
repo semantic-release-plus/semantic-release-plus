@@ -9,14 +9,14 @@ module.exports = async (repositoryUrl, { cwd }, branches) => {
     (branches, branch) => [
       ...branches,
       ...remove(gitBranches, (name) =>
-        micromatch(gitBranches, branch.name).includes(name)
+        micromatch(gitBranches, branch.name).includes(name),
       ).map((name) => ({
         name,
         ...mapValues(omit(branch, 'name'), (value) =>
-          isString(value) ? template(value)({ name }) : value
+          isString(value) ? template(value)({ name }) : value,
         ),
       })),
     ],
-    []
+    [],
   );
 };

@@ -54,7 +54,7 @@ async function stop() {
 async function createRepo(
   name,
   branch = 'master',
-  description = `Repository ${name}`
+  description = `Repository ${name}`,
 ) {
   const exec = await container.exec({
     Cmd: ['repo-admin', '-n', name, '-d', description],

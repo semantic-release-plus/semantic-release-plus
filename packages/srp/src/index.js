@@ -49,7 +49,7 @@ async function run(context, plugins) {
 
   if (!isCi && !options.dryRun && !options.noCi) {
     logger.warn(
-      'This run was not triggered in a known CI environment, running in dry-run mode.'
+      'This run was not triggered in a known CI environment, running in dry-run mode.',
     );
     options.dryRun = true;
   } else {
@@ -67,7 +67,7 @@ async function run(context, plugins) {
 
   if (isCi && isPr && !options.noCi) {
     logger.log(
-      "This run was triggered by a pull request and therefore a new version won't be published."
+      "This run was triggered by a pull request and therefore a new version won't be published.",
     );
     return false;
   }
@@ -82,7 +82,7 @@ async function run(context, plugins) {
   context.branches = await getBranches(
     options.repositoryUrl,
     ciBranch,
-    context
+    context,
   );
   context.branch = context.branches.find(({ name }) => name === ciBranch);
 
@@ -90,7 +90,7 @@ async function run(context, plugins) {
     logger.log(
       `This test run was triggered on the branch ${ciBranch}, while semantic-release-plus is configured to only publish from ${context.branches
         .map(({ name }) => name)
-        .join(', ')}, therefore a new version won't be published.`
+        .join(', ')}, therefore a new version won't be published.`,
     );
     return false;
   }
@@ -98,7 +98,7 @@ async function run(context, plugins) {
   logger[options.dryRun ? 'warn' : 'success'](
     `Run automated release from branch ${ciBranch} on repository ${
       options.repositoryUrl
-    }${options.dryRun ? ' in dry-run mode' : ''}`
+    }${options.dryRun ? ' in dry-run mode' : ''}`,
   );
 
   try {
@@ -115,7 +115,7 @@ async function run(context, plugins) {
         }))
       ) {
         logger.log(
-          `The local branch ${context.branch.name} is behind the remote one, therefore a new version won't be published.`
+          `The local branch ${context.branch.name} is behind the remote one, therefore a new version won't be published.`,
         );
         return false;
       }
@@ -124,7 +124,7 @@ async function run(context, plugins) {
     }
   } catch (error) {
     logger.error(
-      `The command "${error.command}" failed with the error message ${error.stderr}.`
+      `The command "${error.command}" failed with the error message ${error.stderr}.`,
     );
     throw getError('EGITNOPERMISSION', context);
   }
@@ -150,7 +150,7 @@ async function run(context, plugins) {
       !semver.satisfies(nextRelease.version, context.branch.mergeRange)
     ) {
       errors.push(
-        getError('EINVALIDMAINTENANCEMERGE', { ...context, nextRelease })
+        getError('EINVALIDMAINTENANCEMERGE', { ...context, nextRelease }),
       );
     } else {
       const commits = await getCommits({
@@ -167,7 +167,7 @@ async function run(context, plugins) {
 
       if (options.dryRun || options.skipTag) {
         logger.warn(
-          `Skip ${nextRelease.gitTag} tag creation in dry-run / skip-tag mode`
+          `Skip ${nextRelease.gitTag} tag creation in dry-run / skip-tag mode`,
         );
       } else {
         await addNote(
@@ -178,19 +178,19 @@ async function run(context, plugins) {
             commitish: nextRelease.gitHead,
             gitNotesRef,
           },
-          { cwd, env }
+          { cwd, env },
         );
         await push(options.repositoryUrl, { cwd, env });
         await pushNotes(
           { repositoryUrl: options.repositoryUrl, gitNotesRef },
-          { cwd, env }
+          { cwd, env },
         );
         logger.success(
           `Add ${
             nextRelease.channel
               ? `channel ${nextRelease.channel}`
               : 'default channel'
-          } to tag ${nextRelease.gitTag}`
+          } to tag ${nextRelease.gitTag}`,
         );
       }
 
@@ -227,13 +227,13 @@ async function run(context, plugins) {
   if (context.lastRelease.gitHead) {
     context.lastRelease.gitHead = await getTagHead(
       context.lastRelease.gitHead,
-      { cwd, env }
+      { cwd, env },
     );
   }
 
   if (context.lastRelease.gitTag) {
     logger.log(
-      `Found git tag ${context.lastRelease.gitTag} associated with version ${context.lastRelease.version} on branch ${context.branch.name}`
+      `Found git tag ${context.lastRelease.gitTag} associated with version ${context.lastRelease.version} on branch ${context.branch.name}`,
     );
   } else {
     logger.log(`No git tag version found on branch ${context.branch.name}`);
@@ -264,7 +264,7 @@ async function run(context, plugins) {
       ...context,
       validBranches: context.branches.filter(
         ({ type, accept }) =>
-          type !== 'prerelease' && accept.includes(nextRelease.type)
+          type !== 'prerelease' && accept.includes(nextRelease.type),
       ),
     });
   }
@@ -277,7 +277,7 @@ async function run(context, plugins) {
 
   if (options.dryRun || options.skipTag) {
     logger.warn(
-      `Skip ${nextRelease.gitTag} tag creation in dry-run / skip-tag mode`
+      `Skip ${nextRelease.gitTag} tag creation in dry-run / skip-tag mode`,
     );
   } else {
     // Create the tag before calling the publish plugins as some require the tag to exists
@@ -291,12 +291,12 @@ async function run(context, plugins) {
       {
         cwd,
         env,
-      }
+      },
     );
     await push(options.repositoryUrl, { cwd, env });
     await pushNotes(
       { repositoryUrl: options.repositoryUrl, gitNotesRef },
-      { cwd, env }
+      { cwd, env },
     );
     logger.success(`Created tag ${nextRelease.gitTag}`);
   }
@@ -309,7 +309,7 @@ async function run(context, plugins) {
   logger.success(
     `Published release ${nextRelease.version} on ${
       nextRelease.channel ? nextRelease.channel : 'default'
-    } channel`
+    } channel`,
   );
 
   if (options.dryRun) {
@@ -324,7 +324,7 @@ async function run(context, plugins) {
 
 async function logErrors({ logger, stderr }, err) {
   const errors = extractErrors(err).sort((error) =>
-    error.semanticRelease ? -1 : 0
+    error.semanticRelease ? -1 : 0,
   );
   for (const error of errors) {
     if (error.semanticRelease) {
@@ -335,7 +335,7 @@ async function logErrors({ logger, stderr }, err) {
     } else {
       logger.error(
         'An error occurred while running semantic-release-plus: %O',
-        error
+        error,
       );
     }
   }
@@ -354,14 +354,14 @@ async function callFail(context, plugins, err) {
 
 module.exports = async (
   cliOptions = {},
-  { cwd = process.cwd(), env = process.env, stdout, stderr } = {}
+  { cwd = process.cwd(), env = process.env, stdout, stderr } = {},
 ) => {
   const { unhook } = hookStd(
     {
       silent: false,
       streams: [process.stdout, process.stderr, stdout, stderr].filter(Boolean),
     },
-    hideSensitive(env)
+    hideSensitive(env),
   );
   const context = {
     cwd,

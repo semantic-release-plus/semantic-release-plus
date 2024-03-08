@@ -28,7 +28,7 @@ module.exports = async ({
   if (Array.isArray(commitPaths) && commitPaths.length > 0) {
     logger.log(
       'Commits are being filtered by the commitPaths property: %s',
-      ...commitPaths
+      ...commitPaths,
     );
     paths = ['--', ...commitPaths];
   }

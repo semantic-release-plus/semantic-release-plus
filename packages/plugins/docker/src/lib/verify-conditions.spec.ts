@@ -56,7 +56,7 @@ describe('verify', () => {
         password: dockerPassword,
         registry: undefined,
       },
-      tstContext
+      tstContext,
     );
   });
 
@@ -78,7 +78,7 @@ describe('verify', () => {
         password: dockerPassword,
         registry: pluginConfig.registry,
       },
-      tstContext
+      tstContext,
     );
   });
 
@@ -102,7 +102,7 @@ describe('verify', () => {
       await verifyConditions(pluginConfig, tstContext);
     } catch (e) {
       expect(tstContext.logger.error).toBeCalledWith(
-        new Error('docker cli login error')
+        new Error('docker cli login error'),
       );
       expect(e.message).toBe('docker login failed');
     }
@@ -120,7 +120,7 @@ describe('verify', () => {
   it('should skip logging in to docker if set to in config', async () => {
     expect(verifyConditions(pluginConfigNoLogin, context)).resolves;
     expect(context.logger.log).toBeCalledWith(
-      'Skipping docker login because skipLogin was set to true'
+      'Skipping docker login because skipLogin was set to true',
     );
     expect(dockerLoginMock).not.toHaveBeenCalled();
   });

@@ -84,10 +84,10 @@ describe('git', () => {
     await gitPush(repositoryUrl, 'second-branch', { cwd });
 
     await expect(
-      fetch(repositoryUrl, 'master', 'master', { cwd })
+      fetch(repositoryUrl, 'master', 'master', { cwd }),
     ).resolves.not.toThrow();
     await expect(
-      fetch(repositoryUrl, 'second-branch', 'master', { cwd })
+      fetch(repositoryUrl, 'second-branch', 'master', { cwd }),
     ).resolves.not.toThrow();
   });
 
@@ -108,7 +108,7 @@ describe('git', () => {
     await fetch(repositoryUrl, 'master', 'master', { cwd });
 
     expect((await getTags('master', { cwd })).sort()).toEqual(
-      ['v1.0.0', 'v1.0.1', 'v1.1.0'].sort()
+      ['v1.0.0', 'v1.0.1', 'v1.1.0'].sort(),
     );
   });
 
@@ -133,17 +133,17 @@ describe('git', () => {
     cwd = await gitDetachedHeadFromBranch(
       repositoryUrl,
       'other-branch',
-      commit.hash
+      commit.hash,
     );
 
     await fetch(repositoryUrl, 'master', 'other-branch', { cwd });
     await fetch(repositoryUrl, 'other-branch', 'other-branch', { cwd });
 
     expect((await getTags('other-branch', { cwd })).sort()).toEqual(
-      ['v1.0.0', 'v1.0.1', 'v1.1.0'].sort()
+      ['v1.0.0', 'v1.0.1', 'v1.1.0'].sort(),
     );
     expect((await getTags('master', { cwd })).sort()).toEqual(
-      ['v1.0.0', 'v1.0.1', 'v1.1.0', 'v2.0.0'].sort()
+      ['v1.0.0', 'v1.0.1', 'v1.1.0', 'v2.0.0'].sort(),
     );
   });
 
@@ -173,7 +173,7 @@ describe('git', () => {
     await gitCheckout(commit.hash, false, { cwd: cloneCwd });
 
     expect((await getTags('master', { cwd: cloneCwd })).sort()).toEqual(
-      ['v1.0.0', 'v1.0.1', 'v1.1.0', 'v1.2.0'].sort()
+      ['v1.0.0', 'v1.0.1', 'v1.1.0', 'v1.2.0'].sort(),
     );
   });
 
@@ -204,7 +204,7 @@ describe('git', () => {
     await gitPush(repositoryUrl, 'third-branch', { cwd });
 
     expect((await getBranches(repositoryUrl, { cwd })).sort()).toEqual(
-      ['master', 'second-branch', 'third-branch'].sort()
+      ['master', 'second-branch', 'third-branch'].sort(),
     );
   });
 
@@ -231,7 +231,7 @@ describe('git', () => {
     await gitAddConfig(
       'remote.origin.url',
       'git@hostname.com:owner/package.git',
-      { cwd }
+      { cwd },
     );
 
     expect(await repoUrl({ cwd })).toBe('git@hostname.com:owner/package.git');
@@ -275,7 +275,7 @@ describe('git', () => {
     await push(repositoryUrl, { cwd });
 
     expect(await gitRemoteTagHead(repositoryUrl, 'tag_name', { cwd })).toBe(
-      commits[0].hash
+      commits[0].hash,
     );
   });
 
@@ -291,7 +291,7 @@ describe('git', () => {
     await push(repositoryUrl, { cwd });
 
     expect(await gitRemoteTagHead(repositoryUrl, 'tag_name', { cwd })).toBe(
-      commits[0].hash
+      commits[0].hash,
     );
   });
 
@@ -349,7 +349,7 @@ describe('git', () => {
     await gitPush('origin', 'master', { cwd: temporaryRepo });
 
     expect(
-      await isBranchUpToDate(repositoryUrl, 'master', { cwd })
+      await isBranchUpToDate(repositoryUrl, 'master', { cwd }),
     ).toBeFalsy();
   });
 
@@ -365,7 +365,7 @@ describe('git', () => {
     await fetch(repositoryUrl, 'master', 'master', { cwd });
 
     expect(
-      await isBranchUpToDate(repositoryUrl, 'master', { cwd })
+      await isBranchUpToDate(repositoryUrl, 'master', { cwd }),
     ).toBeFalsy();
   });
 
@@ -381,11 +381,11 @@ describe('git', () => {
         commitish: commits[0].hash,
         gitNotesRef,
       },
-      { cwd }
+      { cwd },
     );
 
     expect(
-      await getNote({ commitish: commits[0].hash, gitNotesRef }, { cwd })
+      await getNote({ commitish: commits[0].hash, gitNotesRef }, { cwd }),
     ).toEqual({
       note: 'note',
     });
@@ -398,7 +398,7 @@ describe('git', () => {
     const commits = await gitCommits(['First'], { cwd });
 
     expect(
-      await getNote({ commitish: commits[0].hash, gitNotesRef }, { cwd })
+      await getNote({ commitish: commits[0].hash, gitNotesRef }, { cwd }),
     ).toEqual({});
   });
 
@@ -414,11 +414,11 @@ describe('git', () => {
         commitish: commits[0].hash,
         gitNotesRef,
       },
-      { cwd }
+      { cwd },
     );
 
     await expect(
-      getNote({ gitNotesRef, commitish: commits[0].hash }, { cwd })
+      getNote({ gitNotesRef, commitish: commits[0].hash }, { cwd }),
     ).rejects.toThrow();
   });
 
@@ -434,11 +434,11 @@ describe('git', () => {
         commitish: commits[0].hash,
         gitNotesRef,
       },
-      { cwd }
+      { cwd },
     );
 
     expect(
-      await gitNotesShow({ commitish: commits[0].hash, gitNotesRef }, { cwd })
+      await gitNotesShow({ commitish: commits[0].hash, gitNotesRef }, { cwd }),
     ).toBe('{"note":"note"}');
   });
 
@@ -454,7 +454,7 @@ describe('git', () => {
         commitish: commits[0].hash,
         gitNotesRef,
       },
-      { cwd }
+      { cwd },
     );
     await addNote(
       {
@@ -462,10 +462,10 @@ describe('git', () => {
         commitish: commits[0].hash,
         gitNotesRef,
       },
-      { cwd }
+      { cwd },
     );
     expect(
-      await gitNotesShow({ gitNotesRef, commitish: commits[0].hash }, { cwd })
+      await gitNotesShow({ gitNotesRef, commitish: commits[0].hash }, { cwd }),
     ).toBe('{"note":"note2"}');
   });
 
@@ -482,14 +482,14 @@ describe('git', () => {
         note: JSON.stringify({ note: 'note' }),
         commitish: commits[0].hash,
       },
-      { cwd }
+      { cwd },
     );
     // Create a shallow clone with only 1 commit
     cwd = await gitShallowClone(repositoryUrl);
 
     // Verify the shallow clone doesn't contains the note
     await expect(
-      gitNotesShow({ commitish: commits[0].hash, gitNotesRef }, { cwd })
+      gitNotesShow({ commitish: commits[0].hash, gitNotesRef }, { cwd }),
     ).rejects.toThrow();
 
     await fetch(repositoryUrl, 'master', 'master', { cwd });
@@ -497,7 +497,7 @@ describe('git', () => {
 
     // Verify the shallow clone contains the note
     expect(
-      await gitNotesShow({ commitish: commits[0].hash, gitNotesRef }, { cwd })
+      await gitNotesShow({ commitish: commits[0].hash, gitNotesRef }, { cwd }),
     ).toBe('{"note":"note"}');
   });
 
@@ -515,7 +515,7 @@ describe('git', () => {
         commitish: commit.hash,
         gitNotesRef,
       },
-      { cwd }
+      { cwd },
     );
     cwd = await gitDetachedHead(repositoryUrl, commit.hash);
 
@@ -523,7 +523,7 @@ describe('git', () => {
     await fetchNotes({ repositoryUrl, gitNotesRef }, { cwd });
 
     expect(
-      await gitNotesShow({ commitish: commit.hash, gitNotesRef }, { cwd })
+      await gitNotesShow({ commitish: commit.hash, gitNotesRef }, { cwd }),
     ).toBe('{"note":"note"}');
   });
 });
