@@ -1,3 +1,6 @@
+// TODO refactor to so it doesn't use conditional expect
+/* eslint-disable jest/no-conditional-expect */
+
 import * as tempy from 'tempy';
 import * as verify from './verify';
 import { gitRepo } from '../../test/helpers/git-utils';

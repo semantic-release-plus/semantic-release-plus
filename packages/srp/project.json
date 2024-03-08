@@ -34,17 +34,13 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/srp/**/*.js"]
-      }
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/srp"],
       "options": {
-        "jestConfig": "packages/srp/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/srp/jest.config.ts"
       }
     },
     "ava": {

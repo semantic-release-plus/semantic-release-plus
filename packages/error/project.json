@@ -18,17 +18,13 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["packages/error/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/error"],
       "options": {
-        "jestConfig": "packages/error/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/error/jest.config.ts"
       }
     },
     "release": {
