@@ -46,7 +46,7 @@ test('Maintenance branches - initial state', (t) => {
         channel: '1.x',
         mergeRange: '>=1.3.0 <2.0.0',
       },
-    ]
+    ],
   );
 });
 
@@ -115,7 +115,7 @@ test('Maintenance branches - cap range to first release present on default branc
           accept,
           channel,
           mergeRange: maintenanceRange,
-        })
+        }),
       ),
     [
       {
@@ -150,7 +150,7 @@ test('Maintenance branches - cap range to first release present on default branc
         channel: '2.x.x',
         mergeRange: '>=2.0.0 <3.0.0',
       },
-    ]
+    ],
   );
 });
 
@@ -191,7 +191,7 @@ test('Maintenance branches - cap range to default branch last release if all rel
         channel: '2.x.x',
         mergeRange: '>=2.0.0 <3.0.0',
       },
-    ]
+    ],
   );
 });
 
@@ -238,7 +238,7 @@ test('Release branches - initial state', (t) => {
         channel: 'next-major',
         main: false,
       },
-    ]
+    ],
   );
 });
 
@@ -300,7 +300,7 @@ test('Release branches - 3 release branches', (t) => {
         channel: 'next-major',
         main: false,
       },
-    ]
+    ],
   );
 });
 
@@ -353,7 +353,7 @@ test('Release branches - 2 release branches', (t) => {
         channel: 'next',
         main: false,
       },
-    ]
+    ],
   );
 });
 
@@ -380,7 +380,7 @@ test('Release branches - 1 release branches', (t) => {
         accept: ['patch', 'minor', 'major'],
         channel: undefined,
       },
-    ]
+    ],
   );
 });
 
@@ -433,7 +433,7 @@ test('Release branches - cap ranges to first release only present on following b
         channel: 'next-major',
         main: false,
       },
-    ]
+    ],
   );
 });
 
@@ -474,7 +474,7 @@ test('Release branches - Handle missing previous tags in branch history', (t) =>
         channel: 'next',
         main: false,
       },
-    ]
+    ],
   );
 });
 
@@ -521,7 +521,7 @@ test('Release branches - limit releases on 2nd and 3rd branch based on 1st branc
         channel: 'next-major',
         main: false,
       },
-    ]
+    ],
   );
 });
 
@@ -538,7 +538,7 @@ test('Prerelease branches', (t) => {
     [
       { type: 'prerelease', name: 'beta', channel: 'beta' },
       { type: 'prerelease', name: 'alpha', channel: 'alpha' },
-    ]
+    ],
   );
 });
 
@@ -555,7 +555,7 @@ test('Allow to set channel to "false" to prevent default', (t) => {
     normalize
       .maintenance({ maintenance, release })
       .map(({ name, channel }) => ({ name, channel })),
-    [{ name: '1.x', channel: false }]
+    [{ name: '1.x', channel: false }],
   );
   t.deepEqual(
     normalize
@@ -564,12 +564,12 @@ test('Allow to set channel to "false" to prevent default', (t) => {
     [
       { name: 'master', channel: false },
       { name: 'next', channel: false },
-    ]
+    ],
   );
   t.deepEqual(
     normalize
       .prerelease({ prerelease })
       .map(({ name, channel }) => ({ name, channel })),
-    [{ name: 'beta', channel: false }]
+    [{ name: 'beta', channel: false }],
   );
 });

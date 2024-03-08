@@ -66,7 +66,7 @@ describe('get-config', () => {
     await gitAddConfig(
       'remote.origin.url',
       'https://host.null/owner/module.git',
-      { cwd }
+      { cwd },
     );
 
     const { options: result } = await getConfig({ cwd });
@@ -201,7 +201,7 @@ describe('get-config', () => {
     // Create package.json in repository root
     await writeFile(
       path.resolve(cwd, '.releaserc.js'),
-      `module.exports = ${JSON.stringify(options)}`
+      `module.exports = ${JSON.stringify(options)}`,
     );
 
     const { options: result } = await getConfig({ cwd });
@@ -226,7 +226,7 @@ describe('get-config', () => {
     // Create .releaserc.cjs in repository root
     await writeFile(
       path.resolve(cwd, '.releaserc.cjs'),
-      `module.exports = ${JSON.stringify(options)}`
+      `module.exports = ${JSON.stringify(options)}`,
     );
 
     const { options: result } = await getConfig({ cwd });
@@ -251,7 +251,7 @@ describe('get-config', () => {
     // Create package.json in repository root
     await writeFile(
       path.resolve(cwd, 'release.config.js'),
-      `module.exports = ${JSON.stringify(options)}`
+      `module.exports = ${JSON.stringify(options)}`,
     );
 
     const { options: result } = await getConfig({ cwd });
@@ -276,7 +276,7 @@ describe('get-config', () => {
     // Create release.config.cjs in repository root
     await writeFile(
       path.resolve(cwd, 'release.config.cjs'),
-      `module.exports = ${JSON.stringify(options)}`
+      `module.exports = ${JSON.stringify(options)}`,
     );
 
     const { options: result } = await getConfig({ cwd });
@@ -354,7 +354,7 @@ describe('get-config', () => {
         generateNotes: './shareable.json',
         'plugin-1': './shareable.json',
         'plugin-2': './shareable.json',
-      }
+      },
     );
   });
 
@@ -376,7 +376,7 @@ describe('get-config', () => {
     });
     await outputJson(
       path.resolve(cwd, 'node_modules/shareable/index.json'),
-      options
+      options,
     );
 
     const { options: result } = await getConfig({ cwd });
@@ -390,7 +390,7 @@ describe('get-config', () => {
       {
         analyzeCommits: 'shareable',
         generateNotes: 'shareable',
-      }
+      },
     );
   });
 
@@ -439,7 +439,7 @@ describe('get-config', () => {
         generateNotes2: './shareable2.json',
         analyzeCommits1: './shareable1.json',
         analyzeCommits2: './shareable2.json',
-      }
+      },
     );
   });
 
@@ -471,7 +471,7 @@ describe('get-config', () => {
 
     const expected = omit(
       { ...options1, ...pkgOptions, branches: ['test_pkg'] },
-      'extends'
+      'extends',
     );
     // Verify the options contains the plugin config from package.json and shareable.json
     expect(result).toEqual(expected);
@@ -482,7 +482,7 @@ describe('get-config', () => {
         analyzeCommits: './shareable.json',
         generateNotesShareable: './shareable.json',
         publishShareable: './shareable.json',
-      }
+      },
     );
   });
 
@@ -524,7 +524,7 @@ describe('get-config', () => {
     const { options: result } = await getConfig({ cwd }, cliOptions);
     const expected = omit(
       { ...options2, ...pkgOptions, ...cliOptions, branches: ['branch_opts'] },
-      'extends'
+      'extends',
     );
 
     // Verify the options contains the plugin config from package.json and shareable2.json
@@ -535,7 +535,7 @@ describe('get-config', () => {
       {
         analyzeCommits2: './shareable2.json',
         publishShareable: './shareable2.json',
-      }
+      },
     );
   });
 
@@ -583,7 +583,7 @@ describe('get-config', () => {
         generateNotes: './shareable.json',
         analyzeCommits: './shareable.json',
         'test-plugin': './shareable.json',
-      }
+      },
     );
   });
 
@@ -605,7 +605,7 @@ describe('get-config', () => {
     // Create package.json and release.config.js in repository root
     await writeFile(
       path.resolve(cwd, 'release.config.js'),
-      `module.exports = ${format(pkgOptions)}`
+      `module.exports = ${format(pkgOptions)}`,
     );
     await outputJson(path.resolve(cwd, 'shareable.json'), options1);
 
@@ -624,7 +624,7 @@ describe('get-config', () => {
       {
         generateNotes: './shareable.json',
         analyzeCommits: './shareable.json',
-      }
+      },
     );
   });
 
@@ -642,10 +642,10 @@ describe('get-config', () => {
     await expect(getConfig({ cwd })).rejects.toThrow(
       expect.objectContaining({
         message: expect.stringMatching(
-          /Cannot find module 'non-existing-path'/
+          /Cannot find module 'non-existing-path'/,
         ),
         code: 'MODULE_NOT_FOUND',
-      })
+      }),
     );
   });
 

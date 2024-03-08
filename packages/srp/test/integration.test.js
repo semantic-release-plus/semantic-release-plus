@@ -59,16 +59,16 @@ const npmTestEnv = {
   npm_config_registry: npmRegistry.url,
   LEGACY_TOKEN: Buffer.from(
     `${env.NPM_USERNAME}:${env.NPM_PASSWORD}`,
-    'utf8'
+    'utf8',
   ).toString('base64'),
 };
 
 const cli = require.resolve(
-  '../../../dist/packages/srp/src/bin/semantic-release-plus'
+  '../../../dist/packages/srp/src/bin/semantic-release-plus',
 );
 const pluginError = require.resolve('./fixtures/plugin-error');
 const pluginInheritedError = require.resolve(
-  './fixtures/plugin-error-inherited'
+  './fixtures/plugin-error-inherited',
 );
 const pluginLogEnv = require.resolve('./fixtures/plugin-log-env');
 
@@ -108,7 +108,7 @@ test('Release patch, minor and major versions', async (t) => {
   let verifyMock = await mockServer.mock(
     `/repos/${owner}/${packageName}`,
     { headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }] },
-    { body: { permissions: { push: true } }, method: 'GET' }
+    { body: { permissions: { push: true } }, method: 'GET' },
   );
   t.log('Commit a chore');
   await gitCommits(['chore: Init repository'], { cwd });
@@ -123,7 +123,7 @@ test('Release patch, minor and major versions', async (t) => {
   console.log('######################### DEBUG ########################');
   t.regex(
     stdout,
-    /There are no relevant changes, so no new version is released/
+    /There are no relevant changes, so no new version is released/,
   );
   t.is(exitCode, 0);
 
@@ -132,7 +132,7 @@ test('Release patch, minor and major versions', async (t) => {
   verifyMock = await mockServer.mock(
     `/repos/${owner}/${packageName}`,
     { headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }] },
-    { body: { permissions: { push: true } }, method: 'GET' }
+    { body: { permissions: { push: true } }, method: 'GET' },
   );
   let createReleaseMock = await mockServer.mock(
     `/repos/${owner}/${packageName}/releases`,
@@ -140,7 +140,7 @@ test('Release patch, minor and major versions', async (t) => {
       body: { tag_name: `v${version}`, name: `v${version}` },
       headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }],
     },
-    { body: { html_url: `release-url/${version}` } }
+    { body: { html_url: `release-url/${version}` } },
   );
 
   t.log('Commit a feature');
@@ -149,7 +149,7 @@ test('Release patch, minor and major versions', async (t) => {
   ({ stdout, exitCode } = await execa(cli, [], { env, cwd, extendEnv: false }));
   t.regex(
     stdout,
-    new RegExp(`Published GitHub release: release-url/${version}`)
+    new RegExp(`Published GitHub release: release-url/${version}`),
   );
   t.regex(stdout, new RegExp(`Publishing version ${version} to npm registry`));
   t.is(exitCode, 0);
@@ -158,7 +158,7 @@ test('Release patch, minor and major versions', async (t) => {
   t.is((await readJson(path.resolve(cwd, 'package.json'))).version, version);
   t.is(
     (await readJson(path.resolve(cwd, 'npm-shrinkwrap.json'))).version,
-    version
+    version,
   );
 
   // Retrieve the published package from the registry and check version and gitHead
@@ -179,7 +179,7 @@ test('Release patch, minor and major versions', async (t) => {
   verifyMock = await mockServer.mock(
     `/repos/${owner}/${packageName}`,
     { headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }] },
-    { body: { permissions: { push: true } }, method: 'GET' }
+    { body: { permissions: { push: true } }, method: 'GET' },
   );
   createReleaseMock = await mockServer.mock(
     `/repos/${owner}/${packageName}/releases`,
@@ -187,7 +187,7 @@ test('Release patch, minor and major versions', async (t) => {
       body: { tag_name: `v${version}`, name: `v${version}` },
       headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }],
     },
-    { body: { html_url: `release-url/${version}` } }
+    { body: { html_url: `release-url/${version}` } },
   );
 
   t.log('Commit a fix');
@@ -196,7 +196,7 @@ test('Release patch, minor and major versions', async (t) => {
   ({ stdout, exitCode } = await execa(cli, [], { env, cwd, extendEnv: false }));
   t.regex(
     stdout,
-    new RegExp(`Published GitHub release: release-url/${version}`)
+    new RegExp(`Published GitHub release: release-url/${version}`),
   );
   t.regex(stdout, new RegExp(`Publishing version ${version} to npm registry`));
   t.is(exitCode, 0);
@@ -205,7 +205,7 @@ test('Release patch, minor and major versions', async (t) => {
   t.is((await readJson(path.resolve(cwd, 'package.json'))).version, version);
   t.is(
     (await readJson(path.resolve(cwd, 'npm-shrinkwrap.json'))).version,
-    version
+    version,
   );
 
   // Retrieve the published package from the registry and check version and gitHead
@@ -226,7 +226,7 @@ test('Release patch, minor and major versions', async (t) => {
   verifyMock = await mockServer.mock(
     `/repos/${owner}/${packageName}`,
     { headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }] },
-    { body: { permissions: { push: true } }, method: 'GET' }
+    { body: { permissions: { push: true } }, method: 'GET' },
   );
   createReleaseMock = await mockServer.mock(
     `/repos/${owner}/${packageName}/releases`,
@@ -234,7 +234,7 @@ test('Release patch, minor and major versions', async (t) => {
       body: { tag_name: `v${version}`, name: `v${version}` },
       headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }],
     },
-    { body: { html_url: `release-url/${version}` } }
+    { body: { html_url: `release-url/${version}` } },
   );
 
   t.log('Commit a feature');
@@ -243,7 +243,7 @@ test('Release patch, minor and major versions', async (t) => {
   ({ stdout, exitCode } = await execa(cli, [], { env, cwd, extendEnv: false }));
   t.regex(
     stdout,
-    new RegExp(`Published GitHub release: release-url/${version}`)
+    new RegExp(`Published GitHub release: release-url/${version}`),
   );
   t.regex(stdout, new RegExp(`Publishing version ${version} to npm registry`));
   t.is(exitCode, 0);
@@ -252,7 +252,7 @@ test('Release patch, minor and major versions', async (t) => {
   t.is((await readJson(path.resolve(cwd, 'package.json'))).version, version);
   t.is(
     (await readJson(path.resolve(cwd, 'npm-shrinkwrap.json'))).version,
-    version
+    version,
   );
 
   // Retrieve the published package from the registry and check version and gitHead
@@ -273,7 +273,7 @@ test('Release patch, minor and major versions', async (t) => {
   verifyMock = await mockServer.mock(
     `/repos/${owner}/${packageName}`,
     { headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }] },
-    { body: { permissions: { push: true } }, method: 'GET' }
+    { body: { permissions: { push: true } }, method: 'GET' },
   );
   createReleaseMock = await mockServer.mock(
     `/repos/${owner}/${packageName}/releases`,
@@ -281,7 +281,7 @@ test('Release patch, minor and major versions', async (t) => {
       body: { tag_name: `v${version}`, name: `v${version}` },
       headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }],
     },
-    { body: { html_url: `release-url/${version}` } }
+    { body: { html_url: `release-url/${version}` } },
   );
 
   t.log('Commit a breaking change on next');
@@ -296,7 +296,7 @@ test('Release patch, minor and major versions', async (t) => {
   }));
   t.regex(
     stdout,
-    new RegExp(`Published GitHub release: release-url/${version}`)
+    new RegExp(`Published GitHub release: release-url/${version}`),
   );
   t.regex(stdout, new RegExp(`Publishing version ${version} to npm registry`));
   t.is(exitCode, 0);
@@ -305,7 +305,7 @@ test('Release patch, minor and major versions', async (t) => {
   t.is((await readJson(path.resolve(cwd, 'package.json'))).version, version);
   t.is(
     (await readJson(path.resolve(cwd, 'npm-shrinkwrap.json'))).version,
-    version
+    version,
   );
 
   // Retrieve the published package from the registry and check version and gitHead
@@ -316,7 +316,7 @@ test('Release patch, minor and major versions', async (t) => {
   t.is(releasedVersion, version);
   t.is(
     await gitNotesShow({ gitNotesRef, commitish: `v${version}` }, { cwd }),
-    '{"channels":["next"]}'
+    '{"channels":["next"]}',
   );
   t.is(await gitTagHead(`v${version}`, { cwd }), head);
   t.is(await gitRemoteTagHead(authUrl, `v${version}`, { cwd }), head);
@@ -331,12 +331,12 @@ test('Release patch, minor and major versions', async (t) => {
   verifyMock = await mockServer.mock(
     `/repos/${owner}/${packageName}`,
     { headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }] },
-    { body: { permissions: { push: true } }, method: 'GET' }
+    { body: { permissions: { push: true } }, method: 'GET' },
   );
   const getReleaseMock = await mockServer.mock(
     `/repos/${owner}/${packageName}/releases/tags/v2.0.0`,
     { headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }] },
-    { body: { id: releaseId }, method: 'GET' }
+    { body: { id: releaseId }, method: 'GET' },
   );
   const updateReleaseMock = await mockServer.mock(
     `/repos/${owner}/${packageName}/releases/${releaseId}`,
@@ -344,7 +344,7 @@ test('Release patch, minor and major versions', async (t) => {
       body: { name: `v${version}`, prerelease: false },
       headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }],
     },
-    { body: { html_url: `release-url/${version}` }, method: 'PATCH' }
+    { body: { html_url: `release-url/${version}` }, method: 'PATCH' },
   );
 
   t.log('Merge next into master');
@@ -356,7 +356,7 @@ test('Release patch, minor and major versions', async (t) => {
   t.regex(stdout, new RegExp(`Updated GitHub release: release-url/${version}`));
   t.regex(
     stdout,
-    new RegExp(`Adding version ${version} to npm registry on dist-tag latest`)
+    new RegExp(`Adding version ${version} to npm registry on dist-tag latest`),
   );
   t.is(exitCode, 0);
 
@@ -369,15 +369,15 @@ test('Release patch, minor and major versions', async (t) => {
   t.is(releasedVersion, version);
   t.is(
     await gitNotesShow({ gitNotesRef, commitish: `v${version}` }, { cwd }),
-    '{"channels":["next",null]}'
+    '{"channels":["next",null]}',
   );
   t.is(
     await gitTagHead(`v${version}`, { cwd }),
-    await gitTagHead(`v${version}`, { cwd })
+    await gitTagHead(`v${version}`, { cwd }),
   );
   t.is(
     await gitRemoteTagHead(authUrl, `v${version}`, { cwd }),
-    await gitRemoteTagHead(authUrl, `v${version}`, { cwd })
+    await gitRemoteTagHead(authUrl, `v${version}`, { cwd }),
   );
   t.log(`+ added ${releasedVersion}`);
 
@@ -404,7 +404,7 @@ test('Exit with 1 if a plugin is not found', async (t) => {
   });
 
   const { exitCode, stderr } = await t.throwsAsync(
-    execa(cli, [], { env, cwd, extendEnv: false })
+    execa(cli, [], { env, cwd, extendEnv: false }),
   );
   t.is(exitCode, 1);
   t.regex(stderr, /Cannot find module/);
@@ -424,7 +424,7 @@ test('Exit with 1 if a shareable config is not found', async (t) => {
   });
 
   const { exitCode, stderr } = await t.throwsAsync(
-    execa(cli, [], { env, cwd, extendEnv: false })
+    execa(cli, [], { env, cwd, extendEnv: false }),
   );
   t.is(exitCode, 1);
   t.regex(stderr, /Cannot find module/);
@@ -447,7 +447,7 @@ test('Exit with 1 if a shareable config reference a not found plugin', async (t)
   await writeJson(path.resolve(cwd, 'shareable.json'), shareable);
 
   const { exitCode, stderr } = await t.throwsAsync(
-    execa(cli, [], { env, cwd, extendEnv: false })
+    execa(cli, [], { env, cwd, extendEnv: false }),
   );
   t.is(exitCode, 1);
   t.regex(stderr, /Cannot find module/);
@@ -472,7 +472,7 @@ test('Dry-run', async (t) => {
   const verifyMock = await mockServer.mock(
     `/repos/${owner}/${packageName}`,
     { headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }] },
-    { body: { permissions: { push: true } }, method: 'GET' }
+    { body: { permissions: { push: true } }, method: 'GET' },
   );
   const version = '1.0.0';
   t.log('Commit a feature');
@@ -486,8 +486,8 @@ test('Dry-run', async (t) => {
   t.regex(
     stdout,
     new RegExp(
-      `There is no previous release, the next release version is ${version}`
-    )
+      `There is no previous release, the next release version is ${version}`,
+    ),
   );
   t.regex(stdout, new RegExp(`Release note for version ${version}`));
   t.regex(stdout, /Initial commit/);
@@ -496,7 +496,7 @@ test('Dry-run', async (t) => {
   // Verify package.json and has not been modified
   t.is(
     (await readJson(path.resolve(cwd, 'package.json'))).version,
-    '0.0.0-dev'
+    '0.0.0-dev',
   );
   await mockServer.verify(verifyMock);
 });
@@ -523,7 +523,7 @@ test('Allow local releases with "noCi" option', async (t) => {
   const verifyMock = await mockServer.mock(
     `/repos/${owner}/${packageName}`,
     { headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }] },
-    { body: { permissions: { push: true } }, method: 'GET' }
+    { body: { permissions: { push: true } }, method: 'GET' },
   );
   const createReleaseMock = await mockServer.mock(
     `/repos/${owner}/${packageName}/releases`,
@@ -531,7 +531,7 @@ test('Allow local releases with "noCi" option', async (t) => {
       body: { tag_name: `v${version}`, name: `v${version}` },
       headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }],
     },
-    { body: { html_url: `release-url/${version}` } }
+    { body: { html_url: `release-url/${version}` } },
   );
 
   t.log('Commit a feature');
@@ -544,7 +544,7 @@ test('Allow local releases with "noCi" option', async (t) => {
   });
   t.regex(
     stdout,
-    new RegExp(`Published GitHub release: release-url/${version}`)
+    new RegExp(`Published GitHub release: release-url/${version}`),
   );
   t.regex(stdout, new RegExp(`Publishing version ${version} to npm registry`));
   t.is(exitCode, 0);
@@ -555,7 +555,7 @@ test('Allow local releases with "noCi" option', async (t) => {
   // Retrieve the published package from the registry and check version and gitHead
   const { version: releasedVersion, gitHead: releasedGitHead } = await npmView(
     packageName,
-    npmTestEnv
+    npmTestEnv,
   );
 
   const head = await gitHead({ cwd });
@@ -600,7 +600,7 @@ test('Pass options via CLI arguments', async (t) => {
       false,
       '--debug',
     ],
-    { env, cwd, extendEnv: false }
+    { env, cwd, extendEnv: false },
   );
   t.regex(stdout, new RegExp(`Publishing version ${version} to npm registry`));
   t.is(exitCode, 0);
@@ -611,7 +611,7 @@ test('Pass options via CLI arguments', async (t) => {
   // Retrieve the published package from the registry and check version and gitHead
   const { version: releasedVersion, gitHead: releasedGitHead } = await npmView(
     packageName,
-    npmTestEnv
+    npmTestEnv,
   );
   const head = await gitHead({ cwd });
   t.is(releasedVersion, version);
@@ -648,7 +648,7 @@ test('Run via JS API', async (t) => {
   const verifyMock = await mockServer.mock(
     `/repos/${owner}/${packageName}`,
     { headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }] },
-    { body: { permissions: { push: true } }, method: 'GET' }
+    { body: { permissions: { push: true } }, method: 'GET' },
   );
   const createReleaseMock = await mockServer.mock(
     `/repos/${owner}/${packageName}/releases`,
@@ -656,7 +656,7 @@ test('Run via JS API', async (t) => {
       body: { tag_name: `v${version}`, name: `v${version}` },
       headers: [{ name: 'Authorization', values: [`token ${env.GH_TOKEN}`] }],
     },
-    { body: { html_url: `release-url/${version}` } }
+    { body: { html_url: `release-url/${version}` } },
   );
 
   t.log('Commit a feature');
@@ -675,7 +675,7 @@ test('Run via JS API', async (t) => {
   // Retrieve the published package from the registry and check version and gitHead
   const { version: releasedVersion, gitHead: releasedGitHead } = await npmView(
     packageName,
-    npmTestEnv
+    npmTestEnv,
   );
   const head = await gitHead({ cwd });
   t.is(releasedVersion, version);
@@ -779,7 +779,7 @@ test('Exit with 1 if missing permission to push to the remote repository', async
       cwd,
       reject: false,
       extendEnv: false,
-    }
+    },
   );
   // Verify the type and message are logged
   t.regex(stderr, /EGITNOPERMISSION/);
@@ -808,19 +808,19 @@ test('Hide sensitive environment variable values from the logs', async (t) => {
 
   t.regex(
     stdout,
-    new RegExp(`Console: Exposing token ${escapeRegExp(SECRET_REPLACEMENT)}`)
+    new RegExp(`Console: Exposing token ${escapeRegExp(SECRET_REPLACEMENT)}`),
   );
   t.regex(
     stdout,
-    new RegExp(`Log: Exposing token ${escapeRegExp(SECRET_REPLACEMENT)}`)
+    new RegExp(`Log: Exposing token ${escapeRegExp(SECRET_REPLACEMENT)}`),
   );
   t.regex(
     stderr,
-    new RegExp(`Error: Console token ${escapeRegExp(SECRET_REPLACEMENT)}`)
+    new RegExp(`Error: Console token ${escapeRegExp(SECRET_REPLACEMENT)}`),
   );
   t.regex(
     stderr,
-    new RegExp(`Throw error: Exposing ${escapeRegExp(SECRET_REPLACEMENT)}`)
+    new RegExp(`Throw error: Exposing ${escapeRegExp(SECRET_REPLACEMENT)}`),
   );
 });
 
@@ -842,7 +842,7 @@ test('Use the valid git credentials when multiple are provided', async (t) => {
         repositoryUrl: 'http://toto@localhost:2080/git/test-auth.git',
       },
     }),
-    authUrl
+    authUrl,
   );
 });
 
@@ -862,6 +862,6 @@ test('Use the repository URL as is if none of the given git credentials are vali
       branch: { name: 'master' },
       options: { repositoryUrl: dummyUrl },
     }),
-    dummyUrl
+    dummyUrl,
   );
 });

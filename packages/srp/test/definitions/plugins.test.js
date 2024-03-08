@@ -50,17 +50,17 @@ test('The "generateNotes" plugins output are concatenated with separator and sen
   const env = { MY_TOKEN: 'secret token' };
   t.is(
     plugins.generateNotes.postprocess(['note 1', 'note 2'], { env }),
-    `note 1${RELEASE_NOTES_SEPARATOR}note 2`
+    `note 1${RELEASE_NOTES_SEPARATOR}note 2`,
   );
   t.is(plugins.generateNotes.postprocess(['', 'note'], { env }), 'note');
   t.is(plugins.generateNotes.postprocess([undefined, 'note'], { env }), 'note');
   t.is(
     plugins.generateNotes.postprocess(['note 1', '', 'note 2'], { env }),
-    `note 1${RELEASE_NOTES_SEPARATOR}note 2`
+    `note 1${RELEASE_NOTES_SEPARATOR}note 2`,
   );
   t.is(
     plugins.generateNotes.postprocess(['note 1', undefined, 'note 2'], { env }),
-    `note 1${RELEASE_NOTES_SEPARATOR}note 2`
+    `note 1${RELEASE_NOTES_SEPARATOR}note 2`,
   );
 
   t.is(
@@ -69,9 +69,9 @@ test('The "generateNotes" plugins output are concatenated with separator and sen
         `Note 1: Exposing token ${env.MY_TOKEN}`,
         `Note 2: Exposing token ${SECRET_REPLACEMENT}`,
       ],
-      { env }
+      { env },
     ),
-    `Note 1: Exposing token ${SECRET_REPLACEMENT}${RELEASE_NOTES_SEPARATOR}Note 2: Exposing token ${SECRET_REPLACEMENT}`
+    `Note 1: Exposing token ${SECRET_REPLACEMENT}${RELEASE_NOTES_SEPARATOR}Note 2: Exposing token ${SECRET_REPLACEMENT}`,
   );
 });
 

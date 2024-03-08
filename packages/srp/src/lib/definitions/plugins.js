@@ -20,7 +20,8 @@ module.exports = {
     preprocess: ({ commits, ...inputs }) => ({
       ...inputs,
       commits: commits.filter(
-        (commit) => !/\[skip\s+release]|\[release\s+skip]/i.test(commit.message)
+        (commit) =>
+          !/\[skip\s+release]|\[release\s+skip]/i.test(commit.message),
       ),
     }),
     postprocess: (results) =>

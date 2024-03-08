@@ -13,7 +13,7 @@ describe('get-git-auth-url', () => {
         env,
         branch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo.git' },
-      })
+      }),
     ).toBe('git@host.null:owner/repo.git');
   });
 
@@ -26,7 +26,7 @@ describe('get-git-auth-url', () => {
         env,
         branch: { name: 'master' },
         options: { repositoryUrl: 'https://host.null/owner/repo.git' },
-      })
+      }),
     ).toBe('https://host.null/owner/repo.git');
   });
 
@@ -39,7 +39,7 @@ describe('get-git-auth-url', () => {
         env,
         branch: { name: 'master' },
         options: { repositoryUrl: 'git+https://host.null/owner/repo.git' },
-      })
+      }),
     ).toBe('https://host.null/owner/repo.git');
   });
 
@@ -52,7 +52,7 @@ describe('get-git-auth-url', () => {
         env,
         vranch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo' },
-      })
+      }),
     ).toBe('git@host.null:owner/repo');
   });
 
@@ -67,7 +67,7 @@ describe('get-git-auth-url', () => {
         options: {
           repositoryUrl: 'https://host.null/group/subgroup/owner/repo.git',
         },
-      })
+      }),
     ).toBe('https://host.null/group/subgroup/owner/repo.git');
   });
 
@@ -82,7 +82,7 @@ describe('get-git-auth-url', () => {
         options: {
           repositoryUrl: 'git@host.null:group/subgroup/owner/repo.git',
         },
-      })
+      }),
     ).toBe('git@host.null:group/subgroup/owner/repo.git');
   });
 
@@ -97,9 +97,9 @@ describe('get-git-auth-url', () => {
         options: {
           repositoryUrl: 'semantic-release-plus/semantic-release-plus',
         },
-      })
+      }),
     ).toBe(
-      'https://github.com/semantic-release-plus/semantic-release-plus.git'
+      'https://github.com/semantic-release-plus/semantic-release-plus.git',
     );
   });
 
@@ -114,9 +114,9 @@ describe('get-git-auth-url', () => {
         options: {
           repositoryUrl: 'gitlab:semantic-release-plus/semantic-release-plus',
         },
-      })
+      }),
     ).toBe(
-      'https://gitlab.com/semantic-release-plus/semantic-release-plus.git'
+      'https://gitlab.com/semantic-release-plus/semantic-release-plus.git',
     );
   });
 
@@ -129,7 +129,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, GIT_CREDENTIALS: 'user:pass' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo.git' },
-      })
+      }),
     ).toBe('https://user:pass@host.null/owner/repo.git');
   });
 
@@ -144,7 +144,7 @@ describe('get-git-auth-url', () => {
           branch: 'master',
           repositoryUrl: 'host.null:owner/repo.git',
         },
-      })
+      }),
     ).toBe('https://user:pass@host.null/owner/repo.git');
   });
 
@@ -159,7 +159,7 @@ describe('get-git-auth-url', () => {
           branch: 'master',
           repositoryUrl: 'host.null:6666:owner/repo.git',
         },
-      })
+      }),
     ).toBe('https://user:pass@host.null:6666/owner/repo.git');
   });
 
@@ -174,7 +174,7 @@ describe('get-git-auth-url', () => {
           branch: 'master',
           repositoryUrl: 'host.null:6666:/owner/repo.git',
         },
-      })
+      }),
     ).toBe('https://user:pass@host.null:6666/owner/repo.git');
   });
 
@@ -187,7 +187,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, GIT_CREDENTIALS: 'user:pass' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'https://host.null/owner/repo.git' },
-      })
+      }),
     ).toBe('https://user:pass@host.null/owner/repo.git');
   });
 
@@ -200,7 +200,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, GIT_CREDENTIALS: 'user:pass' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'http://host.null/owner/repo.git' },
-      })
+      }),
     ).toBe('http://user:pass@host.null/owner/repo.git');
   });
 
@@ -215,7 +215,7 @@ describe('get-git-auth-url', () => {
           branch: 'master',
           repositoryUrl: 'http://host.null:8080/owner/repo.git',
         },
-      })
+      }),
     ).toBe('http://user:pass@host.null:8080/owner/repo.git');
   });
 
@@ -228,7 +228,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, GIT_CREDENTIALS: 'user:pass' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git+https://host.null/owner/repo.git' },
-      })
+      }),
     ).toBe('https://user:pass@host.null/owner/repo.git');
   });
 
@@ -241,7 +241,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, GIT_CREDENTIALS: 'user:pass' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git+http://host.null/owner/repo.git' },
-      })
+      }),
     ).toBe('http://user:pass@host.null/owner/repo.git');
   });
 
@@ -256,7 +256,7 @@ describe('get-git-auth-url', () => {
           branch: 'master',
           repositoryUrl: 'ssh://git@host.null:2222/owner/repo.git',
         },
-      })
+      }),
     ).toBe('https://user:pass@host.null/owner/repo.git');
   });
 
@@ -269,7 +269,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, GH_TOKEN: 'token' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo.git' },
-      })
+      }),
     ).toBe('https://token@host.null/owner/repo.git');
   });
 
@@ -282,7 +282,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, GITHUB_TOKEN: 'token' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo.git' },
-      })
+      }),
     ).toBe('https://token@host.null/owner/repo.git');
   });
 
@@ -295,7 +295,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, GL_TOKEN: 'token' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo.git' },
-      })
+      }),
     ).toBe('https://gitlab-ci-token:token@host.null/owner/repo.git');
   });
 
@@ -308,7 +308,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, GITLAB_TOKEN: 'token' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo.git' },
-      })
+      }),
     ).toBe('https://gitlab-ci-token:token@host.null/owner/repo.git');
   });
 
@@ -321,7 +321,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, BB_TOKEN: 'token' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo.git' },
-      })
+      }),
     ).toBe('https://x-token-auth:token@host.null/owner/repo.git');
   });
 
@@ -334,7 +334,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, BITBUCKET_TOKEN: 'token' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo.git' },
-      })
+      }),
     ).toBe('https://x-token-auth:token@host.null/owner/repo.git');
   });
 
@@ -347,7 +347,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, BB_TOKEN_BASIC_AUTH: 'username:token' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo.git' },
-      })
+      }),
     ).toBe('https://username:token@host.null/owner/repo.git');
   });
 
@@ -360,7 +360,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, BITBUCKET_TOKEN_BASIC_AUTH: 'username:token' },
         branch: { name: 'master' },
         options: { repositoryUrl: 'git@host.null:owner/repo.git' },
-      })
+      }),
     ).toBe('https://username:token@host.null/owner/repo.git');
   });
 
@@ -375,7 +375,7 @@ describe('get-git-auth-url', () => {
           branch: 'master',
           repositoryUrl: 'git@host.null:owner/repo.git',
         },
-      })
+      }),
     ).toBe('https://x-access-token:token@host.null/owner/repo.git');
   });
 
@@ -390,7 +390,7 @@ describe('get-git-auth-url', () => {
         options: {
           repositoryUrl: 'https://host.null/group/subgroup/owner/repo.git',
         },
-      })
+      }),
     ).toBe('https://user:pass@host.null/group/subgroup/owner/repo.git');
   });
 
@@ -405,7 +405,7 @@ describe('get-git-auth-url', () => {
         options: {
           repositoryUrl: 'git@host.null:group/subgroup/owner/repo.git',
         },
-      })
+      }),
     ).toBe('https://user:pass@host.null/group/subgroup/owner/repo.git');
   });
 
@@ -418,7 +418,7 @@ describe('get-git-auth-url', () => {
         env: { ...env, GIT_CREDENTIALS: 'user:pass' },
         branch: { name: 'master' },
         options: { repositoryUrl },
-      })
+      }),
     ).toBe(repositoryUrl);
   });
 });

@@ -28,7 +28,7 @@ const { extractErrors } = require('../utils');
 module.exports =
   (
     steps,
-    { settleAll = false, getNextInput = identity, transform = identity } = {}
+    { settleAll = false, getNextInput = identity, transform = identity } = {},
   ) =>
   async (input) => {
     const results = [];
@@ -53,7 +53,7 @@ module.exports =
         // Prepare input for the next step, passing the input of the last iteration (or initial parameter for the first iteration) and the result of the current one
         return getNextInput(lastInput, result);
       },
-      input
+      input,
     );
     if (errors.length > 0) {
       throw new AggregateError(errors);

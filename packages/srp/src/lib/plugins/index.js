@@ -70,7 +70,7 @@ module.exports = (context, pluginsPath) => {
           postprocess = identity,
           preprocess = identity,
         },
-      ]
+      ],
     ) => {
       let pluginOptions;
 
@@ -82,7 +82,7 @@ module.exports = (context, pluginsPath) => {
           options[type] = castArray(plugins[type]).map((plugin) =>
             plugin
               ? [plugin[0], Object.assign(plugin[1], options[type])]
-              : plugin
+              : plugin,
           );
         }
 
@@ -92,7 +92,7 @@ module.exports = (context, pluginsPath) => {
               type,
               required,
               pluginConf: options[type],
-            })
+            }),
           );
           return pluginsConf;
         }
@@ -108,22 +108,22 @@ module.exports = (context, pluginsPath) => {
           },
           type,
           pluginOpt,
-          pluginsPath
-        )
+          pluginsPath,
+        ),
       );
 
       pluginsConf[type] = async (input) =>
         postprocess(
           await pipeline(
             steps,
-            pipelineConfig && pipelineConfig(pluginsConf, logger)
+            pipelineConfig && pipelineConfig(pluginsConf, logger),
           )(await preprocess(input)),
-          input
+          input,
         );
 
       return pluginsConf;
     },
-    plugins
+    plugins,
   );
   if (errors.length > 0) {
     throw new AggregateError(errors);

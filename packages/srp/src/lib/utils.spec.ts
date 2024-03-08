@@ -30,7 +30,7 @@ describe('utils', () => {
         { version: '1.0.0' },
         { version: '1.1.0' },
         { version: '1.2.0' },
-      ])
+      ]),
     ).toEqual(['1.0.0', '1.1.0', '1.2.0']);
   });
 
@@ -118,28 +118,28 @@ describe('utils', () => {
 
   test('getLatestVersion', () => {
     expect(
-      getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1'])
+      getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1']),
     ).toBe('1.2.0');
     expect(getLatestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'])).toBe(
-      undefined
+      undefined,
     );
 
     expect(
-      getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1'])
+      getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1']),
     ).toBe('1.2.0');
     expect(getLatestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'])).toBe(
-      undefined
+      undefined,
     );
 
     expect(
       getLatestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1'], {
         withPrerelease: true,
-      })
+      }),
     ).toBe('1.2.3-alpha.3');
     expect(
       getLatestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'], {
         withPrerelease: true,
-      })
+      }),
     ).toBe('1.2.3-alpha.3');
 
     expect(getLatestVersion([])).toBe(undefined);
@@ -147,28 +147,28 @@ describe('utils', () => {
 
   test('getEarliestVersion', () => {
     expect(
-      getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.0', '1.0.1-alpha.1'])
+      getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.0', '1.0.1-alpha.1']),
     ).toBe('1.0.0');
     expect(getEarliestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'])).toBe(
-      undefined
+      undefined,
     );
 
     expect(
-      getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.0', '1.0.1-alpha.1'])
+      getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.0', '1.0.1-alpha.1']),
     ).toBe('1.0.0');
     expect(getEarliestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'])).toBe(
-      undefined
+      undefined,
     );
 
     expect(
       getEarliestVersion(['1.2.3-alpha.3', '1.2.0', '1.0.1', '1.0.0-alpha.1'], {
         withPrerelease: true,
-      })
+      }),
     ).toBe('1.0.0-alpha.1');
     expect(
       getEarliestVersion(['1.2.3-alpha.3', '1.2.3-alpha.2'], {
         withPrerelease: true,
-      })
+      }),
     ).toBe('1.2.3-alpha.2');
 
     expect(getEarliestVersion([])).toBe(undefined);
@@ -176,7 +176,7 @@ describe('utils', () => {
 
   test('getFirstVersion', () => {
     expect(
-      getFirstVersion(['1.2.0', '1.0.0', '1.3.0', '1.1.0', '1.4.0'], [])
+      getFirstVersion(['1.2.0', '1.0.0', '1.3.0', '1.1.0', '1.4.0'], []),
     ).toBe('1.0.0');
     expect(
       getFirstVersion(
@@ -194,8 +194,8 @@ describe('utils', () => {
               { version: '1.2.0' },
             ],
           },
-        ]
-      )
+        ],
+      ),
     ).toBe('1.3.0');
     expect(
       getFirstVersion(
@@ -213,8 +213,8 @@ describe('utils', () => {
               { version: '1.2.0' },
             ],
           },
-        ]
-      )
+        ],
+      ),
     ).toBe(undefined);
   });
 

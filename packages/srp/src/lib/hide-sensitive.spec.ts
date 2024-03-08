@@ -7,10 +7,10 @@ describe('hide-sensitive', () => {
     const env = { SOME_PASSWORD: 'password', SOME_TOKEN: 'secret' };
     expect(
       hideSensitive(env)(
-        `https://user:${env.SOME_PASSWORD}@host.com?token=${env.SOME_TOKEN}`
-      )
+        `https://user:${env.SOME_PASSWORD}@host.com?token=${env.SOME_TOKEN}`,
+      ),
     ).toBe(
-      `https://user:${SECRET_REPLACEMENT}@host.com?token=${SECRET_REPLACEMENT}`
+      `https://user:${SECRET_REPLACEMENT}@host.com?token=${SECRET_REPLACEMENT}`,
     );
   });
 
@@ -18,31 +18,31 @@ describe('hide-sensitive', () => {
     const env = { secretKey: 'secret' };
     expect(
       hideSensitive(env)(
-        `https://user:${env.secretKey}@host.com?token=${env.secretKey}`
-      )
+        `https://user:${env.secretKey}@host.com?token=${env.secretKey}`,
+      ),
     ).toBe(
-      `https://user:${SECRET_REPLACEMENT}@host.com?token=${SECRET_REPLACEMENT}`
+      `https://user:${SECRET_REPLACEMENT}@host.com?token=${SECRET_REPLACEMENT}`,
     );
   });
 
   test('Replace sensitive environment variable matching specific regex for "private"', () => {
     const env = { privateKey: 'secret', GOPRIVATE: 'host.com' };
     expect(hideSensitive(env)(`https://host.com?token=${env.privateKey}`)).toBe(
-      `https://host.com?token=${SECRET_REPLACEMENT}`
+      `https://host.com?token=${SECRET_REPLACEMENT}`,
     );
   });
 
   test('Replace url-encoded environment variable', () => {
     const env = { privateKey: 'secret ' };
     expect(
-      hideSensitive(env)(`https://host.com?token=${encodeURI(env.privateKey)}`)
+      hideSensitive(env)(`https://host.com?token=${encodeURI(env.privateKey)}`),
     ).toBe(`https://host.com?token=${SECRET_REPLACEMENT}`);
   });
 
   test('Escape regexp special characters', () => {
     const env = { SOME_CREDENTIALS: 'p$^{.+}\\w[a-z]o.*rd' };
     expect(
-      hideSensitive(env)(`https://user:${env.SOME_CREDENTIALS}@host.com`)
+      hideSensitive(env)(`https://user:${env.SOME_CREDENTIALS}@host.com`),
     ).toBe(`https://user:${SECRET_REPLACEMENT}@host.com`);
   });
 
@@ -50,8 +50,8 @@ describe('hide-sensitive', () => {
     const env = { SOME_PASSWORD: 'secret password p$^{.+}\\w[a-z]o.*rd)(' };
     expect(
       hideSensitive(env)(
-        `https://user:${encodeURI(env.SOME_PASSWORD)}@host.com`
-      )
+        `https://user:${encodeURI(env.SOME_PASSWORD)}@host.com`,
+      ),
     ).toBe(`https://user:${SECRET_REPLACEMENT}@host.com`);
   });
 
@@ -66,22 +66,22 @@ describe('hide-sensitive', () => {
   test('Exclude empty environment variables from the regexp', () => {
     const env = { SOME_PASSWORD: 'password', SOME_TOKEN: '' };
     expect(
-      hideSensitive(env)(`https://user:${env.SOME_PASSWORD}@host.com?token=`)
+      hideSensitive(env)(`https://user:${env.SOME_PASSWORD}@host.com?token=`),
     ).toBe(`https://user:${SECRET_REPLACEMENT}@host.com?token=`);
   });
 
   test('Exclude empty environment variables from the regexp if there is only empty ones', () => {
     expect(
       hideSensitive({ SOME_PASSWORD: '', SOME_TOKEN: ' \n ' })(
-        `https://host.com?token=`
-      )
+        `https://host.com?token=`,
+      ),
     ).toBe('https://host.com?token=');
   });
 
   test('Exclude nonsensitive GOPRIVATE environment variable for Golang projects from the regexp', () => {
     const env = { GOPRIVATE: 'host.com' };
     expect(hideSensitive(env)(`https://host.com?token=`)).toBe(
-      'https://host.com?token='
+      'https://host.com?token=',
     );
   });
 
@@ -91,8 +91,8 @@ describe('hide-sensitive', () => {
     const env = { SHORT_TOKEN, LONG_TOKEN };
     expect(
       hideSensitive(env)(
-        `https://user:${SHORT_TOKEN}@host.com?token=${LONG_TOKEN}`
-      )
+        `https://user:${SHORT_TOKEN}@host.com?token=${LONG_TOKEN}`,
+      ),
     ).toBe(`https://user:${SHORT_TOKEN}@host.com?token=${SECRET_REPLACEMENT}`);
   });
 });

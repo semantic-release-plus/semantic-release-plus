@@ -108,7 +108,7 @@ describe('get-last-release', () => {
         },
         options: { tagFormat: `v\${version}` },
       },
-      { before: '2.1.0' }
+      { before: '2.1.0' },
     );
 
     expect(result).toEqual({

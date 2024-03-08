@@ -95,13 +95,13 @@ async function gitCommits(messages, execaOptions) {
         await execa(
           'git',
           ['commit', '-m', message, '--allow-empty', '--no-gpg-sign'],
-          execaOptions
+          execaOptions,
         )
-      ).stdout
+      ).stdout,
   );
   return (await gitGetCommits(undefined, execaOptions)).slice(
     0,
-    messages.length
+    messages.length,
   );
 }
 
@@ -124,8 +124,8 @@ async function gitGetCommits(from, execaOptions) {
     await getStream.array(
       gitLogParser.parse(
         { _: `${from ? from + '..' : ''}HEAD` },
-        { ...execaOptions, env: { ...process.env, ...execaOptions.env } }
-      )
+        { ...execaOptions, env: { ...process.env, ...execaOptions.env } },
+      ),
     )
   ).map((commit) => {
     commit.message = commit.message.trim();
@@ -145,7 +145,7 @@ async function gitCheckout(branch, create, execaOptions) {
   await execa(
     'git',
     create ? ['checkout', '-b', branch] : ['checkout', branch],
-    execaOptions
+    execaOptions,
   );
 }
 
@@ -181,7 +181,7 @@ async function gitTagVersion(tagName, sha, execaOptions) {
   await execa(
     'git',
     sha ? ['tag', '-f', tagName, sha] : ['tag', tagName],
-    execaOptions
+    execaOptions,
   );
 }
 
@@ -212,7 +212,7 @@ async function gitShallowClone(repositoryUrl, branch = 'master', depth = 1) {
     ],
     {
       cwd,
-    }
+    },
   );
   return cwd;
 }
@@ -242,7 +242,7 @@ async function gitDetachedHeadFromBranch(repositoryUrl, branch, head) {
   await execa(
     'git',
     ['fetch', '--force', repositoryUrl, `${branch}:remotes/origin/${branch}`],
-    { cwd }
+    { cwd },
   );
   await execa('git', ['reset', '--hard', head], { cwd });
   await execa('git', ['checkout', '-q', '-B', branch], { cwd });
@@ -286,7 +286,7 @@ async function gitRemoteTagHead(repositoryUrl, tagName, execaOptions) {
     await execa(
       'git',
       ['ls-remote', '--tags', repositoryUrl, tagName],
-      execaOptions
+      execaOptions,
     )
   ).stdout
     .split('\n')
@@ -307,7 +307,7 @@ async function gitCommitTag(gitHead, execaOptions) {
     await execa(
       'git',
       ['describe', '--tags', '--exact-match', gitHead],
-      execaOptions
+      execaOptions,
     )
   ).stdout;
 }
@@ -325,7 +325,7 @@ async function gitPush(repositoryUrl, branch, execaOptions) {
   await execa(
     'git',
     ['push', '--tags', repositoryUrl, `HEAD:${branch}`],
-    execaOptions
+    execaOptions,
   );
 }
 

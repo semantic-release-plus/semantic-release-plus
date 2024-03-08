@@ -31,9 +31,9 @@ module.exports = (context) => {
         !channels.includes(branch.channel || null) &&
         intersection(channels, higherChannels).length > 0 &&
         (branch.type !== 'maintenance' ||
-          semver.gte(version, getLowerBound(branch.mergeRange)))
+          semver.gte(version, getLowerBound(branch.mergeRange))),
     ),
-    'version'
+    'version',
   ).sort((a, b) => semver.compare(b.version, a.version))[0];
 
   if (versiontoAdd) {

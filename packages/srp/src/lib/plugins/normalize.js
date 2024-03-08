@@ -57,7 +57,7 @@ module.exports = (context, type, pluginOpt, pluginsPath) => {
       }
 
       logger.warn(
-        `Skip step "${type}" of plugin "${pluginName}" in dry-run mode`
+        `Skip step "${type}" of plugin "${pluginName}" in dry-run mode`,
       );
     } catch (error) {
       logger.error(`Failed step "${type}" of plugin "${pluginName}"`);
@@ -75,7 +75,7 @@ module.exports = (context, type, pluginOpt, pluginsPath) => {
   if (!isFunction(pluginOpt)) {
     if (pluginsPath[name]) {
       logger.success(
-        `Loaded plugin "${type}" from "${pluginName}" in shareable config "${pluginsPath[name]}"`
+        `Loaded plugin "${type}" from "${pluginName}" in shareable config "${pluginsPath[name]}"`,
       );
     } else {
       logger.success(`Loaded plugin "${type}" from "${pluginName}"`);

@@ -75,11 +75,7 @@ For example the configuration `['1.1.x', '1.2.x', 'master']` will be expanded as
 
 ```js
 {
-  branches: [
-    { name: '1.1.x', range: '1.1.x', channel: '1.1.x' },
-    { name: '1.2.x', range: '1.2.x', channel: '1.2.x' },
-    { name: 'master' },
-  ];
+  branches: [{ name: '1.1.x', range: '1.1.x', channel: '1.1.x' }, { name: '1.2.x', range: '1.2.x', channel: '1.2.x' }, { name: 'master' }];
 }
 ```
 

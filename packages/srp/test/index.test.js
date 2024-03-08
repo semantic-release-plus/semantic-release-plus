@@ -59,7 +59,7 @@ test('Plugins are called with expected values', async (t) => {
       note: JSON.stringify({ channels: ['next'] }),
       commitish: 'v1.0.0',
     },
-    { cwd }
+    { cwd },
   );
   commits = (await gitCommits(['Second'], { cwd })).concat(commits);
   await gitCheckout('next', true, { cwd });
@@ -425,7 +425,7 @@ test('Plugins are called with expected values', async (t) => {
   t.is(await gitTagHead(nextRelease.gitTag, { cwd }), nextRelease.gitHead);
   t.is(
     await gitRemoteTagHead(repositoryUrl, nextRelease.gitTag, { cwd }),
-    nextRelease.gitHead
+    nextRelease.gitHead,
   );
 
   // Verify the author/commiter name and email have been set
@@ -479,14 +479,14 @@ test('Use custom tag format', async (t) => {
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   // Verify the tag has been created on the local and remote repo and reference the gitHead
   t.is(await gitTagHead(nextRelease.gitTag, { cwd }), nextRelease.gitHead);
   t.is(
     await gitRemoteTagHead(repositoryUrl, nextRelease.gitTag, { cwd }),
-    nextRelease.gitHead
+    nextRelease.gitHead,
   );
 });
 
@@ -542,7 +542,7 @@ test('Use new gitHead, and recreate release notes if a prepare plugin create a c
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.is(generateNotes.callCount, 2);
@@ -563,7 +563,7 @@ test('Use new gitHead, and recreate release notes if a prepare plugin create a c
   t.is(await gitTagHead(nextRelease.gitTag, { cwd }), commits[0].hash);
   t.is(
     await gitRemoteTagHead(repositoryUrl, nextRelease.gitTag, { cwd }),
-    commits[0].hash
+    commits[0].hash,
   );
 });
 
@@ -579,7 +579,7 @@ test('Make a new release when a commit is forward-ported to an upper branch', as
     },
     {
       cwd,
-    }
+    },
   );
   await gitCheckout('1.0.x', true, { cwd });
   await gitCommits(['fix: fix on maintenance version 1.0.x'], { cwd });
@@ -590,7 +590,7 @@ test('Make a new release when a commit is forward-ported to an upper branch', as
       note: JSON.stringify({ channels: ['1.0.x'] }),
       commitish: 'v1.0.1',
     },
-    { cwd }
+    { cwd },
   );
   await gitPush('origin', '1.0.x', { cwd });
   await gitCheckout('master', false, { cwd });
@@ -631,7 +631,7 @@ test('Make a new release when a commit is forward-ported to an upper branch', as
       env: {},
       stdout: { write: () => {} },
       stderr: { write: () => {} },
-    })
+    }),
   );
 
   t.is(addChannel.callCount, 0);
@@ -682,7 +682,7 @@ test('Publish a pre-release version', async (t) => {
   t.is(releases[0].gitTag, 'v1.1.0-beta.1');
   t.is(
     await gitNotesShow({ gitNotesRef, commitish: 'v1.1.0-beta.1' }, { cwd }),
-    '{"channels":["beta"]}'
+    '{"channels":["beta"]}',
   );
 
   await gitCommits(['fix: a fix'], { cwd });
@@ -698,7 +698,7 @@ test('Publish a pre-release version', async (t) => {
   t.is(releases[0].gitTag, 'v1.1.0-beta.2');
   t.is(
     await gitNotesShow({ gitNotesRef, commitish: 'v1.1.0-beta.2' }, { cwd }),
-    '{"channels":["beta"]}'
+    '{"channels":["beta"]}',
   );
 });
 
@@ -776,7 +776,7 @@ test('Publish releases from different branch on the same channel', async (t) => 
       env: {},
       stdout: { write: () => {} },
       stderr: { write: () => {} },
-    })
+    }),
   );
   t.is(addChannel.callCount, 0);
 });
@@ -846,12 +846,12 @@ test('Do not add pre-releases to a different channel', async (t) => {
     },
     {
       cwd,
-    }
+    },
   );
   await gitCheckout('beta', true, { cwd });
   await gitCommits(
     ['feat: breaking change/n/nBREAKING CHANGE: break something'],
-    { cwd }
+    { cwd },
   );
   await gitTagVersion('v2.0.0-beta.1', undefined, { cwd });
   await gitAddNote(
@@ -862,7 +862,7 @@ test('Do not add pre-releases to a different channel', async (t) => {
     },
     {
       cwd,
-    }
+    },
   );
   await gitCommits(['fix: a fix'], { cwd });
   await gitTagVersion('v2.0.0-beta.2', undefined, { cwd });
@@ -874,7 +874,7 @@ test('Do not add pre-releases to a different channel', async (t) => {
     },
     {
       cwd,
-    }
+    },
   );
   await gitPush('origin', 'beta', { cwd });
   await gitCheckout('master', false, { cwd });
@@ -917,7 +917,7 @@ test('Do not add pre-releases to a different channel', async (t) => {
       env: {},
       stdout: { write: () => {} },
       stderr: { write: () => {} },
-    })
+    }),
   );
 
   t.is(addChannel.callCount, 0);
@@ -935,14 +935,14 @@ async function addChannelMacro(t, mergeFunction) {
     },
     {
       cwd,
-    }
+    },
   );
   await gitCheckout('next', true, { cwd });
   commits.push(
     ...(await gitCommits(
       ['feat: breaking change/n/nBREAKING CHANGE: break something'],
-      { cwd }
-    ))
+      { cwd },
+    )),
   );
   await gitTagVersion('v2.0.0', undefined, { cwd });
   await gitAddNote(
@@ -951,7 +951,7 @@ async function addChannelMacro(t, mergeFunction) {
       note: JSON.stringify({ channels: ['next'] }),
       commitish: 'v2.0.0',
     },
-    { cwd }
+    { cwd },
   );
 
   commits.push(...(await gitCommits(['fix: a fix'], { cwd })));
@@ -962,7 +962,7 @@ async function addChannelMacro(t, mergeFunction) {
       note: JSON.stringify({ channels: ['next'] }),
       commitish: 'v2.0.1',
     },
-    { cwd }
+    { cwd },
   );
   commits.push(...(await gitCommits(['feat: a feature'], { cwd })));
   await gitTagVersion('v2.1.0', undefined, { cwd });
@@ -972,7 +972,7 @@ async function addChannelMacro(t, mergeFunction) {
       note: JSON.stringify({ channels: ['next'] }),
       commitish: 'v2.1.0',
     },
-    { cwd }
+    { cwd },
   );
   await gitPush('origin', 'next', { cwd });
   await gitCheckout('master', false, { cwd });
@@ -1043,7 +1043,7 @@ async function addChannelMacro(t, mergeFunction) {
   t.is(await gitTagHead(nextRelease.gitTag, { cwd }), nextRelease.gitHead);
   t.is(
     await gitRemoteTagHead(repositoryUrl, nextRelease.gitTag, { cwd }),
-    nextRelease.gitHead
+    nextRelease.gitHead,
   );
 }
 
@@ -1110,7 +1110,7 @@ test('Call all "success" plugins even if one errors out', async (t) => {
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.is(success1.callCount, 1);
@@ -1172,19 +1172,19 @@ test('Log all "verifyConditions" errors', async (t) => {
         env: {},
         stdout: new WritableStreamBuffer(),
         stderr: new WritableStreamBuffer(),
-      })
+      }),
     )),
   ];
 
   t.deepEqual(
     sortBy(errors, ['message']),
-    sortBy([error1, error2, error3], ['message'])
+    sortBy([error1, error2, error3], ['message']),
   );
   t.true(
     t.context.error.calledWith(
       'An error occurred while running semantic-release-plus: %O',
-      error1
-    )
+      error1,
+    ),
   );
   t.true(t.context.error.calledWith('ERR2 error 2'));
   t.true(t.context.error.calledWith('ERR3 error 3'));
@@ -1234,13 +1234,13 @@ test('Log all "verifyRelease" errors', async (t) => {
         env: {},
         stdout: new WritableStreamBuffer(),
         stderr: new WritableStreamBuffer(),
-      })
+      }),
     )),
   ];
 
   t.deepEqual(
     sortBy(errors, ['message']),
-    sortBy([error1, error2], ['message'])
+    sortBy([error1, error2], ['message']),
   );
   t.true(t.context.error.calledWith('ERR1 error 1'));
   t.true(t.context.error.calledWith('ERR2 error 2'));
@@ -1261,7 +1261,7 @@ test('Dry-run skips addChannel, prepare, publish and success', async (t) => {
     },
     {
       cwd,
-    }
+    },
   );
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
@@ -1271,7 +1271,7 @@ test('Dry-run skips addChannel, prepare, publish and success', async (t) => {
       note: JSON.stringify({ channels: ['next'] }),
       commitish: 'v1.1.0',
     },
-    { cwd }
+    { cwd },
   );
 
   await gitPush(repositoryUrl, 'master', { cwd });
@@ -1311,12 +1311,12 @@ test('Dry-run skips addChannel, prepare, publish and success', async (t) => {
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.not(
     t.context.warn.args[0][0],
-    'This run was not triggered in a known CI environment, running in dry-run mode.'
+    'This run was not triggered in a known CI environment, running in dry-run mode.',
   );
   t.is(verifyConditions.callCount, 1);
   t.is(analyzeCommits.callCount, 1);
@@ -1325,26 +1325,26 @@ test('Dry-run skips addChannel, prepare, publish and success', async (t) => {
   t.is(addChannel.callCount, 0);
   t.true(
     t.context.warn.calledWith(
-      `Skip step "addChannel" of plugin "[Function: ${addChannel.name}]" in dry-run mode`
-    )
+      `Skip step "addChannel" of plugin "[Function: ${addChannel.name}]" in dry-run mode`,
+    ),
   );
   t.is(prepare.callCount, 0);
   t.true(
     t.context.warn.calledWith(
-      `Skip step "prepare" of plugin "[Function: ${prepare.name}]" in dry-run mode`
-    )
+      `Skip step "prepare" of plugin "[Function: ${prepare.name}]" in dry-run mode`,
+    ),
   );
   t.is(publish.callCount, 0);
   t.true(
     t.context.warn.calledWith(
-      `Skip step "publish" of plugin "[Function: ${publish.name}]" in dry-run mode`
-    )
+      `Skip step "publish" of plugin "[Function: ${publish.name}]" in dry-run mode`,
+    ),
   );
   t.is(success.callCount, 0);
   t.true(
     t.context.warn.calledWith(
-      `Skip step "success" of plugin "[Function: ${success.name}]" in dry-run mode`
-    )
+      `Skip step "success" of plugin "[Function: ${success.name}]" in dry-run mode`,
+    ),
   );
 });
 
@@ -1382,21 +1382,21 @@ test('Dry-run skips fail', async (t) => {
         env: {},
         stdout: new WritableStreamBuffer(),
         stderr: new WritableStreamBuffer(),
-      })
+      }),
     )),
   ];
 
   t.deepEqual(
     sortBy(errors, ['message']),
-    sortBy([error1, error2], ['message'])
+    sortBy([error1, error2], ['message']),
   );
   t.true(t.context.error.calledWith('ERR1 error 1'));
   t.true(t.context.error.calledWith('ERR2 error 2'));
   t.is(fail.callCount, 0);
   t.true(
     t.context.warn.calledWith(
-      `Skip step "fail" of plugin "[Function: ${fail.name}]" in dry-run mode`
-    )
+      `Skip step "fail" of plugin "[Function: ${fail.name}]" in dry-run mode`,
+    ),
   );
 });
 
@@ -1453,13 +1453,13 @@ test('Force a dry-run if not on a CI and "noCi" is not explicitly set', async (t
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.true(
     t.context.warn.calledWith(
-      'This run was not triggered in a known CI environment, running in dry-run mode.'
-    )
+      'This run was not triggered in a known CI environment, running in dry-run mode.',
+    ),
   );
   t.is(verifyConditions.callCount, 1);
   t.is(analyzeCommits.callCount, 1);
@@ -1512,7 +1512,7 @@ test('Dry-run does not print changelog if "generateNotes" return "undefined"', a
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.deepEqual(t.context.log.args[t.context.log.args.length - 1], [
@@ -1573,16 +1573,16 @@ test('Allow local releases with "noCi" option', async (t) => {
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.not(
     t.context.log.args[0][0],
-    'This run was not triggered in a known CI environment, running in dry-run mode.'
+    'This run was not triggered in a known CI environment, running in dry-run mode.',
   );
   t.not(
     t.context.log.args[0][0],
-    "This run was triggered by a pull request and therefore a new version won't be published."
+    "This run was triggered by a pull request and therefore a new version won't be published.",
   );
   t.is(verifyConditions.callCount, 1);
   t.is(analyzeCommits.callCount, 1);
@@ -1604,7 +1604,7 @@ test('Accept "undefined" value returned by "generateNotes" and "false" by "publi
     },
     {
       cwd,
-    }
+    },
   );
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
@@ -1614,7 +1614,7 @@ test('Accept "undefined" value returned by "generateNotes" and "false" by "publi
       note: JSON.stringify({ channels: ['next'] }),
       commitish: 'v1.1.0',
     },
-    { cwd }
+    { cwd },
   );
   await gitPush(repositoryUrl, 'master', { cwd });
   await gitCheckout('next', true, { cwd });
@@ -1662,7 +1662,7 @@ test('Accept "undefined" value returned by "generateNotes" and "false" by "publi
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.is(analyzeCommits.callCount, 1);
@@ -1706,12 +1706,12 @@ test('Returns false if triggered by a PR', async (t) => {
         env: {},
         stdout: new WritableStreamBuffer(),
         stderr: new WritableStreamBuffer(),
-      }
-    )
+      },
+    ),
   );
   t.is(
     t.context.log.args[t.context.log.args.length - 1][0],
-    "This run was triggered by a pull request and therefore a new version won't be published."
+    "This run was triggered by a pull request and therefore a new version won't be published.",
   );
 });
 
@@ -1727,7 +1727,7 @@ test('Throws "EINVALIDNEXTVERSION" if next release is out of range of the curren
     },
     {
       cwd,
-    }
+    },
   );
   await gitCheckout('1.x', true, { cwd });
   await gitPush('origin', '1.x', { cwd });
@@ -1771,14 +1771,14 @@ test('Throws "EINVALIDNEXTVERSION" if next release is out of range of the curren
       env: {},
       stdout: { write: () => {} },
       stderr: { write: () => {} },
-    })
+    }),
   );
 
   t.is(error.code, 'EINVALIDNEXTVERSION');
   t.is(error.name, 'SemanticReleaseError');
   t.is(
     error.message,
-    'The release `1.1.0` on branch `1.x` cannot be published as it is out of range.'
+    'The release `1.1.0` on branch `1.x` cannot be published as it is out of range.',
   );
   t.regex(error.details, /A valid branch could be `master`./);
 });
@@ -1796,7 +1796,7 @@ test('Throws "EINVALIDNEXTVERSION" if next release is out of range of the curren
       note: JSON.stringify({ channels: ['next'] }),
       commitish: 'v1.1.0',
     },
-    { cwd }
+    { cwd },
   );
   await gitPush('origin', 'next', { cwd });
   await gitCheckout('next-major', true, { cwd });
@@ -1840,14 +1840,14 @@ test('Throws "EINVALIDNEXTVERSION" if next release is out of range of the curren
       env: {},
       stdout: { write: () => {} },
       stderr: { write: () => {} },
-    })
+    }),
   );
 
   t.is(error.code, 'EINVALIDNEXTVERSION');
   t.is(error.name, 'SemanticReleaseError');
   t.is(
     error.message,
-    'The release `1.1.0` on branch `master` cannot be published as it is out of range.'
+    'The release `1.1.0` on branch `master` cannot be published as it is out of range.',
   );
   t.regex(error.details, /A valid branch could be `next` or `next-major`./);
 });
@@ -1864,7 +1864,7 @@ test('Throws "EINVALIDMAINTENANCEMERGE" if merge an out of range release in a ma
     },
     {
       cwd,
-    }
+    },
   );
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
@@ -1876,7 +1876,7 @@ test('Throws "EINVALIDMAINTENANCEMERGE" if merge an out of range release in a ma
     },
     {
       cwd,
-    }
+    },
   );
   await gitCheckout('1.1.x', 'master', { cwd });
   await gitPush('origin', '1.1.x', { cwd });
@@ -1930,7 +1930,7 @@ test('Throws "EINVALIDMAINTENANCEMERGE" if merge an out of range release in a ma
         env: {},
         stdout: { write: () => {} },
         stderr: { write: () => {} },
-      })
+      }),
     )),
   ];
 
@@ -1974,8 +1974,8 @@ test('Returns false value if triggered on an outdated clone', async (t) => {
         env: {},
         stdout: new WritableStreamBuffer(),
         stderr: new WritableStreamBuffer(),
-      }
-    )
+      },
+    ),
   );
   t.deepEqual(t.context.log.args[t.context.log.args.length - 1], [
     "The local branch master is behind the remote one, therefore a new version won't be published.",
@@ -2010,11 +2010,11 @@ test('Returns false if not running from the configured branch', async (t) => {
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
   t.is(
     t.context.log.args[1][0],
-    "This test run was triggered on the branch other-branch, while semantic-release-plus is configured to only publish from master, therefore a new version won't be published."
+    "This test run was triggered on the branch other-branch, while semantic-release-plus is configured to only publish from master, therefore a new version won't be published.",
   );
 });
 
@@ -2055,7 +2055,7 @@ test('Returns false if there is no relevant changes', async (t) => {
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
   t.is(analyzeCommits.callCount, 1);
   t.is(verifyRelease.callCount, 0);
@@ -2063,7 +2063,7 @@ test('Returns false if there is no relevant changes', async (t) => {
   t.is(publish.callCount, 0);
   t.is(
     t.context.log.args[t.context.log.args.length - 1][0],
-    'There are no relevant changes, so no new version is released.'
+    'There are no relevant changes, so no new version is released.',
   );
 });
 
@@ -2082,7 +2082,7 @@ test('Exclude commits with [skip release] or [release skip] from analysis', asyn
       'Test commit\n\n commit body\n[skip release]',
       'Test commit\n\n commit body\n[release skip]',
     ],
-    { cwd }
+    { cwd },
   );
   await gitPush(repositoryUrl, 'master', { cwd });
   const analyzeCommits = stub().resolves();
@@ -2115,7 +2115,7 @@ test('Exclude commits with [skip release] or [release skip] from analysis', asyn
   t.is(analyzeCommits.args[0][1].commits.length, 2);
   t.deepEqual(
     analyzeCommits.args[0][1].commits[0],
-    commits[commits.length - 1]
+    commits[commits.length - 1],
   );
 });
 
@@ -2142,12 +2142,12 @@ test('Log both plugins errors and errors thrown by "fail" plugin', async (t) => 
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.is(
     t.context.error.args[t.context.error.args.length - 1][0],
-    'ERR Plugin error'
+    'ERR Plugin error',
   );
   t.is(t.context.error.args[t.context.error.args.length - 3][1], failError1);
   t.is(t.context.error.args[t.context.error.args.length - 2][1], failError2);
@@ -2175,7 +2175,7 @@ test('Call "fail" only if a plugin returns a SemanticReleaseError', async (t) =>
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.true(fail.notCalled);
@@ -2199,8 +2199,8 @@ test('Throw SemanticReleaseError if repositoryUrl is not set and cannot be found
           env: {},
           stdout: new WritableStreamBuffer(),
           stderr: new WritableStreamBuffer(),
-        }
-      )
+        },
+      ),
     )),
   ];
 
@@ -2245,7 +2245,7 @@ test('Throw an Error if plugin returns an unexpected value', async (t) => {
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
     }),
-    { instanceOf: SemanticReleaseError }
+    { instanceOf: SemanticReleaseError },
   );
   t.regex(error.details, /string/);
 });
@@ -2262,8 +2262,8 @@ test('Hide sensitive information passed to "fail" plugin', async (t) => {
       new SemanticReleaseError(
         `Message: Exposing token ${env.MY_TOKEN}`,
         'ERR',
-        `Details: Exposing token ${env.MY_TOKEN}`
-      )
+        `Details: Exposing token ${env.MY_TOKEN}`,
+      ),
     ),
     success: stub().resolves(),
     fail,
@@ -2279,7 +2279,7 @@ test('Hide sensitive information passed to "fail" plugin', async (t) => {
       env,
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   const error = fail.args[0][1].errors[0];
@@ -2384,7 +2384,7 @@ test('Get all commits including the ones not in the shallow clone', async (t) =>
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.is(analyzeCommits.args[0][1].commits.length, 3);
@@ -2402,7 +2402,7 @@ test('skipTag skips adding tags', async (t) => {
     },
     {
       cwd,
-    }
+    },
   );
   await gitCommits(['Second'], { cwd });
   await gitTagVersion('v1.1.0', undefined, { cwd });
@@ -2412,7 +2412,7 @@ test('skipTag skips adding tags', async (t) => {
       note: JSON.stringify({ channels: ['next'] }),
       commitish: 'v1.1.0',
     },
-    { cwd }
+    { cwd },
   );
 
   await gitPush(repositoryUrl, 'master', { cwd });
@@ -2456,16 +2456,16 @@ test('skipTag skips adding tags', async (t) => {
       env: {},
       stdout: new WritableStreamBuffer(),
       stderr: new WritableStreamBuffer(),
-    })
+    }),
   );
 
   t.not(
     t.context.warn.args[0][0],
-    'This run was not triggered in a known CI environment, running in dry-run mode.'
+    'This run was not triggered in a known CI environment, running in dry-run mode.',
   );
   t.is(
     t.context.warn.args[0][0],
-    `Skip ${nextRelease.gitTag} tag creation in dry-run / skip-tag mode`
+    `Skip ${nextRelease.gitTag} tag creation in dry-run / skip-tag mode`,
   );
   t.is(verifyConditions.callCount, 1);
   t.is(analyzeCommits.callCount, 1);

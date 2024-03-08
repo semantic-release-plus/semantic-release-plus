@@ -35,19 +35,19 @@ describe('add-channel', () => {
     await addChannel({ name: 'joamos/test' }, context);
     expect(dockerPullMock).toHaveBeenCalledWith(
       'joamos/test:1.0.1-alpha.1',
-      context
+      context,
     );
     expect(context.logger.log).toBeCalledWith('pulling image');
     expect(dockerTagMock).toHaveBeenCalledWith(
       'joamos/test:1.0.1-alpha.1',
       'joamos/test:alpha',
-      context
+      context,
     );
     expect(context.logger.log).toBeCalledWith('tagging image1 as image2');
     expect(dockerPushMock).toHaveBeenCalledWith('joamos/test:alpha', context);
     expect(context.logger.log).toBeCalledWith('pushing image2');
     expect(context.logger.log).toBeCalledWith(
-      `Added joamos/test:1.0.1-alpha.1 to tag alpha on docker.io`
+      `Added joamos/test:1.0.1-alpha.1 to tag alpha on docker.io`,
     );
   });
 
@@ -65,22 +65,22 @@ describe('add-channel', () => {
     await addChannel({ name: 'joamos/test', registry: 'ghcr.io' }, context);
     expect(dockerPullMock).toHaveBeenCalledWith(
       'ghcr.io/joamos/test:1.0.1-alpha.1',
-      context
+      context,
     );
     expect(context.logger.log).toBeCalledWith('pulling image');
     expect(dockerTagMock).toHaveBeenCalledWith(
       'ghcr.io/joamos/test:1.0.1-alpha.1',
       'ghcr.io/joamos/test:alpha',
-      context
+      context,
     );
     expect(context.logger.log).toBeCalledWith('tagging image1 as image2');
     expect(dockerPushMock).toHaveBeenCalledWith(
       'ghcr.io/joamos/test:alpha',
-      context
+      context,
     );
     expect(context.logger.log).toBeCalledWith('pushing image2');
     expect(context.logger.log).toBeCalledWith(
-      `Added ghcr.io/joamos/test:1.0.1-alpha.1 to tag alpha on ghcr.io`
+      `Added ghcr.io/joamos/test:1.0.1-alpha.1 to tag alpha on ghcr.io`,
     );
   });
 });

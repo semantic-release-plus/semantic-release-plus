@@ -56,7 +56,7 @@ function loadPlugin({ cwd }, name, pluginsPath) {
   const basePath = pluginsPath[name]
     ? dirname(
         resolveFrom.silent(__dirname, pluginsPath[name]) ||
-          resolveFrom(cwd, pluginsPath[name])
+          resolveFrom(cwd, pluginsPath[name]),
       )
     : __dirname;
   return isFunction(name)

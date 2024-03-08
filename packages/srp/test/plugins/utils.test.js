@@ -16,23 +16,23 @@ test('validatePlugin', (t) => {
   t.true(validatePlugin([path, options]), 'Array definition with options');
   t.true(
     validatePlugin([{ publish: () => {} }, options]),
-    'Array definition with options and path as object'
+    'Array definition with options and path as object',
   );
   t.true(validatePlugin({ path }), 'Object with path definition');
   t.true(
     validatePlugin({ path, ...options }),
-    'Object with path definition with options'
+    'Object with path definition with options',
   );
   t.true(
     validatePlugin({ path: { publish: () => {} }, ...options }),
-    'Object with path  definition with options and path as object'
+    'Object with path  definition with options and path as object',
   );
 
   t.false(validatePlugin(1), 'String definition, wrong path');
   t.false(validatePlugin([]), 'Array definition, missing path');
   t.false(
     validatePlugin([path, options, {}]),
-    'Array definition, additional parameter'
+    'Array definition, additional parameter',
   );
   t.false(validatePlugin([1]), 'Array definition, wrong path');
   t.false(validatePlugin([path, 1]), 'Array definition, wrong options');
@@ -81,7 +81,7 @@ test('validateStep: optional plugin configuration', (t) => {
       { path: 'plugin-path.js' },
       { path: 'plugin-path.js', options: 'value' },
       { path: () => {}, options: 'value' },
-    ])
+    ]),
   );
   t.false(
     validateStep(type, [
@@ -93,7 +93,7 @@ test('validateStep: optional plugin configuration', (t) => {
       { path: 'plugin-path.js' },
       { path: 'plugin-path.js', options: 'value' },
       { path: () => {}, options: 'value' },
-    ])
+    ]),
   );
   t.false(
     validateStep(type, [
@@ -105,7 +105,7 @@ test('validateStep: optional plugin configuration', (t) => {
       { path: 'plugin-path.js' },
       { path: 'plugin-path.js', options: 'value' },
       { path: () => {}, options: 'value' },
-    ])
+    ]),
   );
   t.false(
     validateStep(type, [
@@ -117,7 +117,7 @@ test('validateStep: optional plugin configuration', (t) => {
       { path: null },
       { path: 'plugin-path.js', options: 'value' },
       { path: () => {}, options: 'value' },
-    ])
+    ]),
   );
 });
 
@@ -163,7 +163,7 @@ test('validateStep: required plugin configuration', (t) => {
       { path: 'plugin-path.js' },
       { path: 'plugin-path.js', options: 'value' },
       { path: () => {}, options: 'value' },
-    ])
+    ]),
   );
   t.false(
     validateStep(type, [
@@ -175,7 +175,7 @@ test('validateStep: required plugin configuration', (t) => {
       { path: 'plugin-path.js' },
       { path: 'plugin-path.js', options: 'value' },
       { path: () => {}, options: 'value' },
-    ])
+    ]),
   );
   t.false(
     validateStep(type, [
@@ -187,7 +187,7 @@ test('validateStep: required plugin configuration', (t) => {
       { path: 'plugin-path.js' },
       { path: 'plugin-path.js', options: 'value' },
       { path: () => {}, options: 'value' },
-    ])
+    ]),
   );
   t.false(
     validateStep(type, [
@@ -199,7 +199,7 @@ test('validateStep: required plugin configuration', (t) => {
       { path: null },
       { path: 'plugin-path.js', options: 'value' },
       { path: () => {}, options: 'value' },
-    ])
+    ]),
   );
 });
 
@@ -210,14 +210,14 @@ test('loadPlugin', (t) => {
   t.is(
     require('../fixtures/plugin-noop'),
     loadPlugin({ cwd: './test/fixtures' }, './plugin-noop', {}),
-    'From cwd'
+    'From cwd',
   );
   t.is(
     require('../fixtures/plugin-noop'),
     loadPlugin({ cwd }, './plugin-noop', {
       './plugin-noop': './test/fixtures',
     }),
-    'From a shareable config context'
+    'From a shareable config context',
   );
   t.is(func, loadPlugin({ cwd }, func, {}), 'Defined as a function');
 });
@@ -231,12 +231,12 @@ test('parseConfig', (t) => {
   t.deepEqual(
     parseConfig({ path, ...options }),
     [path, options],
-    'Object definition with options'
+    'Object definition with options',
   );
   t.deepEqual(parseConfig([path]), [path, {}], 'Array definition');
   t.deepEqual(
     parseConfig([path, options]),
     [path, options],
-    'Array definition with options'
+    'Array definition with options',
   );
 });

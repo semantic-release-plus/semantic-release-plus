@@ -15,8 +15,8 @@ module.exports = async (repositoryUrl, ciBranch, context) => {
     repositoryUrl,
     context,
     context.options.branches.map((branch) =>
-      isString(branch) || isRegExp(branch) ? { name: branch } : branch
-    )
+      isString(branch) || isRegExp(branch) ? { name: branch } : branch,
+    ),
   );
 
   await pEachSeries(remoteBranches, async ({ name }) => {
@@ -33,7 +33,7 @@ module.exports = async (repositoryUrl, ciBranch, context) => {
       [type]: branches.filter(filter),
       ...branchesByType,
     }),
-    {}
+    {},
   );
 
   const result = Object.entries(DEFINITIONS).reduce(
@@ -50,13 +50,13 @@ module.exports = async (repositoryUrl, ciBranch, context) => {
         errors.push(
           getError(`E${type.toUpperCase()}BRANCHES`, {
             branches: branchesOfType,
-          })
+          }),
         );
       }
 
       return { ...result, [type]: branchesOfType };
     },
-    {}
+    {},
   );
 
   const duplicates = [...branches]
@@ -64,7 +64,7 @@ module.exports = async (repositoryUrl, ciBranch, context) => {
     .sort()
     .filter(
       (_, idx, array) =>
-        array[idx] === array[idx + 1] && array[idx] !== array[idx - 1]
+        array[idx] === array[idx + 1] && array[idx] !== array[idx - 1],
     );
 
   if (duplicates.length > 0) {

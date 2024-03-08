@@ -36,7 +36,7 @@ async function start() {
         retries: 7,
         minTimeout: 1000,
         factor: 2,
-      }
+      },
     );
   } catch {
     throw new Error(`Couldn't start mock-server after 2 min`);
@@ -76,7 +76,7 @@ const url = `http://${MOCK_SERVER_HOST}:${MOCK_SERVER_PORT}`;
 async function mock(
   path,
   { body: requestBody, headers: requestHeaders },
-  { method = 'POST', statusCode = 200, body: responseBody }
+  { method = 'POST', statusCode = 200, body: responseBody },
 ) {
   await client.mockAnyResponse({
     httpRequest: { path, method },

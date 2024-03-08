@@ -60,8 +60,8 @@ async function getCommits(from, to, paths, execaOptions) {
         {
           _: [`${from ? from + '..' : ''}${to}`, ...paths],
         },
-        { cwd: execaOptions.cwd, env: { ...process.env, ...execaOptions.env } }
-      )
+        { cwd: execaOptions.cwd, env: { ...process.env, ...execaOptions.env } },
+      ),
     )
   ).map(({ message, gitTags, ...commit }) => ({
     ...commit,
@@ -145,7 +145,7 @@ async function fetch(repositoryUrl, branch, ciBranch, execaOptions) {
               `+refs/heads/${branch}:refs/heads/${branch}`,
             ]),
       ],
-      execaOptions
+      execaOptions,
     );
   } catch {
     await execa(
@@ -161,7 +161,7 @@ async function fetch(repositoryUrl, branch, ciBranch, execaOptions) {
               `+refs/heads/${branch}:refs/heads/${branch}`,
             ]),
       ],
-      execaOptions
+      execaOptions,
     );
   }
 }
@@ -213,7 +213,7 @@ async function repoUrl(execaOptions) {
  *
  * @param {Object} [execaOpts] Options to pass to `execa`.
  *
- * @return {Boolean} `true` if the current working directory is in a git repository, falsy otherwise.
+ * @return {Promise<Boolean>} `true` if the current working directory is in a git repository, falsy otherwise.
  */
 async function isGitRepo(execaOptions) {
   try {
@@ -240,7 +240,7 @@ async function verifyAuth(repositoryUrl, branch, execaOptions) {
     await execa(
       'git',
       ['push', '--dry-run', '--no-verify', repositoryUrl, `HEAD:${branch}`],
-      execaOptions
+      execaOptions,
     );
   } catch (error) {
     debug(error);
@@ -300,7 +300,7 @@ async function verifyTagName(tagName, execaOptions = undefined) {
         await execa(
           'git',
           ['check-ref-format', `refs/tags/${tagName}`],
-          execaOptions
+          execaOptions,
         )
       ).exitCode === 0
     );
@@ -324,7 +324,7 @@ async function verifyBranchName(branch, execaOptions) {
         await execa(
           'git',
           ['check-ref-format', `refs/heads/${branch}`],
-          execaOptions
+          execaOptions,
         )
       ).exitCode === 0
     );
@@ -349,7 +349,7 @@ async function isBranchUpToDate(repositoryUrl, branch, execaOptions) {
       await execa(
         'git',
         ['ls-remote', '--heads', repositoryUrl, branch],
-        execaOptions
+        execaOptions,
       )
     ).stdout.match(/^(?<ref>\w+)?/)[1]
   );
@@ -374,7 +374,7 @@ async function getNote({ gitNotesRef, commitish }, execaOptions) {
       // check the legacy notes location
       rawNote = await gitNotesShow(
         { gitNotesRef: GIT_NOTE_REF, commitish },
-        execaOptions
+        execaOptions,
       );
       debug(`retrieved legacy git note: ${rawNote}`);
     } catch (error) {
@@ -395,7 +395,7 @@ async function getNote({ gitNotesRef, commitish }, execaOptions) {
 async function addNote({ gitNotesRef, note, commitish }, execaOptions) {
   await gitAddNote(
     { gitNotesRef, note: JSON.stringify(note), commitish, overwrite: true },
-    execaOptions
+    execaOptions,
   );
 }
 

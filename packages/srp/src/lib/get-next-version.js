@@ -21,7 +21,7 @@ module.exports = ({
       if (
         semver.prerelease(lastRelease.version) &&
         lastRelease.channels.some((lastReleaseChannel) =>
-          isSameChannel(lastReleaseChannel, channel)
+          isSameChannel(lastReleaseChannel, channel),
         )
       ) {
         version = highest(
@@ -30,8 +30,8 @@ module.exports = ({
             getLatestVersion(tagsToVersions(branch.tags), {
               withPrerelease: true,
             }),
-            type
-          )}-${branch.prerelease}.${FIRSTPRERELEASE}`
+            type,
+          )}-${branch.prerelease}.${FIRSTPRERELEASE}`,
         );
       } else {
         version = `${semver.inc(`${major}.${minor}.${patch}`, type)}-${
@@ -49,7 +49,7 @@ module.exports = ({
         ? `${FIRST_RELEASE}-${branch.prerelease}.${FIRSTPRERELEASE}`
         : FIRST_RELEASE;
     logger.log(
-      `There is no previous release, the next release version is ${version}`
+      `There is no previous release, the next release version is ${version}`,
     );
   }
 

@@ -32,10 +32,10 @@ module.exports = ({ branch, options: { tagFormat } }, { before } = {}) => {
       (tag) =>
         ((branch.type === 'prerelease' &&
           tag.channels.some((channel) =>
-            isSameChannel(branch.channel, channel)
+            isSameChannel(branch.channel, channel),
           )) ||
           !semver.prerelease(tag.version)) &&
-        (isUndefined(before) || semver.lt(tag.version, before))
+        (isUndefined(before) || semver.lt(tag.version, before)),
     )
     .sort((a, b) => semver.rcompare(a.version, b.version));
 

@@ -21,7 +21,7 @@ function maintenance({ maintenance, release }) {
       range: range || name,
       channel: isNil(channel) ? name : channel,
     })),
-    'range'
+    'range',
   ).map(({ name, range, tags, ...rest }, idx, branches) => {
     const versions = tagsToVersions(tags);
     // Find the lower bound based on Maintenance branches
@@ -37,7 +37,7 @@ function maintenance({ maintenance, release }) {
     // The actual lower bound is the highest version between the current branch last release and `maintenanceMin`
     const min = highest(
       getLatestVersion(versions) || FIRST_RELEASE,
-      maintenanceMin
+      maintenanceMin,
     );
     // Determine the first release of the default branch not present in any maintenance branch
     const base =
@@ -81,7 +81,7 @@ function release({ release }) {
         ? undefined
         : getFirstVersion(
             tagsToVersions(release[idx + 1].tags),
-            release.slice(0, idx + 1)
+            release.slice(0, idx + 1),
           );
 
     const diff = bound ? semverDiff(lastVersion, bound) : null;

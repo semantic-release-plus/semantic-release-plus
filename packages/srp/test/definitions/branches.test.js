@@ -27,11 +27,11 @@ test('A "maintenance" branches must have a "range" property formatted like "N.x"
 
   t.false(maintenance.branchValidator({ name: 'some-name', range: '^1.0.0' }));
   t.false(
-    maintenance.branchValidator({ name: 'some-name', range: '>=1.0.0 <2.0.0' })
+    maintenance.branchValidator({ name: 'some-name', range: '>=1.0.0 <2.0.0' }),
   );
   t.false(maintenance.branchValidator({ name: 'some-name', range: '1.0.0' }));
   t.false(
-    maintenance.branchValidator({ name: 'some-name', range: 'wrong-range' })
+    maintenance.branchValidator({ name: 'some-name', range: 'wrong-range' }),
   );
   t.false(maintenance.branchValidator({ name: 'some-name', range: true }));
   t.false(maintenance.branchValidator({ name: 'some-name', range: '' }));
@@ -39,14 +39,14 @@ test('A "maintenance" branches must have a "range" property formatted like "N.x"
 
 test('The "maintenance" branches must have unique ranges', (t) => {
   t.true(
-    maintenance.branchesValidator([{ range: '1.x.x' }, { range: '1.0.x' }])
+    maintenance.branchesValidator([{ range: '1.x.x' }, { range: '1.0.x' }]),
   );
 
   t.false(
-    maintenance.branchesValidator([{ range: '1.x.x' }, { range: '1.x.x' }])
+    maintenance.branchesValidator([{ range: '1.x.x' }, { range: '1.x.x' }]),
   );
   t.false(
-    maintenance.branchesValidator([{ range: '1.x.x' }, { range: '1.x' }])
+    maintenance.branchesValidator([{ range: '1.x.x' }, { range: '1.x' }]),
   );
 });
 
@@ -69,7 +69,7 @@ test('A "prerelease" branch must have a valid prerelease detonation in "prerelea
   t.false(prerelease.branchValidator({ name: 'some-name', prerelease: false }));
   t.false(prerelease.branchValidator({ name: 'some-name', prerelease: '000' }));
   t.false(
-    prerelease.branchValidator({ name: 'some-name', prerelease: '#beta' })
+    prerelease.branchValidator({ name: 'some-name', prerelease: '#beta' }),
   );
   t.false(prerelease.branchValidator({ name: '000', prerelease: true }));
   t.false(prerelease.branchValidator({ name: '#beta', prerelease: true }));
@@ -80,7 +80,7 @@ test('The "prerelease" branches must have unique "prerelease" property', (t) => 
     prerelease.branchesValidator([
       { prerelease: 'beta' },
       { prerelease: 'alpha' },
-    ])
+    ]),
   );
 
   t.false(
@@ -88,7 +88,7 @@ test('The "prerelease" branches must have unique "prerelease" property', (t) => 
       { range: 'beta' },
       { range: 'beta' },
       { range: 'alpha' },
-    ])
+    ]),
   );
 });
 
@@ -111,7 +111,7 @@ test('There must be between 1 and 3 release branches', (t) => {
       { name: 'branch1' },
       { name: 'branch2' },
       { name: 'branch3' },
-    ])
+    ]),
   );
 
   t.false(release.branchesValidator([]));
@@ -121,6 +121,6 @@ test('There must be between 1 and 3 release branches', (t) => {
       { name: 'branch2' },
       { name: 'branch3' },
       { name: 'branch4' },
-    ])
+    ]),
   );
 });

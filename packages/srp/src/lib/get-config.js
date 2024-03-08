@@ -27,10 +27,10 @@ module.exports = async (context, cliOptions) => {
     // If `extends` is defined, load and merge each shareable config with `options`
     options = {
       ...castArray(extendPaths).reduce((result, extendPath) => {
-        const extendsOptions = require(resolveFrom.silent(
-          __dirname,
-          extendPath
-        ) || resolveFrom(cwd, extendPath));
+        const extendsOptions = require(
+          resolveFrom.silent(__dirname, extendPath) ||
+            resolveFrom(cwd, extendPath),
+        );
 
         // For each plugin defined in a shareable config, save in `pluginsPath` the extendable config path,
         // so those plugin will be loaded relatively to the config file

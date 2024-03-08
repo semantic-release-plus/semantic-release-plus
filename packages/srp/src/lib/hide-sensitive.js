@@ -21,10 +21,12 @@ module.exports = (env) => {
     toReplace
       .map(
         (envVar) =>
-          `${escapeRegExp(env[envVar])}|${escapeRegExp(encodeURI(env[envVar]))}`
+          `${escapeRegExp(env[envVar])}|${escapeRegExp(
+            encodeURI(env[envVar]),
+          )}`,
       )
       .join('|'),
-    'g'
+    'g',
   );
   return (output) =>
     output && isString(output) && toReplace.length > 0

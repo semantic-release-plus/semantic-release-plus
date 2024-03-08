@@ -16,14 +16,14 @@ const debug = require('debug')('semantic-release-plus:get-git-auth-url');
 function formatAuthUrl(protocol, repositoryUrl, gitCredentials) {
   const [match, auth, host, basePort, path] =
     /^(?!.+:\/\/)(?:(?<auth>.*)@)?(?<host>.*?):(?<port>\d+)?:?\/?(?<path>.*)$/.exec(
-      repositoryUrl
+      repositoryUrl,
     ) || [];
   const { port, hostname, ...parsed } = parse(
     match
       ? `ssh://${auth ? `${auth}@` : ''}${host}${
           basePort ? `:${basePort}` : ''
         }/${path}`
-      : repositoryUrl
+      : repositoryUrl,
   );
 
   return format({
@@ -102,7 +102,7 @@ module.exports = async (context) => {
   } catch {
     debug('SSH key auth failed, falling back to https.');
     const envVars = Object.keys(GIT_TOKENS).filter(
-      (envVar) => !isNil(env[envVar])
+      (envVar) => !isNil(env[envVar]),
     );
 
     // Skip verification if there is no ambiguity on which env var to use for authentication
@@ -115,7 +115,7 @@ module.exports = async (context) => {
 
     if (envVars.length > 1) {
       debug(
-        `Found ${envVars.length} credentials in environment, trying all of them`
+        `Found ${envVars.length} credentials in environment, trying all of them`,
       );
 
       const candidateRepositoryUrls = [];
@@ -127,7 +127,7 @@ module.exports = async (context) => {
 
       const validRepositoryUrls = await Promise.all(candidateRepositoryUrls);
       const chosenAuthUrlIndex = validRepositoryUrls.findIndex(
-        (url) => url !== null
+        (url) => url !== null,
       );
       if (chosenAuthUrlIndex > -1) {
         debug(`Using "${envVars[chosenAuthUrlIndex]}" to authenticate`);
