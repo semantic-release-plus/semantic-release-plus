@@ -33,8 +33,8 @@ const { getGitNotesRef } = require('./lib/git-note-utils');
 let markedOptionsSet = false;
 async function terminalOutput(text) {
   if (!markedOptionsSet) {
-    const { default: TerminalRenderer } = await import('marked-terminal');
-    marked.setOptions({ renderer: new TerminalRenderer() });
+    const { markedTerminal } = await import('marked-terminal');
+    marked.use(markedTerminal());
     markedOptionsSet = true;
   }
 
