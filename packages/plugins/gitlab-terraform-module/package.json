@@ -2,6 +2,9 @@
   "name": "@semantic-release-plus/gitlab-terraform-module",
   "version": "0.0.1",
   "dependencies": {
+    "@semantic-release-plus/core": "0.0.1-automated",
+    "aggregate-error": "3.0.0",
+    "tar": "^6.2.0",
     "tslib": "^2.3.0"
   },
   "type": "commonjs",

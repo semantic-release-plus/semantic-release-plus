@@ -59,6 +59,7 @@
     "semver": "7.3.8",
     "semver-diff": "^3.1.1",
     "signale": "^1.2.1",
+    "tar": "^6.2.0",
     "tslib": "^2.0.0",
     "yargs": "^17.7.2",
     "yargs-parser": "^21.1.1"
@@ -83,6 +84,7 @@
     "@types/micromatch": "^4.0.2",
     "@types/node": "18.19.22",
     "@types/semver": "7.3.13",
+    "@types/tar": "^6.1.11",
     "@types/yargs": "^17.0.28",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",

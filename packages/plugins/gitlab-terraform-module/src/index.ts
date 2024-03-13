@@ -1,1 +1,2 @@
-export * from './lib/gitlab-terraform-module';
+export { verifyConditions } from './lib/verify-conditions';
+export { publish } from './lib/publish';
