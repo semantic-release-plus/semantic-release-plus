@@ -3,7 +3,12 @@ import * as getNextVersion from './get-next-version';
 
 describe('get-next-version', () => {
   const context: Partial<Context> = {};
-  context.logger = { log: jest.fn() };
+  context.logger = {
+    log: jest.fn(),
+    error: jest.fn(),
+    success: jest.fn(),
+    warn: jest.fn,
+  };
 
   test('Increase version for patch release', () => {
     expect(

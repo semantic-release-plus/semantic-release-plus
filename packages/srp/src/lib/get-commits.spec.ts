@@ -10,7 +10,12 @@ describe('get-commits', () => {
   const context: Partial<Context> = {};
   beforeEach(() => {
     // Stub the logger functions
-    context.logger = { log: jest.fn(), error: jest.fn() };
+    context.logger = {
+      log: jest.fn(),
+      error: jest.fn(),
+      success: jest.fn(),
+      warn: jest.fn,
+    };
   });
 
   test('Get all commits when there is no last release', async () => {
