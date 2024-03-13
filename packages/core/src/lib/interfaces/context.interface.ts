@@ -80,7 +80,7 @@ interface Options {
   skipTag?: boolean;
 }
 
-interface Release {
+export interface Release {
   type?: BranchType | undefined;
   channel?: string;
   gitHead?: string;
