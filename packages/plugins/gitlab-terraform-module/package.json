@@ -1,6 +1,7 @@
 {
   "name": "@semantic-release-plus/gitlab-terraform-module",
   "version": "0.0.1",
+  "private": false,
   "dependencies": {
     "@semantic-release-plus/core": "0.0.1-automated",
     "aggregate-error": "3.0.0",
