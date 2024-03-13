@@ -24,5 +24,7 @@
     "error",
     "semantic-release-plus"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
 }
