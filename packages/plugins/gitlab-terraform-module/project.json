@@ -27,6 +27,18 @@
       "options": {
         "jestConfig": "packages/plugins/gitlab-terraform-module/jest.config.ts"
       }
+    },
+    "release": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/packages/plugins/gitlab-terraform-module"
+      ],
+      "options": {
+        "commands": [
+          "node ../../../dist/packages/srp/src/bin/semantic-release-plus.js --debug"
+        ],
+        "cwd": "packages/plugins/gitlab-terraform-module/"
+      }
     }
   },
   "tags": []

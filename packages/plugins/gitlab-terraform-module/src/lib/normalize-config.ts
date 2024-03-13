@@ -5,7 +5,6 @@ export function normalizeConfig(
   pluginConfig: Partial<PluginConfig>,
   context: AnyLifecycleContext,
 ): NormalizedConfig {
-  context;
   const config = {
     ...pluginConfig,
     // TODO: figure out how we want to handle gitlab provided environment variables vs plugin config variables
