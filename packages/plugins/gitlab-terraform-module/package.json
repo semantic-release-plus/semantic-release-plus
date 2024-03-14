@@ -6,7 +6,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@semantic-release-plus/core": "0.0.1-automated",
+    "@semantic-release-plus/core": "alpha",
     "aggregate-error": "3.0.0",
     "tar": "^6.2.0",
     "tslib": "^2.3.0"
