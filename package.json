@@ -123,6 +123,12 @@
     "typescript": "5.3.3",
     "verdaccio": "^5.0.4"
   },
+  "//overrides": "because of the bump to esm and previous versions of plugins using a greater than peerDependencies it causes it to pull never versions of semantic-release which then includes newer versions of plugins",
+  "overrides": {
+    "@semantic-release/commit-analyzer": {
+      "semantic-release": "^19.0.0"
+    }
+  },
   "engines": {
     "node": ">=20.8.1"
   },
