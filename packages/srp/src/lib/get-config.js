@@ -8,6 +8,16 @@ const PLUGINS_DEFINITIONS = require('./definitions/plugins');
 const plugins = require('./plugins');
 const { validatePlugin, parseConfig } = require('./plugins/utils');
 
+// FIXME: In the future actually require the plugins rather than referencing them by string this is added to make linting happy
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const commitAnalyzerPlugin = require('@semantic-release/commit-analyzer');
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const releaseNotesGeneratorPlugin = require('@semantic-release/release-notes-generator');
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const npmPlugin = require('@semantic-release/npm');
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const githubPlugin = require('@semantic-release/github');
+
 const CONFIG_NAME = 'release';
 
 module.exports = async (context, cliOptions) => {

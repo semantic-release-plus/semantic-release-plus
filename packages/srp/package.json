@@ -25,11 +25,45 @@
     "@semantic-release/github": "^8.0.0",
     "@semantic-release/npm": "^9.0.0",
     "@semantic-release/release-notes-generator": "^10.0.0",
-    "@semantic-release-plus/core": "alpha"
+    "@semantic-release-plus/core": "alpha",
+    "aggregate-error": "3.0.0",
+    "cosmiconfig": "^7.1.0",
+    "debug": "4.3.3",
+    "delay": "5.0.0",
+    "dockerode": "3.3.1",
+    "env-ci": "^5.0.0",
+    "execa": "5.1.1",
+    "figures": "^3.0.0",
+    "file-url": "3.0.0",
+    "find-versions": "^4.0.0",
+    "get-stream": "^6.0.0",
+    "git-log-parser": "^1.2.0",
+    "got": "11.8.3",
+    "hook-std": "^2.0.0",
+    "hosted-git-info": "^6.1.1",
+    "lodash": "^4.17.21",
+    "marked-terminal": "^7.0.0",
+    "marked": "^12.0.1",
+    "micromatch": "^4.0.2",
+    "mockserver-client": "5.11.2",
+    "p-each-series": "^2.1.0",
+    "p-reduce": "^2.0.0",
+    "p-retry": "4.6.1",
+    "process": "0.11.10",
+    "read-pkg-up": "^7.0.0",
+    "resolve-from": "^5.0.0",
+    "semver-diff": "^3.1.1",
+    "semver": "7.3.8",
+    "signale": "^1.2.1",
+    "tempy": "1.0.1",
+    "tslib": "^2.3.0",
+    "yargs": "^17.7.2"
   },
-  "peerDependencies": {
-    "tslib": "^2.0.0"
+  "//overrides": "because of the bump to esm and previous versions of plugins using a greater than peerDependencies it causes it to pull never versions of semantic-release which then includes newer versions of plugins",
+  "overrides": {
+    "semantic-release": "^19.0.0"
   },
+  "peerDependencies": {},
   "engines": {
     "node": ">=16 || ^14.17"
   },
