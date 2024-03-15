@@ -1,5 +1,6 @@
 import type { AnyLifecycleContext } from '@semantic-release-plus/core';
 import type { NormalizedConfig, PluginConfig } from './config.interface';
+import { tmpdir } from 'os';
 
 export function normalizeConfig(
   pluginConfig: Partial<PluginConfig>,
@@ -7,6 +8,13 @@ export function normalizeConfig(
 ): NormalizedConfig {
   const config = {
     ...pluginConfig,
+    include: pluginConfig.include || ['**/*'],
+    exclude: pluginConfig.exclude || [
+      '**/.git',
+      '**/.DS_Store',
+      '**/release.config.js',
+    ],
+    outputDir: pluginConfig.outputDir || tmpdir(),
     // TODO: figure out how we want to handle gitlab provided environment variables vs plugin config variables
     // Usually we say environment variable wins but in this case this would not provide a way to override the
     // env variable since it is provided by gitlab idea 1 create new plugin defined env variables then use the
