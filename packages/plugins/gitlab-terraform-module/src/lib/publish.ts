@@ -24,6 +24,9 @@ export async function publish(
     moduleName,
     modulePath,
     moduleSystem,
+    include,
+    exclude,
+    outputDir,
   } = config;
 
   const version = context.nextRelease?.version;
@@ -35,10 +38,19 @@ export async function publish(
     moduleName,
     modulePath,
     moduleSystem,
+    include,
+    exclude,
     version,
+    outputDir,
   });
 
-  const tarPath = await createTar({ moduleName, modulePath });
+  const tarPath = await createTar({
+    moduleName,
+    modulePath,
+    include,
+    exclude,
+    outputDir,
+  });
   logger.success(`tgz created successfully at ${tarPath}`);
 
   if (!version) {
