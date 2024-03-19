@@ -5,20 +5,27 @@ import { mkdir } from 'fs/promises';
 import { glob } from 'glob';
 import * as path from 'path';
 import * as tar from 'tar';
+import * as debugFactory from 'debug';
+import { PublishContext } from '@semantic-release-plus/core';
 
-export async function createTar({
-  moduleName,
-  modulePath,
-  include,
-  exclude,
-  outputDir,
-}: {
-  moduleName: string;
-  modulePath: string;
-  include: string[];
-  exclude?: string[];
-  outputDir: string;
-}) {
+const debug = debugFactory('semantic-release-plus:gitlab-terraform-module:tar');
+
+export async function createTar(
+  {
+    moduleName,
+    modulePath,
+    include,
+    exclude,
+    outputDir,
+  }: {
+    moduleName: string;
+    modulePath: string;
+    include: string[];
+    exclude?: string[];
+    outputDir: string;
+  },
+  context: PublishContext,
+) {
   try {
     const outFile = path.join(outputDir, `${moduleName}.tgz`);
     await mkdir(path.dirname(outFile), { recursive: true });
@@ -27,8 +34,15 @@ export async function createTar({
       nodir: true,
       ignore: exclude,
     });
-    console.log({ includedFiles });
-    console.log({ outFile });
+    debug({
+      moduleName,
+      modulePath,
+      include,
+      exclude,
+      outputDir,
+      includedFiles,
+      outFile,
+    });
     await tar.create(
       {
         gzip: true,
@@ -39,7 +53,7 @@ export async function createTar({
     );
     return outFile;
   } catch (err: any) {
-    console.error('Failed to create tgz', err);
+    context.logger.error(`Failed to create tgz ${err}`);
     throw err;
   }
 }
