@@ -5,14 +5,18 @@ import { status } from './status';
 import { createTar } from './tar';
 import { uploadTerraformModule } from './upload-terraform-module';
 import { verifyConditions } from './verify-conditions';
+import * as debugFactory from 'debug';
+
+const debug = debugFactory(
+  'semantic-release-plus:gitlab-terraform-module:publish',
+);
 
 export async function publish(
   pluginConfig: PluginConfig,
   context: PublishContext,
 ) {
-  console.log({ STATUS: status });
   const config = normalizeConfig(pluginConfig, context);
-
+  debug('status:', status);
   if (!status.verified) {
     verifyConditions(config, context);
   }
@@ -31,7 +35,7 @@ export async function publish(
 
   const version = context.nextRelease?.version;
   const logger = context.logger;
-  console.debug({
+  debug({
     gitlabApiUrl,
     gitlabJobToken,
     gitlabProjectId,
@@ -44,27 +48,36 @@ export async function publish(
     outputDir,
   });
 
-  const tarPath = await createTar({
-    moduleName,
-    modulePath,
-    include,
-    exclude,
-    outputDir,
-  });
-  logger.success(`tgz created successfully at ${tarPath}`);
+  const tarPath = await createTar(
+    {
+      moduleName,
+      modulePath,
+      include,
+      exclude,
+      outputDir,
+    },
+    context,
+  );
+  logger.log(`tgz created successfully at ${tarPath}`);
 
   if (!version) {
     throw new Error('next release version is undefined');
   }
 
   // Create a FormData object and append the file
-  await uploadTerraformModule({
-    tarPath,
-    gitlabApiUrl,
-    gitlabJobToken,
-    gitlabProjectId,
-    moduleName,
-    moduleSystem,
-    version,
-  });
+  await uploadTerraformModule(
+    {
+      tarPath,
+      gitlabApiUrl,
+      gitlabJobToken,
+      gitlabProjectId,
+      moduleName,
+      moduleSystem,
+      version,
+    },
+    context,
+  );
+  logger.success(
+    `Terraform module published successfully ${context.nextRelease.gitTag}`,
+  );
 }

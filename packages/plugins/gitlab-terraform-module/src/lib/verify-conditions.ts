@@ -4,12 +4,17 @@ import type { PluginConfig } from './config.interface';
 import { normalizeConfig } from './normalize-config';
 import { status } from './status';
 import AggregateError = require('aggregate-error');
+import * as debugFactory from 'debug';
+
+const debug = debugFactory(
+  'semantic-release-plus:gitlab-terraform-module:verify-conditions',
+);
 
 export async function verifyConditions(
   pluginConfig: PluginConfig,
   context: VerifyConditionsContext,
 ) {
-  console.log({ STATUS: status });
+  debug('status:', status);
   const config = normalizeConfig(pluginConfig, context);
 
   const errors = [];
