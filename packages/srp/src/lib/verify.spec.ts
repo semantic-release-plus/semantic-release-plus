@@ -1,15 +1,12 @@
 // TODO refactor to so it doesn't use conditional expect
 /* eslint-disable jest/no-conditional-expect */
-
 import * as tempy from 'tempy';
 import * as verify from './verify';
 import { gitRepo } from '../../test/helpers/git-utils';
-
 describe('verify', () => {
   test('Throw a AggregateError', async () => {
     const { cwd } = await gitRepo();
     const options = { branches: [{ name: 'master' }, { name: '' }] };
-
     try {
       await verify({ cwd, options });
       expect(true).toBe(false);
@@ -32,11 +29,9 @@ describe('verify', () => {
       expect(errors[3].details).toBeTruthy();
     }
   });
-
   test('Throw a SemanticReleaseError if does not run on a git repository', async () => {
     const cwd = tempy.directory();
     const options = { branches: [] };
-
     try {
       await verify({ cwd, options });
       expect(true).toBe(false);
@@ -47,11 +42,9 @@ describe('verify', () => {
       expect(errors[0].details).toBeTruthy();
     }
   });
-
   test('Throw a SemanticReleaseError if the "tagFormat" is not valid', async () => {
     const { cwd, repositoryUrl } = await gitRepo(true);
     const options = { repositoryUrl, tagFormat: `?\${version}`, branches: [] };
-
     try {
       await verify({ cwd, options });
       expect(true).toBe(false);
@@ -62,11 +55,9 @@ describe('verify', () => {
       expect(errors[0].details).toBeTruthy();
     }
   });
-
   test('Throw a SemanticReleaseError if the "tagFormat" does not contains the "version" variable', async () => {
     const { cwd, repositoryUrl } = await gitRepo(true);
     const options = { repositoryUrl, tagFormat: 'test', branches: [] };
-
     try {
       await verify({ cwd, options });
       expect(true).toBe(false);
@@ -77,7 +68,6 @@ describe('verify', () => {
       expect(errors[0].details).toBeTruthy();
     }
   });
-
   test('Throw a SemanticReleaseError if the "tagFormat" contains multiple "version" variables', async () => {
     const { cwd, repositoryUrl } = await gitRepo(true);
     const options = {
@@ -85,7 +75,6 @@ describe('verify', () => {
       tagFormat: `\${version}v\${version}`,
       branches: [],
     };
-
     try {
       await verify({ cwd, options });
       expect(true).toBe(false);
@@ -96,7 +85,6 @@ describe('verify', () => {
       expect(errors[0].details).toBeTruthy();
     }
   });
-
   test('Throw a SemanticReleaseError for each invalid branch', async () => {
     const { cwd, repositoryUrl } = await gitRepo(true);
     const options = {
@@ -112,7 +100,6 @@ describe('verify', () => {
         'master',
       ],
     };
-
     try {
       await verify({ cwd, options });
       expect(true).toBe(false);
@@ -141,7 +128,6 @@ describe('verify', () => {
       expect(errors[5].details).toBeTruthy();
     }
   });
-
   test('Return "true" if all verification pass', async () => {
     const { cwd, repositoryUrl } = await gitRepo(true);
     const options = {
@@ -149,7 +135,6 @@ describe('verify', () => {
       tagFormat: `v\${version}`,
       branches: [{ name: 'master' }],
     };
-
     await expect(verify({ cwd, options })).resolves.not.toThrow();
   });
 });

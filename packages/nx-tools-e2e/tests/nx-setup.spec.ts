@@ -2,7 +2,6 @@ import { ensureNxProject, runNxCommandAsync, uniq } from '@nx/plugin/testing';
 describe('nx-tools e2e', () => {
   it('should create nx-tools', async () => {
     const plugin = uniq('nx-tools');
-
     ensureNxProject(
       '@semantic-release-plus/nx-tools',
       'dist/packages/nx-tools',

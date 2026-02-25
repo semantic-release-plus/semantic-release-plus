@@ -1,5 +1,4 @@
 import * as getLastRelease from './get-last-release';
-
 describe('get-last-release', () => {
   test('Get the highest non-prerelease valid tag', () => {
     const result = getLastRelease({
@@ -18,7 +17,6 @@ describe('get-last-release', () => {
       },
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toEqual({
       version: '2.0.0',
       gitTag: 'v2.0.0',
@@ -27,7 +25,6 @@ describe('get-last-release', () => {
       channels: undefined,
     });
   });
-
   test('Get the highest prerelease valid tag, ignoring other tags from other prerelease channels', () => {
     const result = getLastRelease({
       branch: {
@@ -58,7 +55,6 @@ describe('get-last-release', () => {
       },
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toEqual({
       version: '1.0.0-beta.2',
       gitTag: 'v1.0.0-beta.2',
@@ -67,7 +63,6 @@ describe('get-last-release', () => {
       channels: ['beta'],
     });
   });
-
   test('Return empty object if no valid tag is found', () => {
     const result = getLastRelease({
       branch: {
@@ -83,10 +78,8 @@ describe('get-last-release', () => {
       },
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toEqual({});
   });
-
   test('Get the highest non-prerelease valid tag before a certain version', () => {
     const result = getLastRelease(
       {
@@ -110,7 +103,6 @@ describe('get-last-release', () => {
       },
       { before: '2.1.0' },
     );
-
     expect(result).toEqual({
       version: '2.0.0',
       gitTag: 'v2.0.0',

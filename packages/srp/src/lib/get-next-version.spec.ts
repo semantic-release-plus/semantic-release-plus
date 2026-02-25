@@ -1,6 +1,5 @@
 import { Context } from '@semantic-release-plus/core';
 import * as getNextVersion from './get-next-version';
-
 describe('get-next-version', () => {
   const context: Partial<Context> = {};
   context.logger = {
@@ -9,7 +8,6 @@ describe('get-next-version', () => {
     success: jest.fn(),
     warn: jest.fn,
   };
-
   test('Increase version for patch release', () => {
     expect(
       getNextVersion({
@@ -24,7 +22,6 @@ describe('get-next-version', () => {
       }),
     ).toBe('1.0.1');
   });
-
   test('Increase version for minor release', () => {
     expect(
       getNextVersion({
@@ -39,7 +36,6 @@ describe('get-next-version', () => {
       }),
     ).toBe('1.1.0');
   });
-
   test('Increase version for major release', () => {
     expect(
       getNextVersion({
@@ -54,7 +50,6 @@ describe('get-next-version', () => {
       }),
     ).toBe('2.0.0');
   });
-
   test('Return 1.0.0 if there is no previous release', () => {
     expect(
       getNextVersion({
@@ -65,7 +60,6 @@ describe('get-next-version', () => {
       }),
     ).toBe('1.0.0');
   });
-
   test('Increase version for patch release on prerelease branch', () => {
     expect(
       getNextVersion({
@@ -80,7 +74,6 @@ describe('get-next-version', () => {
         logger: context.logger,
       }),
     ).toBe('1.0.1-beta.1');
-
     expect(
       getNextVersion({
         branch: {
@@ -101,7 +94,6 @@ describe('get-next-version', () => {
         logger: context.logger,
       }),
     ).toBe('1.0.1-beta.2');
-
     expect(
       getNextVersion({
         branch: {
@@ -122,7 +114,6 @@ describe('get-next-version', () => {
       }),
     ).toBe('1.0.2-alpha.1');
   });
-
   test('Increase version for minor release on prerelease branch', () => {
     expect(
       getNextVersion({
@@ -137,7 +128,6 @@ describe('get-next-version', () => {
         logger: context.logger,
       }),
     ).toBe('1.1.0-beta.1');
-
     expect(
       getNextVersion({
         branch: {
@@ -158,7 +148,6 @@ describe('get-next-version', () => {
         logger: context.logger,
       }),
     ).toBe('1.1.0-beta.2');
-
     expect(
       getNextVersion({
         branch: {
@@ -179,7 +168,6 @@ describe('get-next-version', () => {
       }),
     ).toBe('1.2.0-alpha.1');
   });
-
   test('Increase version for major release on prerelease branch', () => {
     expect(
       getNextVersion({
@@ -194,7 +182,6 @@ describe('get-next-version', () => {
         logger: context.logger,
       }),
     ).toBe('2.0.0-beta.1');
-
     expect(
       getNextVersion({
         branch: {
@@ -215,7 +202,6 @@ describe('get-next-version', () => {
         logger: context.logger,
       }),
     ).toBe('2.0.0-beta.2');
-
     expect(
       getNextVersion({
         branch: {
@@ -236,7 +222,6 @@ describe('get-next-version', () => {
       }),
     ).toBe('3.0.0-alpha.1');
   });
-
   test('Return 1.0.0 if there is no previous release on prerelease branch', () => {
     expect(
       getNextVersion({
@@ -252,7 +237,6 @@ describe('get-next-version', () => {
       }),
     ).toBe('1.0.0-beta.1');
   });
-
   test('Increase version for release on prerelease branch after previous commits were merged to release branch', () => {
     expect(
       getNextVersion({
@@ -276,7 +260,6 @@ describe('get-next-version', () => {
       }),
     ).toBe('1.2.0-beta.1');
   });
-
   test('Increase version for release on prerelease branch based on highest commit type since last regular release', () => {
     expect(
       getNextVersion({
@@ -299,7 +282,6 @@ describe('get-next-version', () => {
       }),
     ).toBe('2.0.0-beta.1');
   });
-
   test('Increase version for release on prerelease branch when there is no regular releases on other branches', () => {
     expect(
       getNextVersion({
