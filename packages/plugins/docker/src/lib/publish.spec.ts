@@ -56,18 +56,20 @@ describe('publish', () => {
     } as undefined);
 
     await publish(pluginConfig, context);
-    expect(context.logger.log).toBeCalledWith(`Tagging ${name} as ${exactTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(
+      `Tagging ${name} as ${exactTag}`,
+    );
     expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(
+    expect(context.logger.log).toHaveBeenCalledWith(
       `Tagging ${name} as ${channelTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(name, channelTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${exactTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${channelTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
   });
 
@@ -99,18 +101,20 @@ describe('publish', () => {
 
     await publish(pluginConfig, context);
 
-    expect(context.logger.log).toBeCalledWith(`Tagging ${name} as ${exactTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(
+      `Tagging ${name} as ${exactTag}`,
+    );
     expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(
+    expect(context.logger.log).toHaveBeenCalledWith(
       `Tagging ${name} as ${channelTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(name, channelTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${exactTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${channelTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
   });
 
@@ -142,10 +146,12 @@ describe('publish', () => {
 
     await publish(pluginConfig, context);
 
-    expect(context.logger.log).toBeCalledWith(`Tagging ${name} as ${exactTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(
+      `Tagging ${name} as ${exactTag}`,
+    );
     expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${exactTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
 
     // make sure no other calls were made
@@ -175,18 +181,20 @@ describe('publish', () => {
     const channelTag = `${registry}/${name}:latest`;
 
     await publish(pluginConfig, context);
-    expect(context.logger.log).toBeCalledWith(`Tagging ${name} as ${exactTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(
+      `Tagging ${name} as ${exactTag}`,
+    );
     expect(dockerTagMock).toHaveBeenCalledWith(name, exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(
+    expect(context.logger.log).toHaveBeenCalledWith(
       `Tagging ${name} as ${channelTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(name, channelTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${exactTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${channelTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
   });
 
@@ -209,20 +217,20 @@ describe('publish', () => {
     const channelTag = `${name}:latest`;
 
     await publish(pluginConfig, context);
-    expect(context.logger.log).toBeCalledWith(
+    expect(context.logger.log).toHaveBeenCalledWith(
       `Tagging ${fullname} as ${exactTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(fullname, exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(
+    expect(context.logger.log).toHaveBeenCalledWith(
       `Tagging ${fullname} as ${channelTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(fullname, channelTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${exactTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${channelTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
   });
 
@@ -245,20 +253,20 @@ describe('publish', () => {
     const channelTag = `${name}:latest`;
 
     await publish(pluginConfig, context);
-    expect(context.logger.log).toBeCalledWith(
+    expect(context.logger.log).toHaveBeenCalledWith(
       `Tagging ${fullname} as ${exactTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(fullname, exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(
+    expect(context.logger.log).toHaveBeenCalledWith(
       `Tagging ${fullname} as ${channelTag}`,
     );
     expect(dockerTagMock).toHaveBeenCalledWith(fullname, channelTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${exactTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${exactTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(exactTag, context);
 
-    expect(context.logger.log).toBeCalledWith(`Pushing ${channelTag}`);
+    expect(context.logger.log).toHaveBeenCalledWith(`Pushing ${channelTag}`);
     expect(dockerPushMock).toHaveBeenCalledWith(channelTag, context);
   });
 });

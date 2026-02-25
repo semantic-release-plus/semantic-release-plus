@@ -101,7 +101,7 @@ describe('verify', () => {
     try {
       await verifyConditions(pluginConfig, tstContext);
     } catch (e) {
-      expect(tstContext.logger.error).toBeCalledWith(
+      expect(tstContext.logger.error).toHaveBeenCalledWith(
         new Error('docker cli login error'),
       );
       expect(e.message).toBe('docker login failed');
@@ -119,7 +119,7 @@ describe('verify', () => {
 
   it('should skip logging in to docker if set to in config', async () => {
     expect(verifyConditions(pluginConfigNoLogin, context)).resolves;
-    expect(context.logger.log).toBeCalledWith(
+    expect(context.logger.log).toHaveBeenCalledWith(
       'Skipping docker login because skipLogin was set to true',
     );
     expect(dockerLoginMock).not.toHaveBeenCalled();
