@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  name: 'plugins-docker',
+  displayName: 'plugins-docker',
   preset: '../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
