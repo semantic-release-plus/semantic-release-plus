@@ -54,6 +54,8 @@
       "subject": "Apply suggestions from code review"
     },
     "targetVersion": "19",
-    "confirmedPackageUpdates": true
+    "confirmedPackageUpdates": true,
+    "runningMigrations": [],
+    "completedMigrations": {}
   }
 }

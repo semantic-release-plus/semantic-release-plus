@@ -46,3 +46,4 @@ packages/srp/CertificateAuthorityCertificate.pem
 # env files
 .env.local
 .nx/cache
+.nx/workspace-data
