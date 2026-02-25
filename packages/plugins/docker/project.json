@@ -3,6 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/plugins/docker/src",
   "projectType": "library",
+  "tags": ["plugin"],
   "generators": {},
   "targets": {
     "lint": {
@@ -13,7 +14,6 @@
       "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "packages/plugins/docker/jest.config.ts",
-        "tsConfig": "packages/plugins/docker/tsconfig.spec.json",
         "coverageReporters": ["html", "text", "text-summary"]
       }
     },
@@ -40,6 +40,5 @@
         "cwd": "packages/plugins/docker/"
       }
     }
-  },
-  "tags": ["plugin"]
+  }
 }
