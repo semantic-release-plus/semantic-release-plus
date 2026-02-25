@@ -8,6 +8,9 @@ module.exports = {
   pkgRoot: `${pathToRepoRoot}/<%= outputPath %>`,
   tagFormat: name + '-v${version}',
   commitPaths: [
-    `*`, // anything in this directory
+    `*`, // anything in this project's directory
+    // Add paths to global files that affect this project's build output:
+    // `${pathToRepoRoot}/tsconfig.base.json`,
+    // `${pathToRepoRoot}/package.json`,
   ],
 };
