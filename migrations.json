@@ -47,15 +47,5 @@
       "package": "@nx/eslint-plugin",
       "name": "update-19-1-0-rename-no-extra-semi"
     }
-  ],
-  "nx-console": {
-    "initialGitRef": {
-      "ref": "3152090ec36ef78d0e581535b4b3daba9d9512e0",
-      "subject": "Apply suggestions from code review"
-    },
-    "targetVersion": "19",
-    "confirmedPackageUpdates": true,
-    "runningMigrations": [],
-    "completedMigrations": {}
-  }
+  ]
 }
