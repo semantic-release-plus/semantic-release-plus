@@ -5,7 +5,7 @@ import { PublishContext, Logger } from '@semantic-release-plus/core';
 
 // Mock the child_process module
 jest.mock('child_process', () => ({
-  execSync: jest.fn(),
+  execFileSync: jest.fn(),
 }));
 
 // Mock the Debug function
@@ -22,7 +22,7 @@ const params = {
   gitlabJobToken: 'job-token',
 };
 
-const mockExecSync = jest.mocked(childProcess.execSync);
+const mockExecFileSync = jest.mocked(childProcess.execFileSync);
 
 const mockLogger = {
   log: jest.fn(),
@@ -42,32 +42,39 @@ describe('uploadTerraformModule', () => {
   });
 
   it('should execute the curl command successfully', async () => {
-    mockExecSync.mockImplementation(() => 'Success');
-    const expectedCurlCommand = `curl --fail-with-body --location --header "JOB-TOKEN: ${params.gitlabJobToken}" --upload-file ${params.tarPath} ${params.gitlabApiUrl}/projects/${params.gitlabProjectId}/packages/terraform/modules/${params.moduleName}/${params.moduleSystem}/${params.version}/file`;
+    mockExecFileSync.mockImplementation(() => 'Success');
+    const expectedUrl = `${params.gitlabApiUrl}/projects/${params.gitlabProjectId}/packages/terraform/modules/${params.moduleName}/${params.moduleSystem}/${params.version}/file`;
 
     await uploadTerraformModule(params, mockContext as PublishContext);
 
-    expect(mockExecSync).toHaveBeenCalledTimes(1);
-    expect(mockExecSync).toHaveBeenCalledWith(expectedCurlCommand);
+    expect(mockExecFileSync).toHaveBeenCalledTimes(1);
+    expect(mockExecFileSync).toHaveBeenCalledWith('curl', [
+      '--fail-with-body',
+      '--location',
+      '--header',
+      `JOB-TOKEN: ${params.gitlabJobToken}`,
+      '--upload-file',
+      params.tarPath,
+      expectedUrl,
+    ]);
   });
 
-  it('should log an error if the command fails', async () => {
-    // Mock execSync to simulate a command failure
+  it('should log an error and throw a SemanticReleaseError if the command fails', async () => {
     const errorMessage = 'Command failed';
-    mockExecSync.mockImplementation(() => {
+    mockExecFileSync.mockImplementation(() => {
       throw new Error(errorMessage);
     });
 
-    await uploadTerraformModule(params, mockContext);
+    const rejection = expect(
+      uploadTerraformModule(params, mockContext),
+    ).rejects;
+    await rejection.toThrow('Failed to upload terraform module');
+    await rejection.toHaveProperty('semanticRelease', true);
+    await rejection.toHaveProperty('code', 'EUPLOADFAIL');
 
-    expect(mockExecSync).toHaveBeenCalledTimes(1);
-    expect(mockExecSync).toThrow();
-
-    // Expect the error logger to have been called with the error message
+    expect(mockExecFileSync).toHaveBeenCalledTimes(1);
     expect(mockLogger.error).toHaveBeenCalledWith(
       expect.stringContaining(errorMessage),
     );
-
-    // You can add more assertions here to verify error handling, stderr/stdout logging, etc.
   });
 });

@@ -7,6 +7,11 @@ import { writeMsgToTempFile } from '../lib/write-msg-to-temp-file';
 
 const argv = yargs(hideBin(process.argv)).argv;
 
-createCommitMessage().then((message) => {
-  writeMsgToTempFile(message);
-});
+createCommitMessage()
+  .then((message) => {
+    writeMsgToTempFile(message);
+  })
+  .catch((error) => {
+    console.error(`commitmatic: ${error.message}`);
+    process.exit(1);
+  });

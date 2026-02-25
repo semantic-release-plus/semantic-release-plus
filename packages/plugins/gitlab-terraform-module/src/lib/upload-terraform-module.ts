@@ -1,5 +1,6 @@
 import { PublishContext } from '@semantic-release-plus/core';
-import { execSync } from 'child_process';
+import { SemanticReleaseError } from '@semantic-release-plus/error';
+import { execFileSync } from 'child_process';
 import * as debugFactory from 'debug';
 
 const debug = debugFactory(
@@ -26,24 +27,38 @@ export async function uploadTerraformModule(
   },
   context: PublishContext,
 ) {
-  // 'curl --fail-with-body --location --header "JOB-TOKEN: ${CI_JOB_TOKEN}"
-  //        --upload-file /tmp/${TERRAFORM_MODULE_NAME}-${TERRAFORM_MODULE_SYSTEM}-${TERRAFORM_MODULE_VERSION}.tgz
-  //        ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/terraform/modules/${TERRAFORM_MODULE_NAME}/${TERRAFORM_MODULE_SYSTEM}/${TERRAFORM_MODULE_VERSION}/file'
-
-  const curlCmd = `curl --fail-with-body --location --header "JOB-TOKEN: ${gitlabJobToken}" --upload-file ${tarPath} ${gitlabApiUrl}/projects/${gitlabProjectId}/packages/terraform/modules/${moduleName}/${moduleSystem}/${version}/file`;
-  debug(curlCmd);
+  const url = `${gitlabApiUrl}/projects/${gitlabProjectId}/packages/terraform/modules/${moduleName}/${moduleSystem}/${version}/file`;
+  const args = [
+    '--fail-with-body',
+    '--location',
+    '--header',
+    `JOB-TOKEN: ${gitlabJobToken}`,
+    '--upload-file',
+    tarPath,
+    url,
+  ];
+  debug(
+    'curl %o',
+    args.map((a) =>
+      a.includes(gitlabJobToken) ? a.replace(gitlabJobToken, '[REDACTED]') : a,
+    ),
+  );
   try {
-    const result = execSync(curlCmd).toString();
+    const result = execFileSync('curl', args).toString();
     debug(result);
   } catch (error: any) {
     const { logger } = context;
     logger.error(`Command failed with error: ${error.message}`);
-    // Optional: use error.stdout or error.stderr if needed
     if (error.stdout) {
       logger.error(`Standard Output: ${error.stdout.toString()}`);
     }
     if (error.stderr) {
       logger.error(`Standard Error: ${error.stderr.toString()}`);
     }
+    throw new SemanticReleaseError(
+      `Failed to upload terraform module: ${error.message}`,
+      'EUPLOADFAIL',
+      error.stderr ? error.stderr.toString() : error.message,
+    );
   }
 }

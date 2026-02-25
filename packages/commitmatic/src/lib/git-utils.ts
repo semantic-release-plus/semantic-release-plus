@@ -9,13 +9,16 @@ export function getGitDiff(ignoreFiles: string[] = []) {
 }
 
 export function getGitCommitTemplate() {
-  const templateCommand = 'git config commit.template';
-  const templatePath = execSync(templateCommand).toString().trim();
-
-  if (!templatePath) {
-    return;
-  } else {
+  try {
+    const templatePath = execSync('git config commit.template')
+      .toString()
+      .trim();
+    if (!templatePath) {
+      return;
+    }
     return readFileSync(templatePath, 'utf-8');
+  } catch {
+    return;
   }
 }
 
