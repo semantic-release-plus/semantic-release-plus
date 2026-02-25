@@ -50,7 +50,7 @@ test('The "maintenance" branches must have unique ranges', (t) => {
   );
 });
 
-test('A "prerelease" branch is identified by having a thruthy "prerelease" property', (t) => {
+test('A "prerelease" branch is identified by having a truthy "prerelease" property', (t) => {
   t.true(prerelease.filter({ name: 'some-name', prerelease: true }));
   t.true(prerelease.filter({ name: 'some-name', prerelease: 'beta' }));
   t.true(prerelease.filter({ name: 'some-name', prerelease: '' }));
