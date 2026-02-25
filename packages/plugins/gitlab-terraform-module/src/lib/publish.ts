@@ -1,7 +1,6 @@
 import type { PublishContext } from '@semantic-release-plus/core';
 import type { PluginConfig } from './config.interface';
 import { normalizeConfig } from './normalize-config';
-import { status } from './status';
 import { createTar } from './tar';
 import { uploadTerraformModule } from './upload-terraform-module';
 import { verifyConditions } from './verify-conditions';
@@ -16,10 +15,7 @@ export async function publish(
   context: PublishContext,
 ) {
   const config = normalizeConfig(pluginConfig, context);
-  debug('status:', status);
-  if (!status.verified) {
-    verifyConditions(config, context);
-  }
+  await verifyConditions(config, context);
 
   const {
     gitlabApiUrl,
@@ -37,7 +33,6 @@ export async function publish(
   const logger = context.logger;
   debug({
     gitlabApiUrl,
-    gitlabJobToken,
     gitlabProjectId,
     moduleName,
     modulePath,

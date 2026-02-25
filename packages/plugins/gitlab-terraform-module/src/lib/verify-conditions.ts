@@ -2,7 +2,6 @@ import type { VerifyConditionsContext } from '@semantic-release-plus/core';
 import { execSync } from 'child_process';
 import type { PluginConfig } from './config.interface';
 import { normalizeConfig } from './normalize-config';
-import { status } from './status';
 import AggregateError = require('aggregate-error');
 import * as debugFactory from 'debug';
 
@@ -14,7 +13,6 @@ export async function verifyConditions(
   pluginConfig: PluginConfig,
   context: VerifyConditionsContext,
 ) {
-  debug('status:', status);
   const config = normalizeConfig(pluginConfig, context);
 
   const errors = [];
@@ -61,16 +59,15 @@ export async function verifyConditions(
   if (errors.length > 0) {
     throw new AggregateError(errors);
   }
-  status.verified = true;
 }
 
 function hasCurl() {
   try {
     const result = execSync('curl --version');
-    console.log(result.toString());
+    debug('curl version: %s', result.toString().split('\n')[0]);
     return true;
   } catch (e) {
-    console.log(e);
+    debug('curl not found: %s', e instanceof Error ? e.message : String(e));
     return false;
   }
 }

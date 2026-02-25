@@ -24,7 +24,8 @@ export function normalizeConfig(
     gitlabApiUrl: pluginConfig.gitlabApiUrl || context.env?.['CI_API_V4_URL'],
     gitlabProjectId:
       pluginConfig.gitlabProjectId || context.env?.['CI_PROJECT_ID'],
-    gitlabJobToken: context.env?.['CI_JOB_TOKEN'],
+    gitlabJobToken:
+      pluginConfig.gitlabJobToken || context.env?.['CI_JOB_TOKEN'],
   };
 
   return config as NormalizedConfig;
