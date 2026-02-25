@@ -61,13 +61,5 @@
       "package": "@nx/webpack",
       "name": "update-22-0-0-remove-deprecated-options"
     }
-  ],
-  "nx-console": {
-    "initialGitRef": {
-      "ref": "6ee015d7bb6072906b94f86b2ce479fd6aba74be",
-      "subject": "chore: remove nx-console configuration and failed migration entries"
-    },
-    "targetVersion": "latest",
-    "confirmedPackageUpdates": true
-  }
+  ]
 }
