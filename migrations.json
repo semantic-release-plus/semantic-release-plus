@@ -82,21 +82,5 @@
       "package": "@nx/js",
       "name": "migrate-development-custom-condition"
     }
-  ],
-  "nx-console": {
-    "initialGitRef": {
-      "ref": "14a3c23250206c1e33d598f5210bf45a0faf32d3",
-      "subject": "chore: migrate nx to 20"
-    },
-    "targetVersion": "21",
-    "confirmedPackageUpdates": true,
-    "runningMigrations": [],
-    "completedMigrations": {
-      "remove-legacy-cache": {
-        "type": "failed",
-        "name": "remove-legacy-cache",
-        "error": "Cannot find module './run-migration-process.js'\nRequire stack:\n- /Users/Justin.Dietz5/.vscode/extensions/nrwl.angular-console-18.91.0/main.js\n- /Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/api/node/extensionHostProcess.js"
-      }
-    }
-  }
+  ]
 }
