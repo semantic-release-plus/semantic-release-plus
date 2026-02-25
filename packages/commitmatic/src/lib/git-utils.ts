@@ -9,17 +9,19 @@ export function getGitDiff(ignoreFiles: string[] = []) {
 }
 
 export function getGitCommitTemplate() {
+  let templatePath: string;
   try {
-    const templatePath = execSync('git config commit.template')
-      .toString()
-      .trim();
-    if (!templatePath) {
-      return;
-    }
-    return readFileSync(templatePath, 'utf-8');
+    templatePath = execSync('git config commit.template').toString().trim();
   } catch {
+    // git config returns non-zero when the key is not set
     return;
   }
+
+  if (!templatePath) {
+    return;
+  }
+
+  return readFileSync(templatePath, 'utf-8');
 }
 
 export function getGitDirectory() {
