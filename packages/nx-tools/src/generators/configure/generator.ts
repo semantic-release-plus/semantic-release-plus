@@ -1,13 +1,13 @@
 import {
   formatFiles,
   generateFiles,
+  getPackageManagerCommand,
   offsetFromRoot,
   readJson,
   readProjectConfiguration,
   Tree,
   updateProjectConfiguration,
 } from '@nx/devkit';
-import { detectPackageManager } from '@nrwl/tao/src/shared/package-manager';
 import * as path from 'path';
 import { ConfigureGeneratorSchema } from './schema';
 
@@ -69,19 +69,14 @@ export default async function (host: Tree, options: ConfigureGeneratorSchema) {
     host,
     normalizedOptions.projectName,
   );
-  const pm = detectPackageManager();
-  const npxLikeCommand = {
-    npm: 'npx',
-    yarn: 'yarn',
-    npx: 'pnpx',
-  };
+  const pmc = getPackageManagerCommand();
 
   projectConfig.targets['release'] = {
-    executor: '@nx/workspace:run-commands',
+    executor: 'nx:run-commands',
     options: {
       commands: [
         {
-          command: `${npxLikeCommand[pm]} semantic-release --extends=./${normalizedOptions.projectRoot}/release.config.js`,
+          command: `${pmc.dlx} semantic-release --extends=./${normalizedOptions.projectRoot}/release.config.js`,
         },
       ],
     },
