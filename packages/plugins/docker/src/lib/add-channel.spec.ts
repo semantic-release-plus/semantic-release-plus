@@ -1,16 +1,15 @@
 import execa = require('execa');
-import { mocked } from 'ts-jest/utils';
-import { Context } from 'vm';
+import { mocked } from 'jest-mock';
+import { Context } from '@semantic-release-plus/core';
 import { addChannel } from './add-channel';
 import { dockerPull, dockerPush, dockerTag } from './docker-utils';
-
 jest.mock('./docker-utils');
-
 describe('add-channel', () => {
   const dockerPullMock = mocked(dockerPull);
   const dockerTagMock = mocked(dockerTag);
   const dockerPushMock = mocked(dockerPush);
   const context: Context = {
+    branch: { name: 'alpha' },
     nextRelease: { channel: 'alpha', version: '1.0.1-alpha.1' },
     logger: {
       log: jest.fn(),
@@ -19,7 +18,6 @@ describe('add-channel', () => {
       warn: jest.fn(),
     },
   };
-
   it('should add tag to existing published image', async () => {
     dockerPullMock.mockResolvedValue({
       stdout: 'pulling image',
@@ -30,26 +28,24 @@ describe('add-channel', () => {
     dockerPushMock.mockResolvedValue({
       stdout: 'pushing image2',
     } as execa.ExecaReturnValue<string>);
-
     await addChannel({ name: 'joamos/test' }, context);
     expect(dockerPullMock).toHaveBeenCalledWith(
       'joamos/test:1.0.1-alpha.1',
-      context
+      context,
     );
-    expect(context.logger.log).toBeCalledWith('pulling image');
+    expect(context.logger.log).toHaveBeenCalledWith('pulling image');
     expect(dockerTagMock).toHaveBeenCalledWith(
       'joamos/test:1.0.1-alpha.1',
       'joamos/test:alpha',
-      context
+      context,
     );
-    expect(context.logger.log).toBeCalledWith('tagging image1 as image2');
+    expect(context.logger.log).toHaveBeenCalledWith('tagging image1 as image2');
     expect(dockerPushMock).toHaveBeenCalledWith('joamos/test:alpha', context);
-    expect(context.logger.log).toBeCalledWith('pushing image2');
-    expect(context.logger.log).toBeCalledWith(
-      `Added joamos/test:1.0.1-alpha.1 to tag alpha on docker.io`
+    expect(context.logger.log).toHaveBeenCalledWith('pushing image2');
+    expect(context.logger.log).toHaveBeenCalledWith(
+      `Added joamos/test:1.0.1-alpha.1 to tag alpha on docker.io`,
     );
   });
-
   it('should add tag to existing published image on alternate registry', async () => {
     dockerPullMock.mockResolvedValue({
       stdout: 'pulling image',
@@ -60,26 +56,25 @@ describe('add-channel', () => {
     dockerPushMock.mockResolvedValue({
       stdout: 'pushing image2',
     } as execa.ExecaReturnValue<string>);
-
     await addChannel({ name: 'joamos/test', registry: 'ghcr.io' }, context);
     expect(dockerPullMock).toHaveBeenCalledWith(
       'ghcr.io/joamos/test:1.0.1-alpha.1',
-      context
+      context,
     );
-    expect(context.logger.log).toBeCalledWith('pulling image');
+    expect(context.logger.log).toHaveBeenCalledWith('pulling image');
     expect(dockerTagMock).toHaveBeenCalledWith(
       'ghcr.io/joamos/test:1.0.1-alpha.1',
       'ghcr.io/joamos/test:alpha',
-      context
+      context,
     );
-    expect(context.logger.log).toBeCalledWith('tagging image1 as image2');
+    expect(context.logger.log).toHaveBeenCalledWith('tagging image1 as image2');
     expect(dockerPushMock).toHaveBeenCalledWith(
       'ghcr.io/joamos/test:alpha',
-      context
+      context,
     );
-    expect(context.logger.log).toBeCalledWith('pushing image2');
-    expect(context.logger.log).toBeCalledWith(
-      `Added ghcr.io/joamos/test:1.0.1-alpha.1 to tag alpha on ghcr.io`
+    expect(context.logger.log).toHaveBeenCalledWith('pushing image2');
+    expect(context.logger.log).toHaveBeenCalledWith(
+      `Added ghcr.io/joamos/test:1.0.1-alpha.1 to tag alpha on ghcr.io`,
     );
   });
 });

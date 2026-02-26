@@ -8,10 +8,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es2022",
     "module": "esnext",
     "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
+    "lib": ["es2022", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -19,7 +19,12 @@
       "@semantic-release-plus/core": ["packages/core/src/index.ts"],
       "@semantic-release-plus/docker": ["packages/plugins/docker/src/index.ts"],
       "@semantic-release-plus/error": ["packages/error/src/index.js"],
-      "@semantic-release-plus/nx-setup": ["packages/nx-setup/src/index.ts"]
+      "@semantic-release-plus/gitlab-terraform-module": [
+        "packages/plugins/gitlab-terraform-module/src/index.ts"
+      ],
+      "@semantic-release-plus/nx-tools": ["packages/nx-tools/src/index.ts"],
+      "commitmatic": ["packages/commitmatic/src/index.ts"],
+      "semantic-release-plus": ["packages/srp/src/index.js"]
     }
   },
   "exclude": ["node_modules", "tmp"]

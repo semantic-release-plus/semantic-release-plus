@@ -1,42 +1,43 @@
 {
-  "root": "packages/error",
+  "name": "error",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/error/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/error",
         "tsConfig": "packages/error/tsconfig.lib.json",
         "packageJson": "packages/error/package.json",
-        "generatePackageJson": true,
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true,
         "main": "packages/error/src/index.ts",
         "assets": ["packages/error/*.md"]
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["packages/error/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/error"],
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/packages/error"],
       "options": {
-        "jestConfig": "packages/error/jest.config.js",
-        "passWithNoTests": true
+        "jestConfig": "packages/error/jest.config.ts"
       }
     },
     "release": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/error"],
       "options": {
-        "commands": ["npx semantic-release-plus"],
+        "commands": [
+          "node ../../dist/packages/srp/src/bin/semantic-release-plus.js --debug"
+        ],
         "cwd": "packages/error",
         "parallel": false
       }
     }
-  },
-  "tags": []
+  }
 }

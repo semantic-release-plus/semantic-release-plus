@@ -1,0 +1,73 @@
+{
+  "name": "srp",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/srp/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/srp",
+        "tsConfig": "packages/srp/tsconfig.lib.json",
+        "packageJson": "packages/srp/package.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true,
+        "main": "packages/srp/src/index.js",
+        "assets": ["packages/srp/*.md"]
+      }
+    },
+    "chmod": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/srp"],
+      "options": {
+        "commands": [
+          "chmod +x dist/packages/srp/src/bin/semantic-release-plus.js"
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "build"
+        }
+      ]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/packages/srp"],
+      "options": {
+        "jestConfig": "packages/srp/jest.config.ts"
+      }
+    },
+    "ava": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "test"
+      }
+    },
+    "e2e": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "e2e"
+      },
+      "dependsOn": [
+        {
+          "target": "build"
+        }
+      ]
+    },
+    "release": {
+      "executor": "nx:run-script",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "script": "release",
+        "outputPath": "dist/packages/srp"
+      }
+    }
+  }
+}

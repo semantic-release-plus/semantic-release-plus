@@ -1,9 +1,63 @@
 import { BranchType } from '../enums';
 
+export interface CommonContext {
+  stdout: NodeJS.WriteStream;
+  stderr: NodeJS.WriteStream;
+  logger: Logger;
+  gitNotesRef?: string;
+}
+
+export interface VerifyConditionsContext extends CommonContext {
+  cwd: string;
+  env: NodeJS.ProcessEnv;
+  envCi: {
+    isCi: boolean;
+    commit: string;
+    branch: string;
+    [key: string]: unknown;
+  };
+  options: Options;
+  branch: Branch;
+  branches: Branch[];
+}
+
+export interface AnalyzeCommitsContext extends VerifyConditionsContext {
+  commits: Commit[];
+  releases: Release[];
+  lastRelease: Release;
+}
+
+export interface VerifyReleaseContext extends AnalyzeCommitsContext {
+  nextRelease: Release;
+}
+
+export type GenerateNotesContext = VerifyReleaseContext;
+
+export type PrepareContext = GenerateNotesContext;
+
+export type PublishContext = PrepareContext;
+
+export type SuccessContext = PublishContext;
+
+export interface FailContext extends PublishContext {
+  errors: Error[];
+}
+
+export type AnyLifecycleContext =
+  | VerifyConditionsContext
+  | AnalyzeCommitsContext
+  | VerifyReleaseContext
+  | GenerateNotesContext
+  | PrepareContext
+  | PublishContext
+  | SuccessContext
+  | FailContext;
+
 export interface Context {
-  branch?: Branch;
+  branch: Branch;
   branches?: Branch[];
   commits?: Commit[];
+  gitNotesRef?: string;
   cwd?: string;
   env?: NodeJS.ProcessEnv;
   envCi?: NodeJS.ProcessEnv;
@@ -16,11 +70,14 @@ export interface Context {
   stderr?: NodeJS.WriteStream;
 }
 
-export interface Options {
-  tagFormat?: unknown;
-  repositoryUrl?: unknown;
+interface Options {
+  tagFormat?: string;
+  repositoryUrl?: string;
   branches?: unknown;
   publish?: boolean;
+  dryRun?: boolean;
+  noCi?: boolean;
+  skipTag?: boolean;
 }
 
 export interface Release {
@@ -34,23 +91,32 @@ export interface Release {
 }
 
 export interface Logger {
-  log?: (message: string) => void;
-  error?: (message: string) => void;
-  warn?: (message: string) => void;
-  success?: (message: string) => void;
+  log: (message: string) => void;
+  error: (message: string) => void;
+  warn: (message: string) => void;
+  success: (message: string) => void;
 }
 
-export interface Branch {
-  channel: unknown;
-  tags: unknown;
-  type: unknown;
-  name: unknown;
-  range: unknown;
-  accept: unknown;
-  main: unknown;
+interface Branch {
+  name: string;
+  channel?: string;
+  tags?: Tag[];
+  type?: BranchType;
+  range?: string;
+  accept?: unknown;
+  main?: unknown;
+  mergeRange?: string;
 }
 
-export interface Commit {
+interface Tag {
+  version: string;
+  channel: string;
+  channels: string[];
+  gitTag: string;
+  gitHead: string;
+}
+
+interface Commit {
   commit: {
     long: string;
     short: string;

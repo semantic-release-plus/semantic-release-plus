@@ -1,5 +1,4 @@
 import { ImageDetailsInterface, ImageName } from './image-name';
-
 describe('ImageName Spec', () => {
   describe('create new ImageName', () => {
     describe('from string', () => {
@@ -17,10 +16,9 @@ describe('ImageName Spec', () => {
         };
         expect(i.toJSON()).toEqual(expectedImageDetails);
       });
-
       it('with registry, port, namespace, repo, and sha', () => {
         const i = new ImageName(
-          'my-reg:9876/my-namespace/my-repo@sha256:49cb0d58e7fee6e86d061f152bbbd529cf41059e9da00868babed2380c4a3d61'
+          'my-reg:9876/my-namespace/my-repo@sha256:49cb0d58e7fee6e86d061f152bbbd529cf41059e9da00868babed2380c4a3d61',
         );
         const expectedImageDetails: ImageDetailsInterface = {
           registry: 'my-reg:9876',
@@ -36,11 +34,9 @@ describe('ImageName Spec', () => {
         };
         expect(i.toJSON()).toEqual(expectedImageDetails);
       });
-
       it('create ImageName from with namespace', () => {
         const i = new ImageName('cypress/included:3.2.0');
       });
-
       it('should throw an error if given an invalid name string', () => {
         expect.assertions(1);
         try {
@@ -50,13 +46,11 @@ describe('ImageName Spec', () => {
         }
       });
     });
-
     describe('from object', () => {
       it('repository only', () => {
         const i = new ImageName({
           repository: 'my-repo',
         });
-
         const expectedImageDetails: ImageDetailsInterface = {
           repository: 'my-repo',
           name: 'my-repo',
@@ -66,13 +60,11 @@ describe('ImageName Spec', () => {
         };
         expect(i.toJSON()).toEqual(expectedImageDetails);
       });
-
       it('with custom registry', () => {
         const i = new ImageName({
           registry: 'my-reg.io',
           repository: 'my-repo',
         });
-
         const expectedImageDetails: ImageDetailsInterface = {
           localName: 'my-repo',
           localNameWithSuffix: 'my-repo',
@@ -81,7 +73,6 @@ describe('ImageName Spec', () => {
           registry: 'my-reg.io',
           repository: 'my-repo',
         };
-
         expect(i.toJSON()).toEqual(expectedImageDetails);
       });
     });

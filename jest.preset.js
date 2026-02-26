@@ -1,3 +1,9 @@
-const nxPreset = require('@nrwl/jest/preset');
+const nxPreset = require('@nx/jest/preset').default;
 
-module.exports = { ...nxPreset };
+/** @type {import('jest').Config} */
+const config = {
+  ...nxPreset,
+  coverageReporters: ['json', 'lcovonly', 'text', 'text-summary'],
+};
+
+module.exports = config;

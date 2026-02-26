@@ -1,0 +1,16 @@
+/* eslint-disable no-undef */
+const name = '<%= releaseName %>';
+const srcRoot = `<%= projectRoot %>`;
+const pathToRepoRoot = '<%= offsetFromRoot %>'.slice(0, -1) || '.';
+
+module.exports = {
+  extends: `${pathToRepoRoot}/release.config.base.js`,
+  pkgRoot: `${pathToRepoRoot}/<%= outputPath %>`,
+  tagFormat: name + '-v${version}',
+  commitPaths: [
+    `*`, // anything in this project's directory
+    // Add paths to global files that affect this project's build output:
+    // `${pathToRepoRoot}/tsconfig.base.json`,
+    // `${pathToRepoRoot}/package.json`,
+  ],
+};

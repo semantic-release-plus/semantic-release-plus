@@ -1,24 +1,20 @@
 import { Context } from '@semantic-release-plus/core';
 import * as execa from 'execa';
-import { mocked } from 'ts-jest/utils';
+import { mocked } from 'jest-mock';
 import { dockerLogin, dockerPull, dockerPush, dockerTag } from './docker-utils';
-
 jest.mock('execa');
-
 describe('docker utils', () => {
-  const execaMock = mocked(execa, true);
+  const execaMock = mocked(execa, { shallow: true });
   const dockerUser = 'user-name';
   const dockerPassword = '!my-testing-password!';
-
   const context: Context = {
+    branch: { name: 'main' },
     // stdout: jest.fn(),
     // stderr: jest.fn(),
   };
-
   beforeEach(() => {
     execaMock.mockClear();
   });
-
   it('should login successfully to default docker.io', async () => {
     const expectedLoginArgs = [
       'docker',
@@ -27,7 +23,6 @@ describe('docker utils', () => {
         input: dockerPassword,
       },
     ];
-
     // execaMock.mockReturnValue({
     //   stdin: {
     //     pipe: jest.fn()
@@ -43,17 +38,15 @@ describe('docker utils', () => {
       //@ts-expect-error mocking execa return is long
       stdout: 'Login Success',
     });
-
     await dockerLogin(
       {
         userName: dockerUser,
         password: dockerPassword,
       },
-      context
+      context,
     );
     expect(execaMock).toHaveBeenCalledWith(...expectedLoginArgs);
   });
-
   it('should login successfully to ghcr.io', async () => {
     const expectedLoginArgs = [
       'docker',
@@ -62,27 +55,23 @@ describe('docker utils', () => {
         input: dockerPassword,
       },
     ];
-
     execaMock.mockResolvedValue(undefined);
-
     await dockerLogin(
       {
         userName: dockerUser,
         password: dockerPassword,
         registry: 'ghcr.io',
       },
-      context
+      context,
     );
     expect(execaMock).toHaveBeenCalledWith(...expectedLoginArgs);
   });
-
   it('should pull image successfully', async () => {
     const expectedPullArgs = [
       'docker',
       ['pull', 'ghcr.io/joa-mos/node:omega'],
       {},
     ];
-
     // execaMock.mockResolvedValue({
     //   command: 'docker pull ghcr.io/joa-mos/node:omega',
     //   escapedCommand: 'docker pull "ghcr.io/joa-mos/node:omega"',
@@ -100,30 +89,30 @@ describe('docker utils', () => {
     //   killed: false,
     // });
     await dockerPull('ghcr.io/joa-mos/node:omega', {
+      branch: { name: 'main' },
       stdout: process.stdout,
       stderr: process.stderr,
     });
-
     expect(execaMock).toHaveBeenCalledWith(...expectedPullArgs);
   }, 100000);
-
   it('should tag image successfully', async () => {
     const expectedTagArgs = [
       'docker',
       ['tag', 'joa-mos/node:omega', 'joa-mos/node:epsilon'],
       {},
     ];
-
     execaMock.mockResolvedValue({} as execa.ExecaReturnValue<Buffer>);
-    await dockerTag('joa-mos/node:omega', 'joa-mos/node:epsilon', {});
+    await dockerTag('joa-mos/node:omega', 'joa-mos/node:epsilon', {
+      branch: { name: 'main' },
+    });
     expect(execaMock).toHaveBeenCalledWith(...expectedTagArgs);
   });
-
   it('should push tag successfully', async () => {
     const expectedPushArgs = ['docker', ['push', 'joa-mos/node:omega'], {}];
-
     execaMock.mockResolvedValue({} as execa.ExecaReturnValue<Buffer>);
-    await dockerPush('joa-mos/node:omega', {});
+    await dockerPush('joa-mos/node:omega', {
+      branch: { name: 'main' },
+    });
     expect(execaMock).toHaveBeenCalledWith(...expectedPushArgs);
   });
 });

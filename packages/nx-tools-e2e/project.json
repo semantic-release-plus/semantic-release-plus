@@ -1,0 +1,19 @@
+{
+  "name": "nx-tools-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "packages/nx-tools-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["nx-tools"],
+  "targets": {
+    "test-local": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "packages/nx-tools-e2e/jest.config.js",
+        "runInBand": true,
+        "passWithNoTests": false
+      },
+      "dependsOn": ["nx-tools:build"]
+    }
+  }
+}

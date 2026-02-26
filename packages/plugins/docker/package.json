@@ -21,9 +21,6 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "@semantic-release-plus/core": "*"
-  },
-  "peerDependencies": {
-    "semantic-release-plus": "^19.0.0 || ^20.0.0 || >=20.0.0-alpha"
+    "@semantic-release-plus/core": "alpha"
   }
 }

@@ -22,11 +22,9 @@
   },
   "keywords": [
     "error",
-    "semantic-release",
     "semantic-release-plus"
   ],
-  "dependencies": {},
-  "peerDependencies": {
-    "semantic-release-plus": "^19.0.0 || ^20.0.0"
+  "dependencies": {
+    "tslib": "^2.3.0"
   }
 }

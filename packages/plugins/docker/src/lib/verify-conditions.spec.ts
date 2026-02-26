@@ -1,26 +1,22 @@
-import { mocked } from 'ts-jest/utils';
 import { Context } from '@semantic-release-plus/core';
+import { mocked } from 'jest-mock';
 import { dockerLogin } from './docker-utils';
 import { PluginConfig } from './plugin-config.interface';
 import { verifyConditions } from './verify-conditions';
-
 jest.mock('./docker-utils');
-
 describe('verify', () => {
-  const dockerLoginMock = mocked(dockerLogin, true);
+  const dockerLoginMock = mocked(dockerLogin, { shallow: true });
   const dockerUser = 'dockerUserName';
   const dockerPassword = 'dockerPW';
-
   const pluginConfig = {
     name: 'test',
   } as PluginConfig;
-
   const pluginConfigNoLogin = {
     name: 'test',
     skipLogin: true,
   } as PluginConfig;
-
   const context: Context = {
+    branch: { name: 'main' },
     nextRelease: {
       version: '1.1.1',
     },
@@ -31,11 +27,9 @@ describe('verify', () => {
       warn: jest.fn(),
     },
   };
-
   beforeEach(() => {
     dockerLoginMock.mockClear();
   });
-
   it('should try to login to default docker registry', async () => {
     const tstContext: Context = {
       ...context,
@@ -45,19 +39,16 @@ describe('verify', () => {
       },
     };
     dockerLoginMock.mockResolvedValue(undefined);
-
     verifyConditions(pluginConfig, tstContext);
-
     expect(dockerLoginMock).toHaveBeenCalledWith(
       {
         userName: dockerUser,
         password: dockerPassword,
         registry: undefined,
       },
-      tstContext
+      tstContext,
     );
   });
-
   it('should try to login to specified docker registry', async () => {
     const tstContext: Context = {
       ...context,
@@ -67,23 +58,19 @@ describe('verify', () => {
       },
     };
     pluginConfig.registry = 'https://my-reg.url';
-
     verifyConditions(pluginConfig, tstContext);
-
     expect(dockerLoginMock).toHaveBeenCalledWith(
       {
         userName: dockerUser,
         password: dockerPassword,
         registry: pluginConfig.registry,
       },
-      tstContext
+      tstContext,
     );
   });
-
   it('should throw error when missing environment variable', async () => {
     await expect(verifyConditions(pluginConfig, context)).rejects.toThrow();
   });
-
   it('should throw error if login fails', async () => {
     const tstContext: Context = {
       ...context,
@@ -99,13 +86,12 @@ describe('verify', () => {
     try {
       await verifyConditions(pluginConfig, tstContext);
     } catch (e) {
-      expect(tstContext.logger.error).toBeCalledWith(
-        new Error('docker cli login error')
+      expect(tstContext.logger.error).toHaveBeenCalledWith(
+        new Error('docker cli login error'),
       );
       expect(e.message).toBe('docker login failed');
     }
   });
-
   it('should throw error if docker user and password env variables are not populated and skip login is false', async () => {
     expect.assertions(1);
     try {
@@ -114,11 +100,10 @@ describe('verify', () => {
       expect(e.message).toBe('Environment variable DOCKER_USERNAME is not set');
     }
   });
-
   it('should skip logging in to docker if set to in config', async () => {
     expect(verifyConditions(pluginConfigNoLogin, context)).resolves;
-    expect(context.logger.log).toBeCalledWith(
-      'Skipping docker login because skipLogin was set to true'
+    expect(context.logger.log).toHaveBeenCalledWith(
+      'Skipping docker login because skipLogin was set to true',
     );
     expect(dockerLoginMock).not.toHaveBeenCalled();
   });

@@ -1,0 +1,67 @@
+{
+  "name": "nx-tools",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/nx-tools/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/nx-tools",
+        "tsConfig": "packages/nx-tools/tsconfig.lib.json",
+        "packageJson": "packages/nx-tools/package.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true,
+        "main": "packages/nx-tools/src/index.ts",
+        "assets": [
+          "packages/nx-tools/*.md",
+          {
+            "input": "./packages/nx-tools/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx-tools/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx-tools",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/nx-tools",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "link-plugin": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npm link ./dist/packages/nx-tools",
+          "npm link @semantic-release-plus/nx-tools"
+        ],
+        "parallel": false
+      }
+    },
+    "release": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/nx-tools"],
+      "options": {
+        "commands": [
+          "node ../../dist/packages/srp/src/bin/semantic-release-plus.js --debug"
+        ],
+        "cwd": "packages/nx-tools"
+      }
+    }
+  },
+  "tags": ["nx-plugin"]
+}

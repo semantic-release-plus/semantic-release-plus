@@ -28,6 +28,7 @@
 /.sass-cache
 /connect.lock
 /coverage
+/.nyc_output
 /reports
 /libpeerconnection.log
 npm-debug.log
@@ -38,3 +39,13 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# e2e srp cert
+packages/srp/CertificateAuthorityCertificate.pem
+
+# env files
+.env.local
+.nx/cache
+.nx/workspace-data
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
