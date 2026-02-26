@@ -1,8 +1,7 @@
 /* eslint-disable */
 export default {
-  name: 'plugins-docker',
+  displayName: 'plugins-docker',
   preset: '../../../jest.preset.js',
-  globals: {},
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]sx?$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],

@@ -1,65 +1,65 @@
 {
   "migrations": [
     {
+      "version": "22.0.0-beta.1",
+      "description": "Updates release version config based on the breaking changes in Nx v22",
+      "implementation": "./src/migrations/update-22-0-0/release-version-config-changes",
+      "package": "nx",
+      "name": "22-0-0-release-version-config-changes"
+    },
+    {
+      "version": "22.0.0-beta.2",
+      "description": "Consolidates releaseTag* options into nested releaseTag object structure",
+      "implementation": "./src/migrations/update-22-0-0/consolidate-release-tag-config",
+      "package": "nx",
+      "name": "22-0-0-consolidate-release-tag-config"
+    },
+    {
       "cli": "nx",
-      "version": "17.3.0-beta.6",
+      "version": "22.1.0-beta.5",
       "description": "Updates the nx wrapper.",
-      "implementation": "./src/migrations/update-17-3-0/update-nxw",
+      "implementation": "./src/migrations/update-22-1-0/update-nx-wrapper",
       "package": "nx",
-      "name": "17.3.0-update-nx-wrapper"
+      "name": "22-1-0-update-nx-wrapper"
     },
     {
-      "cli": "nx",
-      "version": "18.0.0-beta.2",
-      "description": "Updates .env to disabled adding plugins when generating projects in an existing Nx workspace",
-      "implementation": "./src/migrations/update-18-0-0/disable-crystal-for-existing-workspaces",
-      "x-repair-skip": true,
-      "package": "nx",
-      "name": "18.0.0-disable-adding-plugins-for-existing-workspaces"
-    },
-    {
-      "version": "17.1.0-beta.1",
-      "description": "Updates for @typescript-utils/utils v6.9.1+",
-      "implementation": "./src/migrations/update-17-1-0/update-typescript-eslint",
-      "package": "@nx/eslint",
-      "name": "update-typescript-eslint"
-    },
-    {
-      "version": "17.2.0-beta.0",
-      "description": "Simplify eslintFilePatterns",
-      "implementation": "./src/migrations/update-17-2-0/simplify-eslint-patterns",
-      "package": "@nx/eslint",
-      "name": "simplify-eslint-patterns"
-    },
-    {
-      "version": "17.2.9",
-      "description": "Move executor options to target defaults",
-      "implementation": "./src/migrations/update-17-2-9/move-options-to-target-defaults",
-      "package": "@nx/eslint",
-      "name": "move-options-to-target-defaults"
-    },
-    {
-      "cli": "nx",
-      "version": "17.2.6-beta.1",
-      "description": "Rename workspace rules from @nx/workspace/name to @nx/workspace-name",
-      "implementation": "./src/migrations/update-17-2-6-rename-workspace-rules/rename-workspace-rules",
-      "package": "@nx/eslint-plugin",
-      "name": "update-17-2-6-rename-workspace-rules"
-    },
-    {
-      "cli": "nx",
-      "version": "17.2.1-beta.0",
-      "description": "Add webpack.config.js file when webpackConfig is not defined",
-      "implementation": "./src/migrations/update-17-2-1/webpack-config-setup",
-      "package": "@nx/webpack",
-      "name": "update-17-2-1-webpack-config-setup"
-    },
-    {
-      "version": "17.1.0-beta.2",
-      "description": "Move jest executor options to nx.json targetDefaults",
-      "implementation": "./src/migrations/update-17-1-0/move-options-to-target-defaults",
+      "version": "22.2.0-beta.2",
+      "description": "Convert jest.config.ts files from ESM to CJS syntax (export default -> module.exports, import -> require) for projects using CommonJS resolution to ensure correct loading under Node.js type-stripping.",
+      "implementation": "./src/migrations/update-22-2-0/convert-jest-config-to-cjs",
       "package": "@nx/jest",
-      "name": "move-options-to-target-defaults"
+      "name": "convert-jest-config-to-cjs"
+    },
+    {
+      "version": "22.3.2-beta.0",
+      "requires": {
+        "jest": ">=30.0.0"
+      },
+      "description": "Replace removed matcher aliases in Jest v30 with their corresponding matcher",
+      "implementation": "./src/migrations/update-21-3-0/replace-removed-matcher-aliases",
+      "package": "@nx/jest",
+      "name": "replace-removed-matcher-aliases-v22-3"
+    },
+    {
+      "version": "22.0.0-beta.0",
+      "description": "Remove the deprecated `external` and `externalBuildTargets` options from the `@nx/js:swc` and `@nx/js:tsc` executors.",
+      "factory": "./src/migrations/update-22-0-0/remove-external-options-from-js-executors",
+      "package": "@nx/js",
+      "name": "remove-external-options-from-js-executors"
+    },
+    {
+      "version": "22.1.0-rc.1",
+      "description": "Removes redundant TypeScript project references from project's tsconfig.json files when runtime tsconfig files (e.g., tsconfig.lib.json, tsconfig.app.json) exist.",
+      "factory": "./src/migrations/update-22-1-0/remove-redundant-ts-project-references",
+      "package": "@nx/js",
+      "name": "remove-redundant-ts-project-references"
+    },
+    {
+      "cli": "nx",
+      "version": "22.0.0-beta.0",
+      "description": "Remove deprecated deleteOutputPath and sassImplementation options from @nx/webpack:webpack",
+      "implementation": "./src/migrations/update-22-0-0/remove-deprecated-options",
+      "package": "@nx/webpack",
+      "name": "update-22-0-0-remove-deprecated-options"
     }
   ]
 }

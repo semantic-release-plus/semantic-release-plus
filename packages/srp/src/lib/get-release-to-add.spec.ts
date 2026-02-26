@@ -1,5 +1,4 @@
 import * as getReleaseToAdd from './get-release-to-add';
-
 describe('get-release-to-add', () => {
   test('Return versions merged from release to maintenance branch, excluding lower than branch start range', () => {
     const result = getReleaseToAdd({
@@ -20,7 +19,6 @@ describe('get-release-to-add', () => {
       branches: [{ name: '2.x', channel: '2.x' }, { name: 'master' }],
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toEqual({
       lastRelease: {
         version: '2.1.0',
@@ -47,7 +45,6 @@ describe('get-release-to-add', () => {
       },
     });
   });
-
   test('Return versions merged between release branches', () => {
     const result = getReleaseToAdd({
       branch: {
@@ -65,7 +62,6 @@ describe('get-release-to-add', () => {
       ],
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toEqual({
       lastRelease: {
         version: '1.1.0',
@@ -92,7 +88,6 @@ describe('get-release-to-add', () => {
       },
     });
   });
-
   test('Return releases sorted by ascending order', () => {
     const result = getReleaseToAdd({
       branch: {
@@ -110,7 +105,6 @@ describe('get-release-to-add', () => {
       ],
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toEqual({
       lastRelease: {
         version: '1.1.0',
@@ -137,7 +131,6 @@ describe('get-release-to-add', () => {
       },
     });
   });
-
   test('No lastRelease', () => {
     const result = getReleaseToAdd({
       branch: {
@@ -147,7 +140,6 @@ describe('get-release-to-add', () => {
       branches: [{ name: 'master' }, { name: 'next', channel: 'next' }],
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toEqual({
       lastRelease: {},
       currentRelease: {
@@ -168,7 +160,6 @@ describe('get-release-to-add', () => {
       },
     });
   });
-
   test('Ignore pre-release versions', () => {
     const result = getReleaseToAdd({
       branch: {
@@ -190,7 +181,6 @@ describe('get-release-to-add', () => {
       ],
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toEqual({
       lastRelease: {
         version: '1.0.0',
@@ -217,7 +207,6 @@ describe('get-release-to-add', () => {
       },
     });
   });
-
   test('Exclude versions merged from release to maintenance branch if they have the same "channel"', () => {
     const result = getReleaseToAdd({
       branch: {
@@ -240,10 +229,8 @@ describe('get-release-to-add', () => {
       ],
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toBe(undefined);
   });
-
   test('Exclude versions merged between release branches if they have the same "channel"', () => {
     const result = getReleaseToAdd({
       branch: {
@@ -262,10 +249,8 @@ describe('get-release-to-add', () => {
       ],
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toBe(undefined);
   });
-
   test('Exclude versions merged between release branches if they all have "channel" set to "false"', () => {
     const result = getReleaseToAdd({
       branch: {
@@ -284,10 +269,8 @@ describe('get-release-to-add', () => {
       ],
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toBe(undefined);
   });
-
   test('Exclude versions number less than the latest version already released on that branch', () => {
     const result = getReleaseToAdd({
       branch: {
@@ -307,7 +290,6 @@ describe('get-release-to-add', () => {
       branches: [{ name: '2.x', channel: '2.x' }, { name: 'master' }],
       options: { tagFormat: `v\${version}` },
     });
-
     expect(result).toBe(undefined);
   });
 });

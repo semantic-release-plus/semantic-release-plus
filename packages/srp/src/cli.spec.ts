@@ -1,6 +1,5 @@
 import { escapeRegExp } from 'lodash';
 import { SECRET_REPLACEMENT } from '../src/lib/definitions/constants';
-
 // TODO: Refactor to isolate this so it's only testing cli
 describe('cli', () => {
   let originalArgv: string[];
@@ -9,21 +8,17 @@ describe('cli', () => {
   const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
   // const stdoutSpy = jest.spyOn(process.stdout, 'write').mockImplementation();
   const stderrSpy = jest.spyOn(process.stderr, 'write').mockImplementation();
-
   beforeEach(() => {
     jest.mock('./index', () => indexMock);
     // Remove all cached modules. The cache needs to be cleared before running
     // each command, otherwise you will see the same results from the command
     // run in your first test in subsequent tests.
     jest.resetModules();
-
     // Each test overwrites process arguments so store the original arguments
     originalArgv = process.argv;
   });
-
   afterEach(() => {
     jest.resetAllMocks();
-
     // Set process arguments back to the original value
     process.argv = originalArgv;
   });
@@ -67,7 +62,6 @@ describe('cli', () => {
       '--debug',
       '-d',
     ];
-
     const exitCode = await runCommand(testArgs);
     expect(indexMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -90,7 +84,6 @@ describe('cli', () => {
     );
     expect(exitCode).toBe(0);
   });
-
   test('Pass options to semantic-release-plus API with alias arguments', async () => {
     const testArgs = [
       '--branches',
@@ -107,7 +100,6 @@ describe('cli', () => {
       'config2',
       '--dry-run',
     ];
-
     const exitCode = await runCommand(testArgs);
     expect(indexMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -121,7 +113,6 @@ describe('cli', () => {
     );
     expect(exitCode).toBe(0);
   });
-
   test('Pass unknown options to semantic-release-plus API', async () => {
     const testArgs = [
       '--bool',
@@ -132,9 +123,7 @@ describe('cli', () => {
       '--second-option',
       'value3',
     ];
-
     const exitCode = await runCommand(testArgs);
-
     expect(indexMock).toHaveBeenCalledWith(
       expect.objectContaining({
         bool: true,
@@ -142,29 +131,21 @@ describe('cli', () => {
         secondOption: ['value2', 'value3'],
       }),
     );
-
     expect(exitCode).toBe(0);
   });
-
   test('Pass empty Array to semantic-release-plus API for list option set to "false"', async () => {
     const testArgs = ['--publish', 'false'];
-
     const exitCode = await runCommand(testArgs);
-
     expect(indexMock).toHaveBeenCalledWith(
       expect.objectContaining({
         publish: [],
       }),
     );
-
     expect(exitCode).toBe(0);
   });
-
   test('Do not set properties in option for which arg is not in command line', async () => {
     const testArgs = ['-b', 'master'];
-
     await runCommand(testArgs);
-
     expect('ci' in indexMock.mock.calls[0][0]).toBe(false);
     expect('d' in indexMock.mock.calls[0][0]).toBe(false);
     expect('dry-run' in indexMock.mock.calls[0][0]).toBe(false);
@@ -174,23 +155,17 @@ describe('cli', () => {
     expect('p' in indexMock.mock.calls[0][0]).toBe(false);
     expect('e' in indexMock.mock.calls[0][0]).toBe(false);
   });
-
   test('Display help', async () => {
     const testArgs = ['--help'];
-
     const exitCode = await runCommand(testArgs);
-
     expect(consoleLogSpy).toHaveBeenCalledWith(
       expect.stringMatching(/Run automated package publishing/),
     );
     expect(exitCode).toBe(0);
   });
-
   test('Return error exitCode and prints help if called with a command', async () => {
     const testArgs = ['pre'];
-
     const exitCode = await runCommand(testArgs);
-
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       expect.stringMatching(/Run automated package publishing/),
     );
@@ -199,13 +174,10 @@ describe('cli', () => {
     );
     expect(exitCode).toBe(1);
   });
-
   test('Return error exitCode if multiple plugin are set for single plugin', async () => {
     indexMock.mockResolvedValue(true);
     const testArgs = ['--analyze-commits', 'analyze1', 'analyze2'];
-
     const exitCode = await runCommand(testArgs);
-
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       expect.stringMatching(/Run automated package publishing/),
     );
@@ -214,27 +186,21 @@ describe('cli', () => {
     );
     expect(exitCode).toBe(1);
   });
-
   test('Return error exitCode if semantic-release-plus throw error', async () => {
     indexMock.mockRejectedValue(new Error('semantic-release-plus error'));
     const testArgs = [];
-
     const exitCode = await runCommand(testArgs);
-
     expect(stderrSpy).toHaveBeenCalledWith(
       expect.stringMatching(/semantic-release-plus error/),
     );
-
     expect(exitCode).toBe(1);
   });
-
   test('Hide sensitive environment variable values from the logs', async () => {
     const env = { MY_TOKEN: 'secret token' };
     indexMock.mockRejectedValue(
       new Error(`Throw error: Exposing token ${env.MY_TOKEN}`),
     );
     const testArgs = [];
-
     const exitCode = await runCommand(testArgs, env);
     expect(stderrSpy).toHaveBeenCalledWith(
       expect.stringMatching(
@@ -246,7 +212,6 @@ describe('cli', () => {
     expect(exitCode).toBe(1);
   });
 });
-
 async function runCommand(args, env?) {
   process = {
     ...process,
@@ -260,7 +225,6 @@ async function runCommand(args, env?) {
       ...env,
     },
   };
-
   // Require the yargs CLI script
   return (await require('./cli'))();
 }

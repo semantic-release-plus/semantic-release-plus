@@ -5,7 +5,6 @@ import { omit } from 'lodash';
 import yaml = require('js-yaml');
 import * as getConfig from './get-config';
 import * as plugins from './plugins';
-
 import {
   gitRepo,
   gitTagVersion,
@@ -14,22 +13,18 @@ import {
   gitAddConfig,
 } from '../../test/helpers/git-utils';
 import exp = require('constants');
-
 const DEFAULT_PLUGINS = [
   '@semantic-release/commit-analyzer',
   '@semantic-release/release-notes-generator',
   '@semantic-release/npm',
   '@semantic-release/github',
 ];
-
 jest.mock('./plugins', () => jest.fn().mockReturnValue({}));
 const mockedPlugins = jest.mocked(plugins);
-
 describe('get-config', () => {
   beforeEach(() => {
     mockedPlugins.mockClear();
   });
-
   test('Default values, reading repositoryUrl from package.json', async () => {
     const pkg = { repository: 'https://host.null/owner/package.git' };
     // Create a git repository, set the current working directory at the root of the repo
@@ -43,9 +38,7 @@ describe('get-config', () => {
     });
     // Create package.json in repository root
     await outputJson(path.resolve(cwd, 'package.json'), pkg);
-
     const { options: result } = await getConfig({ cwd });
-
     // Verify the default options are set
     expect(result.branches).toEqual([
       '+([0-9])?(.{+([0-9]),x}).x',
@@ -58,7 +51,6 @@ describe('get-config', () => {
     expect(result.repositoryUrl).toBe('https://host.null/owner/package.git');
     expect(result.tagFormat).toBe(`v\${version}`);
   });
-
   test('Default values, reading repositoryUrl from repo if not set in package.json', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo(true);
@@ -68,9 +60,7 @@ describe('get-config', () => {
       'https://host.null/owner/module.git',
       { cwd },
     );
-
     const { options: result } = await getConfig({ cwd });
-
     // Verify the default options are set
     expect(result.branches).toEqual([
       '+([0-9])?(.{+([0-9]),x}).x',
@@ -83,16 +73,13 @@ describe('get-config', () => {
     expect(result.repositoryUrl).toBe('https://host.null/owner/module.git');
     expect(result.tagFormat).toBe(`v\${version}`);
   });
-
   test('Default values, reading repositoryUrl (http url) from package.json if not set in repo', async () => {
     const pkg = { repository: 'https://host.null/owner/module.git' };
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
     // Create package.json in repository root
     await outputJson(path.resolve(cwd, 'package.json'), pkg);
-
     const { options: result } = await getConfig({ cwd });
-
     // Verify the default options are set
     expect(result.branches).toEqual([
       '+([0-9])?(.{+([0-9]),x}).x',
@@ -105,7 +92,6 @@ describe('get-config', () => {
     expect(result.repositoryUrl).toBe('https://host.null/owner/module.git');
     expect(result.tagFormat).toBe(`v\${version}`);
   });
-
   test('Convert "ci" option to "noCi"', async () => {
     const pkg = {
       repository: 'https://host.null/owner/module.git',
@@ -115,12 +101,9 @@ describe('get-config', () => {
     const { cwd } = await gitRepo();
     // Create package.json in repository root
     await outputJson(path.resolve(cwd, 'package.json'), pkg);
-
     const { options: result } = await getConfig({ cwd });
-
     expect(result.noCi).toBe(true);
   });
-
   test('Read options from package.json', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -134,16 +117,13 @@ describe('get-config', () => {
     };
     // Create package.json in repository root
     await outputJson(path.resolve(cwd, 'package.json'), { release: options });
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = { ...options, branches: ['test_branch'] };
     // Verify the options contains the plugin config from package.json
     expect(result).toEqual(expected);
     // Verify the plugins module is called with the plugin options from package.json
     expect(mockedPlugins).toHaveBeenCalledWith({ options: expected, cwd }, {});
   });
-
   test('Read options from .releaserc.yml', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -156,16 +136,13 @@ describe('get-config', () => {
     };
     // Create package.json in repository root
     await writeFile(path.resolve(cwd, '.releaserc.yml'), yaml.dump(options));
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = { ...options, branches: ['test_branch'] };
     // Verify the options contains the plugin config from package.json
     expect(result).toEqual(expected);
     // Verify the plugins module is called with the plugin options from package.json
     expect(mockedPlugins).toHaveBeenCalledWith({ options: expected, cwd }, {});
   });
-
   test('Read options from .releaserc.json', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -178,16 +155,13 @@ describe('get-config', () => {
     };
     // Create package.json in repository root
     await outputJson(path.resolve(cwd, '.releaserc.json'), options);
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = { ...options, branches: ['test_branch'] };
     // Verify the options contains the plugin config from package.json
     expect(result).toEqual(expected);
     // Verify the plugins module is called with the plugin options from package.json
     expect(mockedPlugins).toHaveBeenCalledWith({ options: expected, cwd }, {});
   });
-
   test('Read options from .releaserc.js', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -203,16 +177,13 @@ describe('get-config', () => {
       path.resolve(cwd, '.releaserc.js'),
       `module.exports = ${JSON.stringify(options)}`,
     );
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = { ...options, branches: ['test_branch'] };
     // Verify the options contains the plugin config from package.json
     expect(result).toEqual(expected);
     // Verify the plugins module is called with the plugin options from package.json
     expect(mockedPlugins).toHaveBeenCalledWith({ options: expected, cwd }, {});
   });
-
   test('Read options from .releaserc.cjs', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -228,16 +199,13 @@ describe('get-config', () => {
       path.resolve(cwd, '.releaserc.cjs'),
       `module.exports = ${JSON.stringify(options)}`,
     );
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = { ...options, branches: ['test_branch'] };
     // Verify the options contains the plugin config from .releaserc.cjs
     expect(result).toEqual(expected);
     // Verify the plugins module is called with the plugin options from .releaserc.cjs
     expect(mockedPlugins).toHaveBeenCalledWith({ options: expected, cwd }, {});
   });
-
   test('Read options from release.config.js', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -253,16 +221,13 @@ describe('get-config', () => {
       path.resolve(cwd, 'release.config.js'),
       `module.exports = ${JSON.stringify(options)}`,
     );
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = { ...options, branches: ['test_branch'] };
     // Verify the options contains the plugin config from package.json
     expect(result).toEqual(expected);
     // Verify the plugins module is called with the plugin options from package.json
     expect(mockedPlugins).toHaveBeenCalledWith({ options: expected, cwd }, {});
   });
-
   test('Read options from release.config.cjs', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -278,16 +243,13 @@ describe('get-config', () => {
       path.resolve(cwd, 'release.config.cjs'),
       `module.exports = ${JSON.stringify(options)}`,
     );
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = { ...options, branches: ['test_branch'] };
     // Verify the options contains the plugin config from release.config.cjs
     expect(result).toEqual(expected);
     // Verify the plugins module is called with the plugin options from release.config.cjs
     expect(mockedPlugins).toHaveBeenCalledWith({ options: expected, cwd }, {});
   });
-
   test('Prioritise CLI/API parameters over file configuration and git repo', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const getRepoValue = await gitRepo();
@@ -313,16 +275,13 @@ describe('get-config', () => {
     };
     // Create package.json in repository root
     await outputJson(path.resolve(cwd, 'package.json'), pkg);
-
     const result = await getConfig({ cwd }, options);
-
     const expected = { ...options, branches: ['branch_cli'] };
     // Verify the options contains the plugin config from CLI/API
     expect(result.options).toEqual(expected);
     // Verify the plugins module is called with the plugin options from CLI/API
     expect(mockedPlugins).toHaveBeenCalledWith({ options: expected, cwd }, {});
   });
-
   test('Read configuration from file path in "extends"', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -340,9 +299,7 @@ describe('get-config', () => {
       release: pkgOptions,
     });
     await outputJson(path.resolve(cwd, 'shareable.json'), options);
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = { ...options, branches: ['test_branch'] };
     // Verify the options contains the plugin config from shareable.json
     expect(result).toEqual(expected);
@@ -357,7 +314,6 @@ describe('get-config', () => {
       },
     );
   });
-
   test('Read configuration from module path in "extends"', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -378,9 +334,7 @@ describe('get-config', () => {
       path.resolve(cwd, 'node_modules/shareable/index.json'),
       options,
     );
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = { ...options, branches: ['test_branch'] };
     // Verify the options contains the plugin config from shareable.json
     expect(result).toEqual(expected);
@@ -393,7 +347,6 @@ describe('get-config', () => {
       },
     );
   });
-
   test('Read configuration from an array of paths in "extends"', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -424,9 +377,7 @@ describe('get-config', () => {
     });
     await outputJson(path.resolve(cwd, 'shareable1.json'), options1);
     await outputJson(path.resolve(cwd, 'shareable2.json'), options2);
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = { ...options1, ...options2, branches: ['test_branch'] };
     // Verify the options contains the plugin config from shareable1.json and shareable2.json
     expect(result).toEqual(expected);
@@ -442,7 +393,6 @@ describe('get-config', () => {
       },
     );
   });
-
   test('Prioritize configuration from config file over "extends"', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -466,9 +416,7 @@ describe('get-config', () => {
       release: pkgOptions,
     });
     await outputJson(path.resolve(cwd, 'shareable.json'), options1);
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = omit(
       { ...options1, ...pkgOptions, branches: ['test_pkg'] },
       'extends',
@@ -485,7 +433,6 @@ describe('get-config', () => {
       },
     );
   });
-
   test('Prioritize configuration from cli/API options over "extends"', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -526,7 +473,6 @@ describe('get-config', () => {
       { ...options2, ...pkgOptions, ...cliOptions, branches: ['branch_opts'] },
       'extends',
     );
-
     // Verify the options contains the plugin config from package.json and shareable2.json
     expect(result).toEqual(expected);
     // Verify the plugins module is called with the plugin options from package.json and shareable2.json
@@ -538,7 +484,6 @@ describe('get-config', () => {
       },
     );
   });
-
   test('Allow to unset properties defined in shareable config with "null"', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -560,9 +505,7 @@ describe('get-config', () => {
       release: pkgOptions,
     });
     await outputJson(path.resolve(cwd, 'shareable.json'), options1);
-
     const { options } = await getConfig({ cwd });
-
     // Verify the options contains the plugin config from shareable.json and the default `plugins`
     expect(options).toEqual({
       ...omit(options1, ['analyzeCommits']),
@@ -586,7 +529,6 @@ describe('get-config', () => {
       },
     );
   });
-
   test('Allow to unset properties defined in shareable config with "undefined"', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -608,9 +550,7 @@ describe('get-config', () => {
       `module.exports = ${format(pkgOptions)}`,
     );
     await outputJson(path.resolve(cwd, 'shareable.json'), options1);
-
     const { options: result } = await getConfig({ cwd });
-
     const expected = {
       ...omit(options1, 'analyzeCommits'),
       ...omit(pkgOptions, ['extends', 'analyzeCommits']),
@@ -627,7 +567,6 @@ describe('get-config', () => {
       },
     );
   });
-
   test('Throw an Error if one of the shareable config cannot be found', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -638,7 +577,6 @@ describe('get-config', () => {
       release: pkgOptions,
     });
     await outputJson(path.resolve(cwd, 'shareable1.json'), options1);
-
     await expect(getConfig({ cwd })).rejects.toThrow(
       expect.objectContaining({
         message: expect.stringMatching(
@@ -648,7 +586,6 @@ describe('get-config', () => {
       }),
     );
   });
-
   test('Convert "ci" option to "noCi" when set from extended config', async () => {
     // Create a git repository, set the current working directory at the root of the repo
     const { cwd } = await gitRepo();
@@ -661,9 +598,7 @@ describe('get-config', () => {
       release: pkgOptions,
     });
     await outputJson(path.resolve(cwd, 'no-ci.json'), options);
-
     const { options: result } = await getConfig({ cwd });
-
     expect(result.ci).toBe(false);
     expect(result.noCi).toBe(true);
   });
