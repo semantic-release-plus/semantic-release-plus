@@ -53,10 +53,19 @@ export async function uploadTerraformModule(
   try {
     const result = execFileSync('curl', args).toString();
     debug(result);
-    const statusCode = parseInt(result.slice(result.lastIndexOf(':') + 1), 10);
-    if (statusCode < 200 || statusCode >= 300) {
+    // Parse the status from behind our explicit marker and fail closed: a
+    // missing marker or unparseable code must be treated as a failed upload,
+    // never silently as success.
+    const markerIndex = result.lastIndexOf(statusMarker);
+    const statusCode =
+      markerIndex === -1
+        ? NaN
+        : parseInt(result.slice(markerIndex + statusMarker.length), 10);
+    if (!(statusCode >= 200 && statusCode < 300)) {
       throw new SemanticReleaseError(
-        `Failed to upload terraform module: unexpected HTTP status ${statusCode}`,
+        `Failed to upload terraform module: unexpected HTTP status ${
+          Number.isNaN(statusCode) ? '(unparseable)' : statusCode
+        }`,
         'EUPLOADFAIL',
         result,
       );

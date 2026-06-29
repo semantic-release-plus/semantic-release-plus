@@ -70,6 +70,19 @@ describe('uploadTerraformModule', () => {
       expect.stringContaining('302'),
     );
   });
+  it('should throw a SemanticReleaseError when the status marker is missing or unparseable', async () => {
+    // If curl's output is truncated or the marker is absent, the status must
+    // fail closed rather than being silently treated as a successful upload.
+    mockExecFileSync.mockImplementation(
+      () => 'unexpected output with no marker',
+    );
+    const rejection = expect(
+      uploadTerraformModule(params, mockContext),
+    ).rejects;
+    await rejection.toThrow('Failed to upload terraform module');
+    await rejection.toHaveProperty('semanticRelease', true);
+    await rejection.toHaveProperty('code', 'EUPLOADFAIL');
+  });
   it('should log an error and throw a SemanticReleaseError if the command fails', async () => {
     const errorMessage = 'Command failed';
     mockExecFileSync.mockImplementation(() => {
