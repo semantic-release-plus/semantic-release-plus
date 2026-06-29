@@ -33,8 +33,8 @@ describe('uploadTerraformModule', () => {
     // Clear mock implementations and instances before each test
     jest.clearAllMocks();
   });
-  it('should execute the curl command successfully', async () => {
-    mockExecFileSync.mockImplementation(() => 'Success');
+  it('should execute the curl command successfully on a 2xx status', async () => {
+    mockExecFileSync.mockImplementation(() => 'OK\nHTTP_STATUS:201');
     const expectedUrl = `${params.gitlabApiUrl}/projects/${params.gitlabProjectId}/packages/terraform/modules/${params.moduleName}/${params.moduleSystem}/${params.version}/file`;
     await uploadTerraformModule(params, mockContext as PublishContext);
     expect(mockExecFileSync).toHaveBeenCalledTimes(1);
@@ -45,8 +45,43 @@ describe('uploadTerraformModule', () => {
       `JOB-TOKEN: ${params.gitlabJobToken}`,
       '--upload-file',
       params.tarPath,
+      '--write-out',
+      '\nHTTP_STATUS:%{http_code}',
       expectedUrl,
     ]);
+  });
+  it('should accept any 2xx status code', async () => {
+    mockExecFileSync.mockImplementation(() => '{"ok":true}\nHTTP_STATUS:200');
+    await expect(
+      uploadTerraformModule(params, mockContext as PublishContext),
+    ).resolves.toBeUndefined();
+  });
+  it('should throw a SemanticReleaseError when the status code is not 2xx', async () => {
+    // curl can exit 0 (e.g. a redirect or unexpected success body) while the
+    // server returned a non-2xx status. The upload must not be reported as success.
+    mockExecFileSync.mockImplementation(() => 'Found\nHTTP_STATUS:302');
+    const rejection = expect(
+      uploadTerraformModule(params, mockContext),
+    ).rejects;
+    await rejection.toThrow('Failed to upload terraform module');
+    await rejection.toHaveProperty('semanticRelease', true);
+    await rejection.toHaveProperty('code', 'EUPLOADFAIL');
+    expect(mockLogger.error).toHaveBeenCalledWith(
+      expect.stringContaining('302'),
+    );
+  });
+  it('should throw a SemanticReleaseError when the status marker is missing or unparseable', async () => {
+    // If curl's output is truncated or the marker is absent, the status must
+    // fail closed rather than being silently treated as a successful upload.
+    mockExecFileSync.mockImplementation(
+      () => 'unexpected output with no marker',
+    );
+    const rejection = expect(
+      uploadTerraformModule(params, mockContext),
+    ).rejects;
+    await rejection.toThrow('Failed to upload terraform module');
+    await rejection.toHaveProperty('semanticRelease', true);
+    await rejection.toHaveProperty('code', 'EUPLOADFAIL');
   });
   it('should log an error and throw a SemanticReleaseError if the command fails', async () => {
     const errorMessage = 'Command failed';

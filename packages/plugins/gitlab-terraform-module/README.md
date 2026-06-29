@@ -51,3 +51,28 @@ Add the following to your release configuration
 | `gitlabApiUrl`     | The url to use when pushing to the the module to the registry                                                            | `string`   | env variable `CI_API_V4_URL`                          |
 | `gitlabProjectId`  | The gitlab project ID to push the module to                                                                              | `string`   | env variable `CI_PROJECT_ID`                          |
 | `gitlabJobToken`   | The token to use to push to the module registry                                                                          | `string`   | env variable `CI_JOB_TOKEN`                           |
+
+## Troubleshooting
+
+### Upload fails with `HTTP 500`
+
+GitLab's Terraform module registry parses every uploaded archive that contains
+`.tf` files. The parser is sensitive to archive structure: a flat archive (files
+at the root, no leading `./` entry, no macOS extended-attribute metadata) uploads
+cleanly and returns `201 Created`. An archive built by BSD/macOS `tar` — which
+adds a leading `./` root entry and `._*` AppleDouble metadata — makes the parser
+return `HTTP 500` rather than a clean `4xx`, so it is easy to misdiagnose as a
+transient server error.
+
+This plugin builds archives with the Node [`tar`](https://www.npmjs.com/package/tar)
+library using explicit relative file paths, which produces a flat archive on Linux
+CI runners — so this is mainly a note for anyone reproducing an upload **manually**
+on macOS. When doing so, build a flat archive and strip macOS metadata:
+
+```bash
+# ❌ 500 — BSD/macOS tar, archive has a leading "./" entry
+tar -czf module.tgz -C <moduleDir> .
+
+# ✅ 201 — flat archive, explicit files, no macOS metadata
+(cd <moduleDir> && tar --no-xattrs --no-mac-metadata -czf module.tgz main.tf variables.tf outputs.tf README.md)
+```
