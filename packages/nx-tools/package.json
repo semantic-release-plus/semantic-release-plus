@@ -22,7 +22,7 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "@semantic-release-plus/core": "alpha",
-    "semantic-release-plus": "alpha"
+    "@semantic-release-plus/core": "workspace:*",
+    "semantic-release-plus": "workspace:*"
   }
 }
