@@ -1,0 +1,24 @@
+packages:
+  - 'packages/*'
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  bufferutil: true
+  cpu-features: true
+  es5-ext: true
+  fsevents: true
+  nx: true
+  ssh2: true
+  unrs-resolver: true
+  utf-8-validate: true
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@swc/core'
+  - bufferutil
+  - cpu-features
+  - es5-ext
+  - fsevents
+  - nx
+  - ssh2
+  - unrs-resolver
+  - utf-8-validate
