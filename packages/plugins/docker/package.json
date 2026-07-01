@@ -21,6 +21,9 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "@semantic-release-plus/core": "alpha"
+    "@semantic-release-plus/core": "workspace:*"
+  },
+  "devDependencies": {
+    "jest-mock": "30.0.5"
   }
 }

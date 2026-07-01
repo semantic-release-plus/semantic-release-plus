@@ -1,5 +1,6 @@
 packages:
   - 'packages/*'
+  - 'packages/plugins/*'
 allowBuilds:
   '@parcel/watcher': true
   '@swc/core': true

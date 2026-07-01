@@ -30,7 +30,7 @@ importers:
         version: 7.1.0
       debug:
         specifier: 4.3.3
-        version: 4.3.3
+        version: 4.3.3(supports-color@9.4.0)
       dedent:
         specifier: ^1.5.1
         version: 1.7.1(babel-plugin-macros@3.1.0)
@@ -324,6 +324,40 @@ importers:
         specifier: workspace:*
         version: link:../srp
 
+  packages/plugins/docker:
+    dependencies:
+      '@semantic-release-plus/core':
+        specifier: workspace:*
+        version: link:../../core
+    devDependencies:
+      jest-mock:
+        specifier: 30.0.5
+        version: 30.0.5
+
+  packages/plugins/gitlab-terraform-module:
+    dependencies:
+      '@semantic-release-plus/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@semantic-release-plus/error':
+        specifier: workspace:*
+        version: link:../../error
+      aggregate-error:
+        specifier: 3.0.0
+        version: 3.0.0
+      debug:
+        specifier: 4.3.3
+        version: 4.3.3(supports-color@9.4.0)
+      glob:
+        specifier: ^10.3.10
+        version: 10.5.0
+      tar:
+        specifier: ^6.2.0
+        version: 6.2.0
+      tslib:
+        specifier: ^2.3.0
+        version: 2.8.1
+
   packages/srp:
     dependencies:
       '@semantic-release-plus/core':
@@ -352,7 +386,7 @@ importers:
         version: 7.1.0
       debug:
         specifier: 4.3.3
-        version: 4.3.3
+        version: 4.3.3(supports-color@9.4.0)
       delay:
         specifier: 5.0.0
         version: 5.0.0
@@ -14588,7 +14622,7 @@ snapshots:
       '@babel/types': 7.29.0
       '@jridgewell/remapping': 2.3.5
       convert-source-map: 2.0.0
-      debug: 4.3.3
+      debug: 4.3.3(supports-color@9.4.0)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -14644,7 +14678,7 @@ snapshots:
       '@babel/core': 7.29.0
       '@babel/helper-compilation-targets': 7.28.6
       '@babel/helper-plugin-utils': 7.28.6
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
       lodash.debounce: 4.0.8
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -14655,7 +14689,7 @@ snapshots:
       '@babel/core': 7.29.0
       '@babel/helper-compilation-targets': 7.28.6
       '@babel/helper-plugin-utils': 7.28.6
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
       lodash.debounce: 4.0.8
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -15333,7 +15367,7 @@ snapshots:
       '@babel/parser': 7.29.0
       '@babel/template': 7.28.6
       '@babel/types': 7.29.0
-      debug: 4.3.3
+      debug: 4.3.3(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -15421,7 +15455,7 @@ snapshots:
   '@eslint/eslintrc@2.1.4(supports-color@9.4.0)':
     dependencies:
       ajv: 6.14.0
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
       espree: 9.6.1
       globals: 13.24.0
       ignore: 5.3.1
@@ -15437,7 +15471,7 @@ snapshots:
   '@humanwhocodes/config-array@0.13.0(supports-color@9.4.0)':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
       minimatch: 3.1.5
     transitivePeerDependencies:
       - supports-color
@@ -17566,7 +17600,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -18724,9 +18758,11 @@ snapshots:
     dependencies:
       ms: 2.1.2
 
-  debug@4.3.3:
+  debug@4.3.3(supports-color@9.4.0):
     dependencies:
       ms: 2.1.2
+    optionalDependencies:
+      supports-color: 9.4.0
 
   debug@4.4.1:
     dependencies:
@@ -18844,7 +18880,7 @@ snapshots:
   detect-port@1.5.1:
     dependencies:
       address: 1.2.2
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -18867,7 +18903,7 @@ snapshots:
 
   docker-modem@3.0.8(supports-color@9.4.0):
     dependencies:
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
       readable-stream: 3.6.2
       split-ca: 1.0.1
       ssh2: 1.15.0
@@ -19463,7 +19499,7 @@ snapshots:
 
   follow-redirects@1.15.11(debug@4.3.3):
     optionalDependencies:
-      debug: 4.3.3
+      debug: 4.3.3(supports-color@9.4.0)
 
   for-in@1.0.2: {}
 
@@ -19973,7 +20009,7 @@ snapshots:
     dependencies:
       '@tootallnate/once': 1.1.2
       agent-base: 6.0.2
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -20020,14 +20056,14 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
   https-proxy-agent@7.0.6:
     dependencies:
       agent-base: 7.1.4
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -20346,7 +20382,7 @@ snapshots:
 
   istanbul-lib-source-maps@4.0.1(supports-color@9.4.0):
     dependencies:
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
       istanbul-lib-coverage: 3.2.2
       source-map: 0.6.1
     transitivePeerDependencies:
@@ -20355,7 +20391,7 @@ snapshots:
   istanbul-lib-source-maps@5.0.6:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
       istanbul-lib-coverage: 3.2.2
     transitivePeerDependencies:
       - supports-color
@@ -22100,11 +22136,11 @@ snapshots:
 
   p-map@3.0.0:
     dependencies:
-      aggregate-error: 3.1.0
+      aggregate-error: 3.0.0
 
   p-map@4.0.0:
     dependencies:
-      aggregate-error: 3.1.0
+      aggregate-error: 3.0.0
 
   p-reduce@2.1.0: {}
 
@@ -22996,7 +23032,7 @@ snapshots:
       '@semantic-release/release-notes-generator': 10.0.3(semantic-release@19.0.5)
       aggregate-error: 3.0.0
       cosmiconfig: 7.1.0
-      debug: 4.3.3
+      debug: 4.3.3(supports-color@9.4.0)
       env-ci: 5.5.0
       execa: 5.1.1
       figures: 3.2.0
@@ -23284,7 +23320,7 @@ snapshots:
 
   spdy-transport@3.0.0(supports-color@9.4.0):
     dependencies:
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
       detect-node: 2.1.0
       hpack.js: 2.1.6
       obuf: 1.1.2
@@ -23295,7 +23331,7 @@ snapshots:
 
   spdy@4.0.2(supports-color@9.4.0):
     dependencies:
-      debug: 4.4.3(supports-color@9.4.0)
+      debug: 4.3.3(supports-color@9.4.0)
       handle-thing: 2.0.1
       http-deceiver: 1.2.7
       select-hose: 2.0.0

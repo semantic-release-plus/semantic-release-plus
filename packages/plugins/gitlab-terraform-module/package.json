@@ -6,8 +6,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@semantic-release-plus/core": "alpha",
-    "@semantic-release-plus/error": "0.0.1",
+    "@semantic-release-plus/core": "workspace:*",
+    "@semantic-release-plus/error": "workspace:*",
     "aggregate-error": "3.0.0",
     "debug": "4.3.3",
     "glob": "^10.3.10",
