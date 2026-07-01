@@ -322,7 +322,7 @@ importers:
         version: link:../core
       semantic-release-plus:
         specifier: workspace:*
-        version: link:../..
+        version: link:../srp
 
   packages/srp:
     dependencies:
