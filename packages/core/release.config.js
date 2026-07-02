@@ -4,8 +4,7 @@ const name = 'core';
 const srcRoot = `packages/${name}`;
 const pathToRepoRoot = '../..';
 
-module.exports = {
-  extends: `${pathToRepoRoot}/release.config.base.js`,
+module.exports = require(`${pathToRepoRoot}/release.config.base.js`)({
   pkgRoot: `${pathToRepoRoot}/dist/${srcRoot}`,
   tagFormat: name + '-v${version}',
   commitPaths: [
@@ -18,4 +17,4 @@ module.exports = {
     // `${pathToRepoRoot}/.prettierignore`,
     `*`, // anything in this directory
   ],
-};
+});

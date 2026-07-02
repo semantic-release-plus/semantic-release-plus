@@ -13,6 +13,25 @@ This repo will eventually be the single repo for all [semantic-release-plus](htt
 
 > semantic-release-plus is a fork of semantic-release and is not maintained by the same team as semantic-release.
 
+## Local development setup
+
+This repo uses **pnpm** (pinned via [corepack](https://nodejs.org/api/corepack.html)) and **Node 22**.
+
+1. Use Node 22 (the `.nvmrc` pins it). With [fnm](https://github.com/Schniz/fnm): `fnm use` (or `fnm install` first).
+2. Enable corepack so the pinned pnpm version is used automatically:
+   ```bash
+   corepack enable
+   ```
+3. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+4. Common tasks (Nx via pnpm):
+   ```bash
+   pnpm exec nx run-many --target=build
+   pnpm exec nx run-many --target=test
+   ```
+
 # Packages
 
 ## Core

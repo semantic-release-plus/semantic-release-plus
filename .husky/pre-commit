@@ -1,4 +1,11 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx lint-staged --relative
+# Resolve pnpm robustly: git hooks run in a minimal shell that does not source
+# the user's profile, so corepack's `pnpm` shim may not be on PATH. Fall back to
+# `corepack pnpm` (corepack ships with Node) when the shim is unavailable.
+if command -v pnpm >/dev/null 2>&1; then
+  pnpm exec lint-staged --relative
+else
+  corepack pnpm exec lint-staged --relative
+fi
