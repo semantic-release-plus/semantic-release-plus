@@ -3,8 +3,9 @@ const name = 'srp';
 const srcRoot = `packages/${name}`;
 const pathToRepoRoot = '../..';
 
-module.exports = {
-  extends: `${pathToRepoRoot}/release.config.base.js`,
+// The base config is a factory that wires the shared plugin list (including the
+// workspace:* -> version rewrite exec step) around this package's pkgRoot.
+module.exports = require(`${pathToRepoRoot}/release.config.base.js`)({
   pkgRoot: `${pathToRepoRoot}/dist/${srcRoot}`,
   tagFormat: name + '-v${version}',
   commitPaths: [
@@ -12,4 +13,4 @@ module.exports = {
     `*`, // anything in this directory
     `${pathToRepoRoot}/packages/core`,
   ],
-};
+});

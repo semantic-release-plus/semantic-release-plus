@@ -3,8 +3,7 @@ const name = 'docker';
 const srcRoot = `packages/plugins/${name}`;
 const pathToRepoRoot = '../../..';
 
-module.exports = {
-  extends: `${pathToRepoRoot}/release.config.base.js`,
+module.exports = require(`${pathToRepoRoot}/release.config.base.js`)({
   pkgRoot: `${pathToRepoRoot}/dist/${srcRoot}`,
   tagFormat: name + '-v${version}',
   commitPaths: [
@@ -12,4 +11,4 @@ module.exports = {
     `*`, // anything in this directory
     `${pathToRepoRoot}/packages/core`,
   ],
-};
+});
